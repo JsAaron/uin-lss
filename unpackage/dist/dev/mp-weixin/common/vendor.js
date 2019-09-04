@@ -10210,8 +10210,8 @@ app;exports.default = _default;
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var getters = {
 
   //app
-  appid: function appid(state) {return state.app.device.appid;},
-  code: function code(state) {return state.app.device.code;} };var _default =
+  $appid: function $appid(state) {return state.app.device.appid;},
+  $code: function $code(state) {return state.app.device.code;} };var _default =
 
 getters;exports.default = _default;
 

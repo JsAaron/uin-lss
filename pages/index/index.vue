@@ -69,7 +69,7 @@
 
 	export default {
 		computed: {
-			...mapGetters(['appid', 'code'])
+			...mapGetters(['$appid'])
 		},
 		data() {
 			return {
@@ -137,7 +137,7 @@
 							//获取code
 							this.SET_CODE(loginRes.code)
 							util.getWxOpenId({
-								appid: this.appid,
+								appid: this.$appid,
 								code: loginRes.code
 							}).then(openRes => {
 								//获取openid

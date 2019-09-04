@@ -184,7 +184,7 @@ function getLocation(callback) {
 
 {
   computed: _objectSpread({},
-  (0, _vuex.mapGetters)(['appid', 'code'])),
+  (0, _vuex.mapGetters)(['$appid'])),
 
   data: function data() {
     return {
@@ -252,7 +252,7 @@ function getLocation(callback) {
             //获取code
             _this2.SET_CODE(loginRes.code);
             util.getWxOpenId({
-              appid: _this2.appid,
+              appid: _this2.$appid,
               code: loginRes.code }).
             then(function (openRes) {
               //获取openid
