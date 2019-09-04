@@ -18,6 +18,11 @@
 
 <script>
 	import * as util from '@/utils';
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
+
 	const app = getApp();
 
 	/**
@@ -63,6 +68,9 @@
 	}
 
 	export default {
+		computed: {
+			...mapGetters(['appid', 'code'])
+		},
 		data() {
 			return {
 				hasAdvert: true, //默认显示广告
@@ -74,7 +82,9 @@
 			//权限
 			accreditUserInfo(
 				data => {
-					app.globalData.userInfo = data;
+					// this.
+					this.SET_USERINFO(data)
+
 					//定位服务
 					accreditUserLocation(() => {
 						getLocation(() => {
@@ -97,13 +107,13 @@
 			);
 		},
 		methods: {
-
+			...mapMutations(['SET_USERINFO', 'SET_CODE', 'SET_OPENID']),
 			/**
 			 * 初始化设备数据
 			 */
 			initDeviceData(callback) {
 				this.getDeviceData().then(() => {
-					console.log(app)
+					// console.log(app)
 					// app.$$accessLoginData().then(callback).catch(callback)
 				})
 			},
@@ -125,20 +135,22 @@
 								return reject()
 							}
 							//获取code
-							app.globalData.device.code = loginRes.code; //code
-							
-							util.getWxOpenId(app.globalData.device).then(openRes => {
+							this.SET_CODE(loginRes.code)
+							util.getWxOpenId({
+								appid: this.appid,
+								code: loginRes.code
+							}).then(openRes => {
 								//获取openid
 								const openid = openRes.data.openid;
 								if (openid) {
-									app.globalData.device.openid = openid; //openid
+									this.SET_OPENID(openid)
 									reslove();
 								} else {
 									this.$api.showToast("没有获取设备编号,请再次点击");
 									return;
 								}
 							}).catch(err => {
-								this.$api.showToast(' 服务器连接失败')
+								this.$api.showToast('服务器连接失败')
 								reject();
 							});
 						},
@@ -164,7 +176,7 @@
 				util
 					.getUserInfo()
 					.then(userInfo => {
-						app.globalData.userInfo = userInfo;
+						this.SET_USERINFO(userInfo)
 						this.hasUserAccredit = true;
 						this.nextProcess();
 					})

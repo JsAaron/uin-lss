@@ -19,7 +19,7 @@ export function getWxOpenId(device) {
 			url: config.openIdUrl,
 			data: {
 				appid: device.appid,
-				secret: device.secret,
+				secret: "",
 				js_code: device.code
 			},
 			method: "GET",

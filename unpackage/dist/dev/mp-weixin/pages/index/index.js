@@ -132,30 +132,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var util = _interopRequireWildcard(__webpack_require__(/*! @/utils */ 18));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var app = getApp(); /**
+var util = _interopRequireWildcard(__webpack_require__(/*! @/utils */ 18));
+var _vuex = __webpack_require__(/*! vuex */ 40);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+
+
+
+var app = getApp();
+
+/**
                      * 检测用户权限，设置数据
                      * 获取微信用户基本信息
-                     */function accreditUserInfo(success, fail) {util.checkAccredit('scope.userInfo').then(function () {util.getUserInfo().then(function (data) {success(data);});}).catch(fail);} /**
-                                                                                                                                                                                                    * 检测用户定位
-                                                                                                                                                                                                    */function accreditUserLocation(success, fail) {util.detectAccredit('scope.userLocation').then(success).catch(function () {var data = {
+                     */
+function accreditUserInfo(success, fail) {
+  util.
+  checkAccredit('scope.userInfo').
+  then(function () {
+    util.getUserInfo().then(function (data) {
+      success(data);
+    });
+  }).
+  catch(fail);
+}
+
+/**
+   * 检测用户定位
+   */
+function accreditUserLocation(success, fail) {
+  util.detectAccredit('scope.userLocation').then(success).catch(function () {
+    var data = {
       content: '您未选择地理位置，我们无法为您提供服务！',
       scope: 'scope.userLocation',
       buttonText: '重新获取地理位置',
@@ -178,6 +183,9 @@ function getLocation(callback) {
 }var _default =
 
 {
+  computed: _objectSpread({},
+  (0, _vuex.mapGetters)(['appid', 'code'])),
+
   data: function data() {
     return {
       hasAdvert: true, //默认显示广告
@@ -189,7 +197,9 @@ function getLocation(callback) {
     //权限
     accreditUserInfo(
     function (data) {
-      app.globalData.userInfo = data;
+      // this.
+      _this.SET_USERINFO(data);
+
       //定位服务
       accreditUserLocation(function () {
         getLocation(function () {
@@ -211,14 +221,14 @@ function getLocation(callback) {
     });
 
   },
-  methods: {
-
+  methods: _objectSpread({},
+  (0, _vuex.mapMutations)(['SET_USERINFO', 'SET_CODE', 'SET_OPENID']), {
     /**
-              * 初始化设备数据
-              */
+                                                                          * 初始化设备数据
+                                                                          */
     initDeviceData: function initDeviceData(callback) {
       this.getDeviceData().then(function () {
-        console.log(app);
+        // console.log(app)
         // app.$$accessLoginData().then(callback).catch(callback)
       });
     },
@@ -240,20 +250,22 @@ function getLocation(callback) {
               return reject();
             }
             //获取code
-            app.globalData.device.code = loginRes.code; //code
-
-            util.getWxOpenId(app.globalData.device).then(function (openRes) {
+            _this2.SET_CODE(loginRes.code);
+            util.getWxOpenId({
+              appid: _this2.appid,
+              code: loginRes.code }).
+            then(function (openRes) {
               //获取openid
               var openid = openRes.data.openid;
               if (openid) {
-                app.globalData.device.openid = openid; //openid
+                _this2.SET_OPENID(openid);
                 reslove();
               } else {
                 _this2.$api.showToast("没有获取设备编号,请再次点击");
                 return;
               }
             }).catch(function (err) {
-              _this2.$api.showToast(' 服务器连接失败');
+              _this2.$api.showToast('服务器连接失败');
               reject();
             });
           },
@@ -279,7 +291,7 @@ function getLocation(callback) {
       util.
       getUserInfo().
       then(function (userInfo) {
-        app.globalData.userInfo = userInfo;
+        _this3.SET_USERINFO(userInfo);
         _this3.hasUserAccredit = true;
         _this3.nextProcess();
       }).
@@ -299,7 +311,7 @@ function getLocation(callback) {
         */
     onChangeUserAccreditButton: function onChangeUserAccreditButton() {
       this.userAccreditStyle = true;
-    } } };exports.default = _default;
+    } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

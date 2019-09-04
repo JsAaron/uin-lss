@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App'
+import store from './store'
 import {
 	gotoPage,
 	showBusy,
@@ -11,18 +12,21 @@ import {
 
 Vue.config.productionTip = false
 
+Vue.prototype.$store = store;
 Vue.prototype.$api = {
 	showBusy,
 	hideBusy,
-	showToast,
+	showToast, 
 	hideToast,
 	showModal,
 	gotoPage
 }
 
+
 App.mpType = 'app'
 
 const app = new Vue({
+	store,
 	...App
 })
 app.$mount()
