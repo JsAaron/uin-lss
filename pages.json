@@ -1,0 +1,49 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "刷脸友惠"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarBackgroundColor": "#4f96ff",
+		"navigationBarTextStyle": "white",
+		"navigationStyle": "default",
+		"backgroundTextStyle": "light",
+		"backgroundColor": "#4f96ff"
+	},
+	"tabBar": {
+		"color": "#777777",
+		"selectedColor": "#4f96ff",
+		"backgroundColor": "#f8f8f8",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/home-on.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabbar/recommend.png",
+				"selectedIconPath": "static/tabbar/recommend-on.png",
+				"text": "推荐"
+			},
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabbar/my.png",
+				"selectedIconPath": "static/tabbar/my-on.png",
+				"text": "我的"
+			}
+		]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+}

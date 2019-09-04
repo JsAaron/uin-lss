@@ -1,0 +1,88 @@
+// 基础颜色值
+$red: #d43b33;
+$black: #000;
+$white: #fff;
+$orange: rgb(255, 153, 1);
+$green: #33cd5f;
+$gray: #c9c9c9; //普通灰
+$gray-light: #e5e5e5; //亮灰
+$gray-darker: #7d7e80; //暗灰
+$gray-dark: #999; //深灰
+$blue: #4f96ff;
+
+
+//action
+$opacity-half: 0.5;
+
+// 文本颜色
+$text-color-gray: #808080;
+$text-color-white: $white;
+$text-color-red: $red;
+$text-color-blue: $blue;
+$text-color-orange: $orange;
+
+// 背景颜色
+$background-color-red: $red; //背景红
+$background-color-gray: rgb(233, 233, 233);
+$background-color-white: $white;
+$background-color-blue: $blue;
+$background-color-orange: $orange;
+$background-color-gray-dark: $gray-dark;
+
+//状态文字颜色
+$color-success: #00950d;
+$color-fail: $red;
+
+//======================
+//  flex定位
+//======================
+
+//设置flex定位
+//justify-content属性定义了项目在主轴上的对齐方式
+//justify-content: flex-start | flex-end | center | space-between | space-around;
+
+//align-items属性定义项目在交叉轴上如何对齐。
+//align-items: flex-start | flex-end | center | baseline | stretch;
+
+@mixin flex($direction: row, $justify: center, $align: center) {
+	display: flex !important;
+	flex-direction: $direction;
+	align-items: $align;
+	justify-content: $justify;
+}
+
+//======================
+//  横向X
+//======================
+
+//横向设置,默认居中
+@mixin flex-h($justify: center, $align: center) {
+	@include flex(row, $justify, $align);
+}
+
+//横向左对齐
+@mixin flex-h-left($align: center) {
+	@include flex(row, flex-start, $align);
+}
+
+//横向右对齐
+@mixin flex-h-right($align: center) {
+	@include flex(row, flex-end, $align);
+}
+
+//横向两端对齐
+@mixin flex-h-between($align: center) {
+	@include flex(row, space-between, $align);
+}
+
+//横向平分
+@mixin flex-h-around($align: center) {
+	@include flex(row, space-around, $align);
+}
+
+//======================
+//  竖向Y
+//======================
+@mixin flex-v($justify: center, $align: center){
+		@include flex(column, $justify, $align);
+}
