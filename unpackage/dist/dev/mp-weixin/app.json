@@ -41,5 +41,6 @@
       "desc": "为了应用更好的体验,需要获取您的地理位置,请允许"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap14.json"
 }

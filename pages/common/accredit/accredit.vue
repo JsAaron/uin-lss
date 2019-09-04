@@ -16,6 +16,7 @@
 				buttonText: "" //按钮名称
 			};
 		},
+
 		onLoad(options) {
 			this.options = JSON.parse(options.data)
 			this.isInit = true
@@ -33,9 +34,11 @@
 
 			//重新检测
 			util.detectAccredit(this.options.scope).then(() => {
+				console.log(1)
 				this.$api.hideBusy()
 				this.$api.gotoPage("back")
 			}).catch(() => {
+				console.log(2)
 				// 没有授权
 				this.$api.hideBusy()
 				this.$api.showModal({

@@ -39,19 +39,27 @@
 	 * 检测用户定位
 	 */
 	function accreditUserLocation(success, fail) {
-		util
-			.detectAccredit('scope.userLocation')
-			.then(success)
-			.catch(() => {
-				let data = {
-					content: '您未选择地理位置，我们无法为您提供服务！',
-					scope: 'scope.userLocation',
-					buttonText: '重新获取地理位置',
-					describe: '亲，我们未获得您的位置授权，将无法为您提供推荐的商圈以及相关的一些活动！'
-				};
-				util.gotoPage(`/pages/common/accredit/accredit?data=${JSON.stringify(data)}`);
-				fail && fail();
-			});
+		util.detectAccredit('scope.userLocation').then(success).catch(() => {
+			let data = {
+				content: '您未选择地理位置，我们无法为您提供服务！',
+				scope: 'scope.userLocation',
+				buttonText: '重新获取地理位置',
+				describe: '亲，我们未获得您的位置授权，将无法为您提供推荐的商圈以及相关的一些活动！'
+			};
+			util.gotoPage(`/pages/common/accredit/accredit?data=${JSON.stringify(data)}`);
+			fail && fail();
+		});
+	}
+
+	/**
+	 * 获取坐标位置
+	 */
+	function getLocation(callback) {
+		util.getLocationData().then(res => {
+			app.globalData.location.latitude = res.latitude;
+			app.globalData.location.longitude = res.longitude;
+			callback && callback()
+		})
 	}
 
 	export default {
@@ -67,6 +75,20 @@
 			accreditUserInfo(
 				data => {
 					app.globalData.userInfo = data;
+					//定位服务
+					accreditUserLocation(() => {
+						getLocation(() => {
+							this.$api.showBusy()
+							this.initDeviceData(() => {
+								// 		// // 固码支付
+								// 		// if (app.globalData.share.type === "qrPay") {
+								// 		// 	this.$api.gotoPage("/common/qr-pay/qr-pay")
+								// 		// } else {
+								// 		// 	this.enterUrl()
+								// 		// }
+							});
+						})
+					})
 				},
 				e => {
 					//未授权
@@ -75,16 +97,64 @@
 			);
 		},
 		methods: {
+
+			/**
+			 * 初始化设备数据
+			 */
+			initDeviceData(callback) {
+				this.getDeviceData().then(() => {
+					console.log(app)
+					// app.$$accessLoginData().then(callback).catch(callback)
+				})
+			},
+
+			//====================
+			// 自动
+			//====================
+
+			/**
+			 * 获取硬件登录参数
+			 */
+			getDeviceData() {
+				return new Promise((reslove, reject) => {
+					uni.login({
+						provider: 'weixin',
+						success: loginRes => {
+							if (!loginRes.code) {
+								this.$api.showToast('登录失败！' + loginRes.errMsg)
+								return reject()
+							}
+							//获取code
+							app.globalData.device.code = loginRes.code; //code
+							
+							util.getWxOpenId(app.globalData.device).then(openRes => {
+								//获取openid
+								const openid = openRes.data.openid;
+								if (openid) {
+									app.globalData.device.openid = openid; //openid
+									reslove();
+								} else {
+									this.$api.showToast("没有获取设备编号,请再次点击");
+									return;
+								}
+							}).catch(err => {
+								this.$api.showToast(' 服务器连接失败')
+								reject();
+							});
+						},
+						fail() {
+							this.$api.showToast(' 获取微信登录凭证失败')
+							reject();
+						}
+					});
+				});
+			},
+
 			/**
 			 * 开始页面操作
 			 */
 			nextProcess() {
-				accreditUserLocation(
-					() => {},
-					() => {
-						this.data.action = 'accredit-location';
-					}
-				);
+
 			},
 
 			/**

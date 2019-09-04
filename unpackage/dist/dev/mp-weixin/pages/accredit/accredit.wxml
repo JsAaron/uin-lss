@@ -1,1 +1,0 @@
-<view class="auth"><image class="img" src="/static/pubilc/accredit.png" mode="aspectFill"></image><view class="describe">{{describe}}</view><button data-event-opts="{{[['tap',[['onOpenSetting',['$event']]]]]}}" class="btn" bindtap="__e">{{buttonText}}</button></view>

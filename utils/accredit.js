@@ -16,7 +16,7 @@ import {
 export function getWxOpenId(device) {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: globalConfig.openIdUrl,
+			url: config.openIdUrl,
 			data: {
 				appid: device.appid,
 				secret: device.secret,
@@ -37,7 +37,7 @@ export function getRegeditQrCode(device) {
 	return new Promise((resolve, reject) => {
 		console.log('device', device)
 		uni.request({
-			url: globalConfig.registerQrCodeUrl,
+			url: config.registerQrCodeUrl,
 			data: {
 				appid: device.appid,
 				secret: device.secret,
@@ -63,7 +63,7 @@ export function getShareQrCode({
 } = {}) {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: globalConfig.goodsQrCodeUrl,
+			url: config.goodsQrCodeUrl,
 			data: {
 				agentidsp,
 				goodsid,
@@ -96,7 +96,7 @@ export function getWinxinAvatarUrl(avatarUrl) {
 			resolve(wxAvatarUrl)
 		} else {
 			uni.request({
-				url: globalConfig.weixin,
+				url: config.weixin,
 				data: {
 					urls: String(avatarUrl)
 				},
@@ -117,7 +117,7 @@ export function getWinxinAvatarUrl(avatarUrl) {
 export function getPayQrCode(device, agentname) {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: globalConfig.payQrCodeUrl,
+			url: config.payQrCodeUrl,
 			data: {
 				agentname: agentname,
 				appid: device.appid,
@@ -193,7 +193,6 @@ function requestAccredit(scopeName) {
 export function detectAccredit(scopeName) {
 	return new Promise((resolve, reject) => {
 		checkAccredit(scopeName).then(resolve).catch(() => {
-			console.log(2, scopeName)
 			//未授权,发起新的授权请求
 			requestAccredit(scopeName).then(resolve).catch(reject)
 		})

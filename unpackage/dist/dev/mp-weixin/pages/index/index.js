@@ -113,7 +113,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -155,10 +155,7 @@ var app = getApp(); /**
                      * 获取微信用户基本信息
                      */function accreditUserInfo(success, fail) {util.checkAccredit('scope.userInfo').then(function () {util.getUserInfo().then(function (data) {success(data);});}).catch(fail);} /**
                                                                                                                                                                                                     * 检测用户定位
-                                                                                                                                                                                                    */function accreditUserLocation(success, fail) {util.detectAccredit('scope.userLocation').
-  then(success).
-  catch(function () {
-    var data = {
+                                                                                                                                                                                                    */function accreditUserLocation(success, fail) {util.detectAccredit('scope.userLocation').then(success).catch(function () {var data = {
       content: '您未选择地理位置，我们无法为您提供服务！',
       scope: 'scope.userLocation',
       buttonText: '重新获取地理位置',
@@ -166,6 +163,17 @@ var app = getApp(); /**
 
     util.gotoPage("/pages/common/accredit/accredit?data=".concat(JSON.stringify(data)));
     fail && fail();
+  });
+}
+
+/**
+   * 获取坐标位置
+   */
+function getLocation(callback) {
+  util.getLocationData().then(function (res) {
+    app.globalData.location.latitude = res.latitude;
+    app.globalData.location.longitude = res.longitude;
+    callback && callback();
   });
 }var _default =
 
@@ -182,6 +190,20 @@ var app = getApp(); /**
     accreditUserInfo(
     function (data) {
       app.globalData.userInfo = data;
+      //定位服务
+      accreditUserLocation(function () {
+        getLocation(function () {
+          _this.$api.showBusy();
+          _this.initDeviceData(function () {
+            // 		// // 固码支付
+            // 		// if (app.globalData.share.type === "qrPay") {
+            // 		// 	this.$api.gotoPage("/common/qr-pay/qr-pay")
+            // 		// } else {
+            // 		// 	this.enterUrl()
+            // 		// }
+          });
+        });
+      });
     },
     function (e) {
       //未授权
@@ -190,15 +212,63 @@ var app = getApp(); /**
 
   },
   methods: {
+
     /**
-              * 开始页面操作
+              * 初始化设备数据
               */
-    nextProcess: function nextProcess() {var _this2 = this;
-      accreditUserLocation(
-      function () {},
-      function () {
-        _this2.data.action = 'accredit-location';
+    initDeviceData: function initDeviceData(callback) {
+      this.getDeviceData().then(function () {
+        console.log(app);
+        // app.$$accessLoginData().then(callback).catch(callback)
       });
+    },
+
+    //====================
+    // 自动
+    //====================
+
+    /**
+     * 获取硬件登录参数
+     */
+    getDeviceData: function getDeviceData() {var _this2 = this;
+      return new Promise(function (reslove, reject) {
+        uni.login({
+          provider: 'weixin',
+          success: function success(loginRes) {
+            if (!loginRes.code) {
+              _this2.$api.showToast('登录失败！' + loginRes.errMsg);
+              return reject();
+            }
+            //获取code
+            app.globalData.device.code = loginRes.code; //code
+
+            util.getWxOpenId(app.globalData.device).then(function (openRes) {
+              //获取openid
+              var openid = openRes.data.openid;
+              if (openid) {
+                app.globalData.device.openid = openid; //openid
+                reslove();
+              } else {
+                _this2.$api.showToast("没有获取设备编号,请再次点击");
+                return;
+              }
+            }).catch(function (err) {
+              _this2.$api.showToast(' 服务器连接失败');
+              reject();
+            });
+          },
+          fail: function fail() {
+            this.$api.showToast(' 获取微信登录凭证失败');
+            reject();
+          } });
+
+      });
+    },
+
+    /**
+        * 开始页面操作
+        */
+    nextProcess: function nextProcess() {
 
     },
 
@@ -230,6 +300,7 @@ var app = getApp(); /**
     onChangeUserAccreditButton: function onChangeUserAccreditButton() {
       this.userAccreditStyle = true;
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 18 */,

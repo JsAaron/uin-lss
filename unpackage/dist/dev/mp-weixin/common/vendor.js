@@ -7753,7 +7753,7 @@ var _common = __webpack_require__(/*! ./common.js */ 11);function _interopRequir
                                                                                                                                         * 获取openid
                                                                                                                                         */function getWxOpenId(device) {return new Promise(function (resolve, reject) {
     uni.request({
-      url: globalConfig.openIdUrl,
+      url: _config.default.openIdUrl,
       data: {
         appid: device.appid,
         secret: device.secret,
@@ -7774,7 +7774,7 @@ function getRegeditQrCode(device) {
   return new Promise(function (resolve, reject) {
     console.log('device', device);
     uni.request({
-      url: globalConfig.registerQrCodeUrl,
+      url: _config.default.registerQrCodeUrl,
       data: {
         appid: device.appid,
         secret: device.secret,
@@ -7800,7 +7800,7 @@ function getShareQrCode()
 {var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},device = _ref.device,agentidsp = _ref.agentidsp,goodsid = _ref.goodsid,fagentid = _ref.fagentid;
   return new Promise(function (resolve, reject) {
     uni.request({
-      url: globalConfig.goodsQrCodeUrl,
+      url: _config.default.goodsQrCodeUrl,
       data: {
         agentidsp: agentidsp,
         goodsid: goodsid,
@@ -7833,7 +7833,7 @@ function getWinxinAvatarUrl(avatarUrl) {
       resolve(wxAvatarUrl);
     } else {
       uni.request({
-        url: globalConfig.weixin,
+        url: _config.default.weixin,
         data: {
           urls: String(avatarUrl) },
 
@@ -7854,7 +7854,7 @@ function getWinxinAvatarUrl(avatarUrl) {
 function getPayQrCode(device, agentname) {
   return new Promise(function (resolve, reject) {
     uni.request({
-      url: globalConfig.payQrCodeUrl,
+      url: _config.default.payQrCodeUrl,
       data: {
         agentname: agentname,
         appid: device.appid,
@@ -7930,7 +7930,6 @@ function requestAccredit(scopeName) {
 function detectAccredit(scopeName) {
   return new Promise(function (resolve, reject) {
     checkAccredit(scopeName).then(resolve).catch(function () {
-      console.log(2, scopeName);
       //未授权,发起新的授权请求
       requestAccredit(scopeName).then(resolve).catch(reject);
     });
@@ -8857,9 +8856,7 @@ function getRouterPrevPage(serial) {
 /***/ }),
 /* 25 */,
 /* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */
+/* 27 */
 /*!*************************************************************************************************!*\
   !*** /Users/wen/develop/github/uni-lss/main.js?{"page":"pages%2Fcommon%2Faccredit%2Faccredit"} ***!
   \*************************************************************************************************/
@@ -8870,7 +8867,7 @@ function getRouterPrevPage(serial) {
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _accredit = _interopRequireDefault(__webpack_require__(/*! ./pages/common/accredit/accredit.vue */ 30));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _accredit = _interopRequireDefault(__webpack_require__(/*! ./pages/common/accredit/accredit.vue */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_accredit.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 

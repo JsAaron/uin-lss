@@ -130,6 +130,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       referral_code: '' } },
 
 
+
   onLaunch: function onLaunch() {
     console.log('App Launch');
   },
