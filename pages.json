@@ -5,6 +5,12 @@
 			"style": {
 				"navigationBarTitleText": "刷脸友惠"
 			}
+		},
+		{
+			"path": "pages/common/accredit/accredit",
+			"style": {
+				"navigationBarTitleText": "申请权限"
+			}
 		}
 	],
 	"globalStyle": {

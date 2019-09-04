@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/common/accredit/accredit"
   ],
   "subPackages": [],
   "window": {
@@ -40,6 +41,5 @@
       "desc": "为了应用更好的体验,需要获取您的地理位置,请允许"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap70.json"
+  "usingComponents": {}
 }

@@ -1,8 +1,8 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],[
 /* 0 */
-/*!*********************************!*\
-  !*** D:/github/uin-lss/main.js ***!
-  \*********************************/
+/*!*************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/main.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7493,9 +7493,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!************************************!*\
-  !*** D:/github/uin-lss/pages.json ***!
-  \************************************/
+/*!****************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/pages.json ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7615,9 +7615,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 11 */
-/*!*****************************************!*\
-  !*** D:/github/uin-lss/utils/common.js ***!
-  \*****************************************/
+/*!*********************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/utils/common.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7691,9 +7691,9 @@ function showModal(object) {
 
 /***/ }),
 /* 12 */
-/*!******************************************************************!*\
-  !*** D:/github/uin-lss/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \******************************************************************/
+/*!**********************************************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7712,9 +7712,9 @@ createPage(_index.default);
 /* 16 */,
 /* 17 */,
 /* 18 */
-/*!****************************************!*\
-  !*** D:/github/uin-lss/utils/index.js ***!
-  \****************************************/
+/*!********************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/utils/index.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7724,13 +7724,13 @@ var _lang = __webpack_require__(/*! ./lang */ 21);Object.keys(_lang).forEach(fun
 var _common = __webpack_require__(/*! ./common */ 11);Object.keys(_common).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _common[key];} });});
 var _md = __webpack_require__(/*! ./md5 */ 22);Object.keys(_md).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _md[key];} });});
 var _layer = __webpack_require__(/*! ./layer */ 23);Object.keys(_layer).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _layer[key];} });});
-var _router = __webpack_require__(/*! ./router */ 28);Object.keys(_router).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _router[key];} });});
+var _router = __webpack_require__(/*! ./router */ 24);Object.keys(_router).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _router[key];} });});
 
 /***/ }),
 /* 19 */
-/*!*******************************************!*\
-  !*** D:/github/uin-lss/utils/accredit.js ***!
-  \*******************************************/
+/*!***********************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/utils/accredit.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7975,9 +7975,9 @@ function getLocationData() {var data = arguments.length > 0 && arguments[0] !== 
 
 /***/ }),
 /* 20 */
-/*!***********************************!*\
-  !*** D:/github/uin-lss/config.js ***!
-  \***********************************/
+/*!***************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/config.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8043,9 +8043,9 @@ module.exports = config;
 
 /***/ }),
 /* 21 */
-/*!***************************************!*\
-  !*** D:/github/uin-lss/utils/lang.js ***!
-  \***************************************/
+/*!*******************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/utils/lang.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8469,9 +8469,9 @@ function limitFloat(val) {
 
 /***/ }),
 /* 22 */
-/*!**************************************!*\
-  !*** D:/github/uin-lss/utils/md5.js ***!
-  \**************************************/
+/*!******************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/utils/md5.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8682,9 +8682,9 @@ module.exports = {
 
 /***/ }),
 /* 23 */
-/*!****************************************!*\
-  !*** D:/github/uin-lss/utils/layer.js ***!
-  \****************************************/
+/*!********************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/utils/layer.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8745,14 +8745,10 @@ function getContainerHeight(selector, callback) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */
-/*!*****************************************!*\
-  !*** D:/github/uin-lss/utils/router.js ***!
-  \*****************************************/
+/* 24 */
+/*!*********************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/utils/router.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8857,6 +8853,26 @@ function getRouterPrevPage(serial) {
   return pages[pages.length - serial];
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */
+/*!*************************************************************************************************!*\
+  !*** /Users/wen/develop/github/uni-lss/main.js?{"page":"pages%2Fcommon%2Faccredit%2Faccredit"} ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _accredit = _interopRequireDefault(__webpack_require__(/*! ./pages/common/accredit/accredit.vue */ 30));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_accredit.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ })
 ]]);
