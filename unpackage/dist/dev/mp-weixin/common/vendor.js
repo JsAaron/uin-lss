@@ -17,13 +17,17 @@ var _common = __webpack_require__(/*! @/utils/common */ 11);function _interopReq
 
 
 
+
+
 _vue.default.config.productionTip = false;
 
 _vue.default.prototype.$api = {
   showBusy: _common.showBusy,
   hideBusy: _common.hideBusy,
   showToast: _common.showToast,
-  hideToast: _common.hideToast };
+  hideToast: _common.hideToast,
+  showModal: _common.showModal,
+  gotoPage: _common.gotoPage };
 
 
 _App.default.mpType = 'app';
@@ -7618,7 +7622,7 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.showBusy = showBusy;exports.hideBusy = hideBusy;exports.showToast = showToast;exports.hideToast = hideToast;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.showBusy = showBusy;exports.hideBusy = hideBusy;exports.showToast = showToast;exports.hideToast = hideToast;exports.showModal = showModal;
 function showBusy(title) {
   uni.showLoading({
     title: title || "载入中..." });
@@ -7644,7 +7648,7 @@ function showToast(arg1, arg2, arg3) {
     //如果是成功，带对象参数，支持回调
     if (typeof arg2 === "object") {
       var data = arg2;
-      data.image = "/assets/images/icon/".concat(arg1, ".png");
+      data.image = "/static/icon/".concat(arg1, ".png");
       return uni.showToast(data);
     }
 
@@ -7653,7 +7657,7 @@ function showToast(arg1, arg2, arg3) {
       mask: true,
       title: arg2,
       icon: "cancel",
-      image: "/assets/images/icon/".concat(arg1, ".png"),
+      image: "/static/icon/".concat(arg1, ".png"),
       duration: arg3 || 2000 });
 
   }
@@ -7662,8 +7666,7 @@ function showToast(arg1, arg2, arg3) {
   //   title: '网络异常,语音播放无法正常使用',
   // })
   if (typeof arg1 === "object") {
-    var _data = arg1;
-    return uni.showToast(_data);
+    return uni.showToast(arg1);
   }
 
   // showToast("发送成功",2000,"success")
@@ -7677,6 +7680,12 @@ function showToast(arg1, arg2, arg3) {
 
 function hideToast(text, time, icon) {
   return uni.hideToast();
+}
+
+
+
+function showModal(object) {
+  return uni.showModal(object);
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
@@ -7715,6 +7724,7 @@ var _lang = __webpack_require__(/*! ./lang */ 21);Object.keys(_lang).forEach(fun
 var _common = __webpack_require__(/*! ./common */ 11);Object.keys(_common).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _common[key];} });});
 var _md = __webpack_require__(/*! ./md5 */ 22);Object.keys(_md).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _md[key];} });});
 var _layer = __webpack_require__(/*! ./layer */ 23);Object.keys(_layer).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _layer[key];} });});
+var _router = __webpack_require__(/*! ./router */ 28);Object.keys(_router).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _router[key];} });});
 
 /***/ }),
 /* 19 */
@@ -8731,6 +8741,120 @@ function getContainerHeight(selector, callback) {
   getRect(selector, function (rect) {
     callback(getWindowHeight() - rect.height - rect.top);
   });
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */
+/*!*****************************************!*\
+  !*** D:/github/uin-lss/utils/router.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.gotoSuccessPage = gotoSuccessPage;exports.gotoFailPage = gotoFailPage;exports.gotoPage = gotoPage;exports.getRouterPrevPage = getRouterPrevPage;var _lang = __webpack_require__(/*! ./lang */ 21);
+
+/**
+                                                                                                                                                                                                                                                                   * 去成功页面
+                                                                                                                                                                                                                                                                   */
+function gotoSuccessPage(args) {
+  gotoPage("/common/success/success?data=".concat(JSON.stringify(args)));
+}
+
+/**
+   * 失败页面
+   */
+function gotoFailPage(args) {
+  gotoPage("/common/error/error?data=".concat(JSON.stringify(args)));
+}
+
+/**
+   * 跳页面
+   * navigateTo 保留当前页面，跳页
+   * redirectTo 关闭当前页面，跳页，用于基本不重复的页面，比如注册流程
+   * reLaunch   关闭之前所有页面，一般用于注册完毕
+   * 
+   * 4种情况
+   * 1 gotoPage(url)
+   * 2 gotoPage(reLaunch,url)
+   * 3 gotoPage(url,2000)
+   * 4 gotoPage(reLaunch,url,2000)
+   **/
+function gotoPage(type, url, time) {
+
+  //如果是返回，带时间
+  if (type === "back") {
+    time = url;
+    if (time) {
+      setTimeout(function () {
+        uni.navigateBack({});
+      }, time);
+    } else {
+      uni.navigateBack({});
+    }
+    return;
+  }
+
+  //gotoPage(undefined,url)
+  if (!type && url) {
+    uni.navigateTo({
+      url: url });
+
+    return;
+  }
+
+  var length = arguments.length;
+
+
+  // gotoPage(url)
+  if (length === 1) {
+    uni.navigateTo({
+      url: type });
+
+    return;
+  }
+
+  //gotoPage(url,2000)
+  //gotoPage(reLaunch, url)
+  if (length === 2) {
+    //gotoPage(url,2000)
+    if (lang.isNumber(url)) {
+      setTimeout(function () {
+        uni.navigateTo({
+          url: type });
+
+      }, url);
+    } else {
+      //gotoPage(switchTab, url)
+      ///gotoPage(reLaunch, url)
+      wx[type || navigateTo]({
+        url: url });
+
+    }
+  }
+
+  // gotoPage(reLaunch,url,2000)
+  if (length === 3) {
+    setTimeout(function () {
+      wx[type]({
+        url: url });
+
+    }, time);
+  }
+}
+
+/**
+   * 获取上一个页面路由
+   */
+function getRouterPrevPage(serial) {
+  var pages = getCurrentPages();
+  serial = serial || 2;
+  return pages[pages.length - serial];
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

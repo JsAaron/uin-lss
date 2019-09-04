@@ -24,7 +24,7 @@ export function showToast(arg1, arg2, arg3) {
 		//如果是成功，带对象参数，支持回调
 		if (typeof arg2 === "object") {
 			let data = arg2
-			data.image = `/assets/images/icon/${arg1}.png`
+			data.image = `/static/icon/${arg1}.png`
 			return uni.showToast(data);
 		}
 
@@ -33,7 +33,7 @@ export function showToast(arg1, arg2, arg3) {
 			mask: true,
 			title: arg2,
 			icon: "cancel",
-			image: `/assets/images/icon/${arg1}.png`,
+			image: `/static/icon/${arg1}.png`,
 			duration: arg3 || 2000
 		});
 	}
@@ -42,8 +42,7 @@ export function showToast(arg1, arg2, arg3) {
 	//   title: '网络异常,语音播放无法正常使用',
 	// })
 	if (typeof arg1 === "object") {
-		let data = arg1
-		return uni.showToast(data);
+		return uni.showToast(arg1);
 	}
 
 	// showToast("发送成功",2000,"success")
@@ -57,4 +56,10 @@ export function showToast(arg1, arg2, arg3) {
 
 export function hideToast(text, time, icon) {
 	return uni.hideToast();
+}
+
+
+
+export function showModal(object){
+	return uni.showModal(object);
 }

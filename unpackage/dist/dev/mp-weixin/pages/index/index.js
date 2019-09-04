@@ -156,15 +156,36 @@ var util = _interopRequireWildcard(__webpack_require__(/*! @/utils */ 18));funct
 //
 //
 //
-/**
- * 检测用户权限，设置数据
- * 获取微信用户基本信息
- */function accreditUserInfo(success, fail) {util.checkAccredit('scope.userInfo').then(function () {util.getUserInfo().then(function (data) {success(data);});}).catch(fail);}var _default = { data: function data() {return { hasAdvert: true, //默认显示广告
+var app = getApp(); /**
+                     * 检测用户权限，设置数据
+                     * 获取微信用户基本信息
+                     */function accreditUserInfo(success, fail) {util.checkAccredit('scope.userInfo').then(function () {util.getUserInfo().then(function (data) {success(data);});}).catch(fail);} /**
+                                                                                                                                                                                                    * 检测用户定位
+                                                                                                                                                                                                    */function accreditUserLocation(success, fail) {util.detectAccredit('scope.userLocation').then(success).catch(function () {var data = {
+      content: '您未选择地理位置，我们无法为您提供服务！',
+      scope: 'scope.userLocation',
+      buttonText: '重新获取地理位置',
+      describe: '亲，我们未获得您的位置授权，将无法为您提供推荐的商圈以及相关的一些活动！' };
+
+    util.gotoPage("/common/accredit/accredit?data=".concat(JSON.stringify(data)));
+    fail && fail();
+  });
+}var _default =
+
+{
+  data: function data() {
+    return {
+      hasAdvert: true, //默认显示广告
       hasUserAccredit: true, //默认已授权
       userAccreditStyle: '' //授权点击样式
-    };}, onLoad: function onLoad(options) {var _this = this; //权限
-    accreditUserInfo(function (data) {
-      // app.globalData.userInfo = data;
+    };
+  },
+  onLoad: function onLoad(options) {var _this = this;
+    //权限
+    accreditUserInfo(
+    function (data) {
+      app.globalData.userInfo = data;
+      console.log(app);
     },
     function (e) {
       //未授权
@@ -174,16 +195,35 @@ var util = _interopRequireWildcard(__webpack_require__(/*! @/utils */ 18));funct
   },
   methods: {
     /**
-              * 获取用户授权数据
+              * 开始页面操作
               */
-    onGetUserAccredit: function onGetUserAccredit() {
+    nextProcess: function nextProcess() {var _this2 = this;
+      accreditUserLocation(
+      function () {},
+      function () {
+        _this2.data.action = 'accredit-location';
+      });
+
+    },
+
+    /**
+        * 获取用户授权数据
+        */
+    onGetUserAccredit: function onGetUserAccredit() {var _this3 = this;
       util.
       getUserInfo().
       then(function (userInfo) {
-        console.log(userInfo);
-        //app.globalData.userInfo = userInfo;
+        app.globalData.userInfo = userInfo;
+        _this3.hasUserAccredit = true;
+        _this3.nextProcess();
       }).
       catch(function () {
+        _this3.userAccreditStyle = false;
+        _this3.$api.showModal({
+          title: '温馨提示',
+          showCancel: false,
+          confirmText: '继续授权',
+          content: '亲！拒绝将无法进入哦！您确定这么做吗' });
 
       });
     },

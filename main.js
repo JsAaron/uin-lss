@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import App from './App'
 import {
+	gotoPage,
 	showBusy,
 	hideBusy,
 	showToast,
-	hideToast
+	hideToast,
+	showModal
 } from '@/utils/common'
 
 Vue.config.productionTip = false
@@ -13,7 +15,9 @@ Vue.prototype.$api = {
 	showBusy,
 	hideBusy,
 	showToast,
-	hideToast
+	hideToast,
+	showModal,
+	gotoPage
 }
 
 App.mpType = 'app'
