@@ -1,3 +1,14 @@
+.advert {
+  position: relative;
+}
+.advert swiper {
+    width: 100vw;
+    height: 100vh;
+}
+.advert .slide-image {
+    width: 100vw;
+    height: 100vh;
+}
 .user-accredit {
   position: absolute;
   z-index: 555;

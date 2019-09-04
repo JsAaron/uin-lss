@@ -1,8 +1,8 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],[
 /* 0 */
-/*!*************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/main.js ***!
-  \*************************************************/
+/*!*********************************!*\
+  !*** D:/github/uni-lss/main.js ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10,8 +10,9 @@
 /* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ 4);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
-var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 39));
-var _common = __webpack_require__(/*! @/utils/common */ 11);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 11));
+var _utils = __webpack_require__(/*! @/utils */ 22);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
 
 
 
@@ -24,12 +25,13 @@ _vue.default.config.productionTip = false;
 
 _vue.default.prototype.$store = _store.default;
 _vue.default.prototype.$api = {
-  showBusy: _common.showBusy,
-  hideBusy: _common.hideBusy,
-  showToast: _common.showToast,
-  hideToast: _common.hideToast,
-  showModal: _common.showModal,
-  gotoPage: _common.gotoPage };
+  showBusy: _utils.showBusy,
+  hideBusy: _utils.hideBusy,
+  showToast: _utils.showToast,
+  hideToast: _utils.hideToast,
+  showModal: _utils.showModal,
+  gotoPage: _utils.gotoPage,
+  accessLogin: _utils.accessLogin };
 
 
 
@@ -7497,9 +7499,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!****************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/pages.json ***!
-  \****************************************************/
+/*!************************************!*\
+  !*** D:/github/uni-lss/pages.json ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7619,1571 +7621,18 @@ function normalizeComponent (
 
 /***/ }),
 /* 11 */
-/*!*********************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/utils/common.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.showBusy = showBusy;exports.hideBusy = hideBusy;exports.showToast = showToast;exports.hideToast = hideToast;exports.showModal = showModal;
-function showBusy(title) {
-  uni.showLoading({
-    title: title || "载入中..." });
-
-}
-
-function hideBusy() {
-  uni.hideLoading();
-}
-
-/**
-   * 
-   * @param {*} arg1
-   * @param {*} arg2 
-   * @param {*} arg3 
-   */
-function showToast(arg1, arg2, arg3) {
-
-  // showToast("success","成功",20F00)
-  // showToast("fail","失败",2000)
-  if (arg1 === "success" || arg1 === "fail") {
-
-    //如果是成功，带对象参数，支持回调
-    if (typeof arg2 === "object") {
-      var data = arg2;
-      data.image = "/static/icon/".concat(arg1, ".png");
-      return uni.showToast(data);
-    }
-
-    //不带对象参数
-    return uni.showToast({
-      mask: true,
-      title: arg2,
-      icon: "cancel",
-      image: "/static/icon/".concat(arg1, ".png"),
-      duration: arg3 || 2000 });
-
-  }
-
-  // util.showToast({
-  //   title: '网络异常,语音播放无法正常使用',
-  // })
-  if (typeof arg1 === "object") {
-    return uni.showToast(arg1);
-  }
-
-  // showToast("发送成功",2000,"success")
-  return uni.showToast({
-    mask: true,
-    title: arg1,
-    icon: arg3 || "none",
-    duration: arg2 || 2000 });
-
-}
-
-function hideToast(text, time, icon) {
-  return uni.hideToast();
-}
-
-
-
-function showModal(object) {
-  return uni.showModal(object);
-}
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 12 */
-/*!**********************************************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/index/index.vue */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_index.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
-
-/***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */
-/*!********************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/utils/index.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });var _accredit = __webpack_require__(/*! ./accredit */ 19);Object.keys(_accredit).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _accredit[key];} });});
-var _lang = __webpack_require__(/*! ./lang */ 21);Object.keys(_lang).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _lang[key];} });});
-var _common = __webpack_require__(/*! ./common */ 11);Object.keys(_common).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _common[key];} });});
-var _md = __webpack_require__(/*! ./md5 */ 22);Object.keys(_md).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _md[key];} });});
-var _layer = __webpack_require__(/*! ./layer */ 23);Object.keys(_layer).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _layer[key];} });});
-var _router = __webpack_require__(/*! ./router */ 24);Object.keys(_router).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _router[key];} });});
-var _request = __webpack_require__(/*! ./request */ 38);Object.keys(_request).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _request[key];} });});
-
-/***/ }),
-/* 19 */
-/*!***********************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/utils/accredit.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.getWxOpenId = getWxOpenId;exports.getRegeditQrCode = getRegeditQrCode;exports.getShareQrCode = getShareQrCode;exports.getWinxinAvatarUrl = getWinxinAvatarUrl;exports.getPayQrCode = getPayQrCode;exports.checkAccredit = checkAccredit;exports.getUserInfo = getUserInfo;exports.detectAccredit = detectAccredit;exports.getLocationData = getLocationData;
-
-
-
-
-
-
-var _config = _interopRequireDefault(__webpack_require__(/*! @/config */ 20));
-var _common = __webpack_require__(/*! ./common.js */ 11);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
-                                                                                                                                    * @Description: In User Settings Edit
-                                                                                                                                    * @Author: your name
-                                                                                                                                    * @Date: 2019-07-22 16:59:41
-                                                                                                                                    * @LastEditTime: 2019-08-16 16:58:44
-                                                                                                                                    * @LastEditors: Please set LastEditors
-                                                                                                                                    */ /**
-                                                                                                                                        * 获取openid
-                                                                                                                                        */function getWxOpenId(device) {return new Promise(function (resolve, reject) {
-    uni.request({
-      url: _config.default.openIdUrl,
-      data: {
-        appid: device.appid,
-        secret: "",
-        js_code: device.code },
-
-      method: "GET",
-      success: resolve,
-      fail: reject });
-
-  });
-}
-
-/**
-   * 获取注册二维码
-   * @param
-   */
-function getRegeditQrCode(device) {
-  return new Promise(function (resolve, reject) {
-    console.log('device', device);
-    uni.request({
-      url: _config.default.registerQrCodeUrl,
-      data: {
-        appid: device.appid,
-        secret: device.secret,
-        js_code: device.code,
-        agentid: device.agentid },
-
-      method: "GET",
-      success: resolve,
-      fail: reject });
-
-  });
-}
-
-
-/**
-   * 商品分享二维码
-   */
-function getShareQrCode()
-
-
-
-
-{var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},device = _ref.device,agentidsp = _ref.agentidsp,goodsid = _ref.goodsid,fagentid = _ref.fagentid;
-  return new Promise(function (resolve, reject) {
-    uni.request({
-      url: _config.default.goodsQrCodeUrl,
-      data: {
-        agentidsp: agentidsp,
-        goodsid: goodsid,
-        fagentid: fagentid,
-        appid: device.appid,
-        secret: device.secret,
-        js_code: device.code,
-        agentid: device.agentid },
-
-      method: "GET",
-      success: resolve,
-      fail: reject });
-
-
-  });
-}
-
-
-
-/**
-   * 获取二维码
-   * solid 0 分享
-   * solid 1 付款
-   * @param
-   */
-var wxAvatarUrl = ""; //微信头像缓存
-function getWinxinAvatarUrl(avatarUrl) {
-  return new Promise(function (resolve, reject) {
-    if (wxAvatarUrl) {
-      resolve(wxAvatarUrl);
-    } else {
-      uni.request({
-        url: _config.default.weixin,
-        data: {
-          urls: String(avatarUrl) },
-
-        method: "GET",
-        success: function success(res) {
-          wxAvatarUrl = res.data.tgimg;
-          resolve(wxAvatarUrl);
-        },
-        fail: reject });
-
-    }
-  });
-}
-
-/**
-   * 获取付款二维码
-   */
-function getPayQrCode(device, agentname) {
-  return new Promise(function (resolve, reject) {
-    uni.request({
-      url: _config.default.payQrCodeUrl,
-      data: {
-        agentname: agentname,
-        appid: device.appid,
-        secret: device.secret,
-        js_code: device.code,
-        agentid: device.agentid },
-
-      method: "get",
-      success: resolve,
-      fail: reject });
-
-  });
-}
-
-/**
-   * 查看是否授权
-   * 查看授权
-   */
-function checkAccredit(scopeName) {
-  return new Promise(function (resolve, reject) {
-    uni.getSetting({
-      success: function success(res) {
-        if (res.authSetting[scopeName]) {
-          resolve();
-        } else {
-          reject();
-        }
-      },
-      fail: function fail() {
-        reject();
-      } });
-
-  });
-}
-
-/**
-   * 获取用户数据
-   */
-function getUserInfo() {
-  return new Promise(function (resolve, reject) {
-    uni.getUserInfo({
-      success: function success(res) {
-        resolve(res.userInfo);
-      },
-      fail: reject });
-
-  });
-}
-
-
-/**
-   * 提前向用户发起授权请求
-   */
-function requestAccredit(scopeName) {
-  return new Promise(function (resolve, reject) {
-    uni.authorize({
-      scope: scopeName,
-      success: function success(res) {
-        resolve();
-      },
-      fail: function fail() {
-        reject();
-      } });
-
-  });
-}
-
-/**
-   * 探测授权
-   * 1.scope.camera
-   * 2.因为有可能取消，所以支持递归检测
-   */
-function detectAccredit(scopeName) {
-  return new Promise(function (resolve, reject) {
-    checkAccredit(scopeName).then(resolve).catch(function () {
-      //未授权,发起新的授权请求
-      requestAccredit(scopeName).then(resolve).catch(reject);
-    });
-  });
-}
-
-/**
-   * 授权成功后
-   * 开始获取定位地址
-   * 1 支持地图定位
-   * 2 直接获取
-   */
-function getLocationData() {var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return new Promise(function (resolve, reject) {
-    var setComplete = function setComplete(res) {
-      if (!res) {
-        res = {};
-      }
-      if (!res.latitude || !res.longitude) {
-        (0, _common.showToast)("定位失败，请确定GPS功能是否打");
-        reject({});
-        return;
-      }
-      resolve(res);
-    };
-
-    // 地图方式
-    if (data.supportMap) {
-      uni.chooseLocation({
-        complete: setComplete });
-
-    } else {
-      //直接获取
-      uni.getLocation({
-        type: "wgs84",
-        complete: setComplete });
-
-    }
-  });
-}
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 20 */
-/*!***************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/config.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-var lcc = "https://lss.facess.net/lssSys";
-var pay = "https://lcc.facess.net/pay";
-var imgDomain = "https://img.facess.net/"; //加/
-
-var config = {
-
-  api: "appaccount/appbase",
-  /**
-                              * 获取openid请求
-                              */
-  openIdUrl: "".concat(lcc, "/loginAction!weixingcode2session.ilf"),
-
-  /**
-                                                                      * 人脸识别设备请求
-                                                                      */
-  deviceUrl: "".concat(pay, "/smallProgram"),
-  /**
-                                               * 普通请求
-                                               */
-  requestUrl: "".concat(lcc, "/loginAction!currency.ilf"),
-  /**
-                                                            * 加密请求
-                                                            */
-  md5Url: "".concat(lcc, "/lssSys/loginAction!des.ilf"),
-
-
-  /***
-                                                          * 图片域名
-                                                          */
-  imgDomain: imgDomain,
-
-  //=================== 二维码 =============================
-
-  /**
-   * 二维码请求地址
-   * 支付
-   */
-  payQrCodeUrl: "".concat(lcc, "/loginAction!weixingSolidImage.ilf"),
-  /**
-                                                                       * 商品二维码请求地址
-                                                                       * sp-2222222-111111-33333
-                                                                       * 分享
-                                                                       */
-  goodsQrCodeUrl: "".concat(lcc, "/loginAction!weixingShopImage.ilf"),
-  /**
-                                                                        * 推广海报,注册
-                                                                        * weixingRegisterImage的格式是zc-agentid
-                                                                        * 分享
-                                                                        */
-  registerQrCodeUrl: "".concat(lcc, "/loginAction!weixingRegisterImage.ilf"),
-  /** 
-                                                                               * 微信哦图像
-                                                                               */
-  weixin: "".concat(lcc, "/loginAction!weixingAutomatic.ilf") };
-
-
-
-module.exports = config;
-
-/***/ }),
-/* 21 */
-/*!*******************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/utils/lang.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.splitNumber = splitNumber;exports.removeSpace = removeSpace;exports.removeBorderSpace = removeBorderSpace;exports.formatNumber = formatNumber;exports.formatDate = formatDate;exports.getDayDiff = getDayDiff;exports.getDateTimeDiff = getDateTimeDiff;exports.getYearMonth = getYearMonth;exports.getToday = getToday;exports.getFirstDayMonth = getFirstDayMonth;exports.getPastHalfYear = getPastHalfYear;exports.converByte = converByte;exports.signStartTime = signStartTime;exports.signEndTime = signEndTime;exports.isEmpty = isEmpty;exports.phoneEncrypt = phoneEncrypt;exports.isInteger = isInteger;exports.isNumber = isNumber;exports.checkEmail = checkEmail;exports.def = def;exports.limitFloat = limitFloat; /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * @class String
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * 格式化字符串
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     */
-String.format = function (format) {
-  var args = Xut.toArray(arguments, 1);
-  return format.replace(/\{(\d+)\}/g, function (m, i) {
-    return args[i];
-  });
-};
-
-String.styleFormat = function (format) {
-  return format.replace(/\s+/g, " ");
-};
-
-/**
-    * 格式化日期时间
-    */
-Date.prototype.Format = function (fmt) {
-  //author: meizz
-  var o = {
-    "M+": this.getMonth() + 1, //月份
-    "d+": this.getDate(), //日
-    "h+": this.getHours(), //小时
-    "m+": this.getMinutes(), //分
-    "s+": this.getSeconds(), //秒
-    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-    S: this.getMilliseconds() //毫秒
-  };
-  if (/(y+)/.test(fmt))
-  fmt = fmt.replace(
-  RegExp.$1,
-  (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-
-  for (var k in o) {
-    if (new RegExp("(" + k + ")").test(fmt))
-    fmt = fmt.replace(
-    RegExp.$1,
-    RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));}
-
-  return fmt;
-};
-
-/**
-    * 分割数据，4位+空格
-    */
-function splitNumber(str, type) {
-  if (type === "identity") {
-    return str.replace(/\s/g, "").replace(/(\d{6})(?=\d)/g, "$1 ");
-  }
-  return str.replace(/\s/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
-}
-
-/**
-   * 移除所有空格
-   * @param {*} str
-   */
-function removeSpace(str) {
-  return str.replace(/\s+/g, "");
-}
-
-/**
-   * 移除前后空格
-   * @param {*} str
-   */
-function removeBorderSpace(str) {
-  return str.replace(/^\s+|\s+$/g, "");
-}
-
-function formatNumber(n) {
-  n = n.toString();
-  return n[1] ? n : "0" + n;
-}
-
-Date.prototype.addMonths = function (m) {
-  var temp = new Date(
-  this.getFullYear(),
-  this.getMonth(),
-  this.getDate(),
-  this.getHours(),
-  this.getMinutes(),
-  this.getSeconds(),
-  this.getMilliseconds());
-
-  temp.setMonth(temp.getMonth() + m);
-  return temp;
-};
-Date.prototype.addDays = function (d) {
-  var temp = new Date(
-  this.getFullYear(),
-  this.getMonth(),
-  this.getDate(),
-  this.getHours(),
-  this.getMinutes(),
-  this.getSeconds(),
-  this.getMilliseconds());
-
-  temp.setDate(temp.getDate() + d);
-  return temp;
-};
-Date.prototype.addHours = function (h) {
-  var temp = new Date(
-  this.getFullYear(),
-  this.getMonth(),
-  this.getDate(),
-  this.getHours(),
-  this.getMinutes(),
-  this.getSeconds(),
-  this.getMilliseconds());
-
-  temp.setHours(temp.getHours() + h);
-  return temp;
-};
-Date.prototype.addMinutes = function (m) {
-  var temp = new Date(
-  this.getFullYear(),
-  this.getMonth(),
-  this.getDate(),
-  this.getHours(),
-  this.getMinutes(),
-  this.getSeconds(),
-  this.getMilliseconds());
-
-  temp.setMinutes(temp.getMinutes() + m);
-  return temp;
-};
-
-/**
-    *config = {
-      addMonth :增加月份
-    }
-    * @param {*} date
-    */
-function formatDate(date) {var count = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  var year = date.getFullYear();
-  var month = date.getMonth() + count;
-  var day = date.getDate();
-  return [year, month, day].map(formatNumber).join("-");
-}
-
-/**
-   * 为了兼容ios
-   * 格式转化
-   * 1 时间戳 1561099150799 
-   * 2 日期  "2019-06-25 23:59:00"
-   */
-function convertFormat(date) {
-  date = date.valueOf();
-
-  //1561099150799
-  if (/^[0-9]*$/.test(date)) {
-    return Date.parse(new Date(date));
-  }
-
-  //"2019-06-25 23:59:00"\
-  //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式 
-  if (/[-:]/.test(date)) {
-    return Date.parse(date.replace(/-/g, "/"));
-  }
-
-  console.log('checkFormat不认识格式');
-}
-
-
-/**
-   * 获取日期差
-   */
-function getDayDiff(start, end) {
-  var stime = convertFormat(start);
-  var etime = convertFormat(end);
-  var usedTime = etime - stime; //两个时间戳相差的毫秒数
-  if (stime <= etime) {
-    return {
-      valid: true,
-      day: Math.floor(usedTime / (24 * 3600 * 1000)) };
-
-  } else {
-    return {
-      valid: false };
-
-  }
-}
-
-
-/**
-   * 获取日期时间差
-   * @param {} start 
-   * @param {*} end 
-   * @param {*} type 
-   */
-function getDateTimeDiff(start, end, type) {
-  var stime = convertFormat(start);
-  var etime = convertFormat(end);
-  var usedTime = etime - stime; //两个时间戳相差的毫秒数
-  var day = parseInt(usedTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数   
-  var hour = parseInt(usedTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时   
-  var minute = parseInt(usedTime / 1000 / 60 % 60, 10); //计算剩余的分钟   
-  // var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数   
-
-  if (etime < stime) {
-    return '';
-  }
-
-  if (type == 'day') {
-    return day + '天';
-  }
-
-  if (type === 'all') {
-    if (day && hour) {
-      return "".concat(day, "\u5929").concat(parseInt(hour), "\u5C0F\u65F6");
-    }
-    if (!day && hour && minute) {
-      return "".concat(hour, "\u5C0F\u65F6").concat(parseInt(minute), "\u5206\u949F");
-    }
-    if (!day && !hour && minute) {
-      return minute + '分钟';
-    }
-  } else {
-    if (day) {
-      return day + '天';
-    }
-    if (hour) {
-      return hour + '小时';
-    }
-    if (minute) {
-      return minute + '分钟';
-    }
-  }
-}
-
-/**
-   * 获取上一个月 30天前
-   */
-function getYearMonth(date) {
-  return formatDate(new Date(), 0);
-}
-
-/**
-   * 今天
-   */
-function getToday() {
-  return formatDate(new Date());
-}
-
-/**
-   * 获取当月第一天
-   */
-function getFirstDayMonth() {
-  var date = new Date();
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  return [year, month, 1].map(formatNumber).join("-");
-}
-
-/**
-   * 半年时间
-   */
-function getPastHalfYear() {
-  // 先获取当前时间
-  var curDate = new Date().getTime();
-  // 将半年的时间单位换算成毫秒
-  var halfYear = 365 / 2 * 24 * 3600 * 1000;
-  var pastResult = curDate - halfYear; // 半年前的时间（毫秒单位）
-
-  // 日期函数，定义起点为半年前
-  var pastDate = new Date(pastResult),
-  pastYear = pastDate.getFullYear(),
-  pastMonth = pastDate.getMonth() + 1,
-  pastDay = pastDate.getDate();
-
-  return [pastYear, pastMonth, pastDay].map(formatNumber).join("-");
-}
-
-
-/**
-   * 转化字节=》M
-   */
-function converByte(limit) {
-  var size = "";
-  if (limit < 0.1 * 1024) {
-    //如果小于0.1KB转化成B
-    size = limit.toFixed(2) + "B";
-  } else if (limit < 0.1 * 1024 * 1024) {
-    //如果小于0.1MB转化成KB
-    size = (limit / 1024).toFixed(2) + "KB";
-  } else if (limit < 0.1 * 1024 * 1024 * 1024) {
-    //如果小于0.1GB转化成MB
-    size = (limit / (1024 * 1024)).toFixed(2) + "MB";
-  } else {
-    //其他转化成GB
-    size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB";
-  }
-
-  var sizestr = size + "";
-  var len = sizestr.indexOf(".");
-  var dec = sizestr.substr(len + 1, 2);
-  if (dec == "00") {
-    //当小数点后为00时 去掉小数部分
-    return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
-  }
-  return sizestr;
-}
-
-function signStartTime() {
-  return new Date();
-}
-
-function signEndTime(startTime) {
-  var end = new Date();
-  var date3 = end.getTime() - startTime.getTime();
-  // //计算出相差天数
-  // var days = Math.floor(date3 / (24 * 3600 * 1000))
-  // //计算出小时数
-  // var leave1 = date3 % (24 * 3600 * 1000) //计算天数后剩余的毫秒数
-  // var hours = Math.floor(leave1 / (3600 * 1000))
-  // //计算相差分钟数
-  // var leave2 = leave1 % (3600 * 1000) //计算小时数后剩余的毫秒数
-  // var minutes = Math.floor(leave2 / (60 * 1000))
-  // //计算相差秒数
-  // var leave3 = leave2 % (60 * 1000) //计算分钟数后剩余的毫秒数
-  // var seconds = Math.round(leave3 / 1000)
-  return "\u7528\u65F6".concat(date3 / 1000, "\u79D2");
-}
-
-/**
-   * 判断为空
-   * 排除未定义
-   */
-function isEmpty(value) {
-  if (!value) {
-    return true;
-  }
-  if (value == undefined) {
-    return true;
-  }
-  if (value == "undefined") {
-    return true;
-  }
-}
-
-/**
-   * 电话加密
-   * 134****0000
-   */
-function phoneEncrypt(phone) {
-  return phone && phone.replace(/^(\d{3})\d{4}(\d+)/, "$1****$2");
-}
-
-
-
-/**
-   * 必须是整数
-   */
-function isInteger(num) {
-  if (!/(^[1-9]\d*$)/.test(num)) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-/**
-   * 是数字
-   * @param {*} obj 
-   */
-function isNumber(obj) {
-  return typeof obj === 'number' && !isNaN(obj);
-}
-
-/**
-   * 验证邮箱
-   * @param {*} text 
-   */
-function checkEmail(text) {
-  if (!text.match(/^\w+([._-]\w+)*@(\w+\.)+\w+$/)) {
-    return false;
-  }
-  return true;
-}
-
-
-/**
-   * 定义一个属性
-   */
-function def(obj, key, val) {var writable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-  Object.defineProperty(obj, key, {
-    value: val,
-    enumerable: true,
-    writable: writable,
-    configurable: true });
-
-}
-
-/**
-   *两位小数、不能0或.开头 只能输入数字和.
-   *
-   * @export
-   * @param {*} val
-   * @returns
-   */
-function limitFloat(val) {
-  var sNum = val.toString(); //先转换成字符串类型
-  if (sNum.indexOf('.') == 0) {//第一位就是 .
-    console.log('first str is .');
-    sNum = '0' + sNum;
-  }
-  sNum = sNum.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符
-  sNum = sNum.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
-  sNum = sNum.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-  sNum = sNum.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); //只能输入两个小数
-  //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-  if (sNum.indexOf(".") < 0 && sNum != "") {
-    sNum = parseFloat(sNum);
-  }
-  return sNum;
-}
-
-/***/ }),
-/* 22 */
-/*!******************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/utils/md5.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
- /* 
-               * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message 
-               * Digest Algorithm, as defined in RFC 1321. 
-               * Version 1.1 Copyright (C) Paul Johnston 1999 - 2002. 
-               * Code also contributed by Greg Holt 
-               */
-
-/* 
-                   * Add integers, wrapping at 2^32. This uses 16-bit operations internally 
-                   * to work around bugs in some JS interpreters. 
-                   */
-function safe_add(x, y) {
-  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-  return msw << 16 | lsw & 0xFFFF;
-}
-
-/* 
-   * Bitwise rotate a 32-bit number to the left. 
-   */
-function rol(num, cnt) {
-  return num << cnt | num >>> 32 - cnt;
-}
-
-/* 
-   * These functions implement the four basic operations the algorithm uses. 
-   */
-function cmn(q, a, b, x, s, t) {
-  return safe_add(rol(safe_add(safe_add(a, q), safe_add(x, t)), s), b);
-}
-function ff(a, b, c, d, x, s, t) {
-  return cmn(b & c | ~b & d, a, b, x, s, t);
-}
-function gg(a, b, c, d, x, s, t) {
-  return cmn(b & d | c & ~d, a, b, x, s, t);
-}
-function hh(a, b, c, d, x, s, t) {
-  return cmn(b ^ c ^ d, a, b, x, s, t);
-}
-function ii(a, b, c, d, x, s, t) {
-  return cmn(c ^ (b | ~d), a, b, x, s, t);
-}
-
-/* 
-   * Calculate the MD5 of an array of little-endian words, producing an array 
-   * of little-endian words. 
-   */
-function coreMD5(x) {
-  var a = 1732584193;
-  var b = -271733879;
-  var c = -1732584194;
-  var d = 271733878;
-
-  for (var i = 0; i < x.length; i += 16) {
-    var olda = a;
-    var oldb = b;
-    var oldc = c;
-    var oldd = d;
-
-    a = ff(a, b, c, d, x[i + 0], 7, -680876936);
-    d = ff(d, a, b, c, x[i + 1], 12, -389564586);
-    c = ff(c, d, a, b, x[i + 2], 17, 606105819);
-    b = ff(b, c, d, a, x[i + 3], 22, -1044525330);
-    a = ff(a, b, c, d, x[i + 4], 7, -176418897);
-    d = ff(d, a, b, c, x[i + 5], 12, 1200080426);
-    c = ff(c, d, a, b, x[i + 6], 17, -1473231341);
-    b = ff(b, c, d, a, x[i + 7], 22, -45705983);
-    a = ff(a, b, c, d, x[i + 8], 7, 1770035416);
-    d = ff(d, a, b, c, x[i + 9], 12, -1958414417);
-    c = ff(c, d, a, b, x[i + 10], 17, -42063);
-    b = ff(b, c, d, a, x[i + 11], 22, -1990404162);
-    a = ff(a, b, c, d, x[i + 12], 7, 1804603682);
-    d = ff(d, a, b, c, x[i + 13], 12, -40341101);
-    c = ff(c, d, a, b, x[i + 14], 17, -1502002290);
-    b = ff(b, c, d, a, x[i + 15], 22, 1236535329);
-
-    a = gg(a, b, c, d, x[i + 1], 5, -165796510);
-    d = gg(d, a, b, c, x[i + 6], 9, -1069501632);
-    c = gg(c, d, a, b, x[i + 11], 14, 643717713);
-    b = gg(b, c, d, a, x[i + 0], 20, -373897302);
-    a = gg(a, b, c, d, x[i + 5], 5, -701558691);
-    d = gg(d, a, b, c, x[i + 10], 9, 38016083);
-    c = gg(c, d, a, b, x[i + 15], 14, -660478335);
-    b = gg(b, c, d, a, x[i + 4], 20, -405537848);
-    a = gg(a, b, c, d, x[i + 9], 5, 568446438);
-    d = gg(d, a, b, c, x[i + 14], 9, -1019803690);
-    c = gg(c, d, a, b, x[i + 3], 14, -187363961);
-    b = gg(b, c, d, a, x[i + 8], 20, 1163531501);
-    a = gg(a, b, c, d, x[i + 13], 5, -1444681467);
-    d = gg(d, a, b, c, x[i + 2], 9, -51403784);
-    c = gg(c, d, a, b, x[i + 7], 14, 1735328473);
-    b = gg(b, c, d, a, x[i + 12], 20, -1926607734);
-
-    a = hh(a, b, c, d, x[i + 5], 4, -378558);
-    d = hh(d, a, b, c, x[i + 8], 11, -2022574463);
-    c = hh(c, d, a, b, x[i + 11], 16, 1839030562);
-    b = hh(b, c, d, a, x[i + 14], 23, -35309556);
-    a = hh(a, b, c, d, x[i + 1], 4, -1530992060);
-    d = hh(d, a, b, c, x[i + 4], 11, 1272893353);
-    c = hh(c, d, a, b, x[i + 7], 16, -155497632);
-    b = hh(b, c, d, a, x[i + 10], 23, -1094730640);
-    a = hh(a, b, c, d, x[i + 13], 4, 681279174);
-    d = hh(d, a, b, c, x[i + 0], 11, -358537222);
-    c = hh(c, d, a, b, x[i + 3], 16, -722521979);
-    b = hh(b, c, d, a, x[i + 6], 23, 76029189);
-    a = hh(a, b, c, d, x[i + 9], 4, -640364487);
-    d = hh(d, a, b, c, x[i + 12], 11, -421815835);
-    c = hh(c, d, a, b, x[i + 15], 16, 530742520);
-    b = hh(b, c, d, a, x[i + 2], 23, -995338651);
-
-    a = ii(a, b, c, d, x[i + 0], 6, -198630844);
-    d = ii(d, a, b, c, x[i + 7], 10, 1126891415);
-    c = ii(c, d, a, b, x[i + 14], 15, -1416354905);
-    b = ii(b, c, d, a, x[i + 5], 21, -57434055);
-    a = ii(a, b, c, d, x[i + 12], 6, 1700485571);
-    d = ii(d, a, b, c, x[i + 3], 10, -1894986606);
-    c = ii(c, d, a, b, x[i + 10], 15, -1051523);
-    b = ii(b, c, d, a, x[i + 1], 21, -2054922799);
-    a = ii(a, b, c, d, x[i + 8], 6, 1873313359);
-    d = ii(d, a, b, c, x[i + 15], 10, -30611744);
-    c = ii(c, d, a, b, x[i + 6], 15, -1560198380);
-    b = ii(b, c, d, a, x[i + 13], 21, 1309151649);
-    a = ii(a, b, c, d, x[i + 4], 6, -145523070);
-    d = ii(d, a, b, c, x[i + 11], 10, -1120210379);
-    c = ii(c, d, a, b, x[i + 2], 15, 718787259);
-    b = ii(b, c, d, a, x[i + 9], 21, -343485551);
-
-    a = safe_add(a, olda);
-    b = safe_add(b, oldb);
-    c = safe_add(c, oldc);
-    d = safe_add(d, oldd);
-  }
-  return [a, b, c, d];
-}
-
-/* 
-   * Convert an array of little-endian words to a hex string. 
-   */
-function binl2hex(binarray) {
-  var hex_tab = "0123456789abcdef";
-  var str = "";
-  for (var i = 0; i < binarray.length * 4; i++) {
-    str += hex_tab.charAt(binarray[i >> 2] >> i % 4 * 8 + 4 & 0xF) +
-    hex_tab.charAt(binarray[i >> 2] >> i % 4 * 8 & 0xF);
-  }
-  return str;
-}
-
-/* 
-   * Convert an array of little-endian words to a base64 encoded string. 
-   */
-function binl2b64(binarray) {
-  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  var str = "";
-  for (var i = 0; i < binarray.length * 32; i += 6) {
-    str += tab.charAt(binarray[i >> 5] << i % 32 & 0x3F |
-    binarray[i >> 5 + 1] >> 32 - i % 32 & 0x3F);
-  }
-  return str;
-}
-
-/* 
-   * Convert an 8-bit character string to a sequence of 16-word blocks, stored 
-   * as an array, and append appropriate padding for MD4/5 calculation. 
-   * If any of the characters are >255, the high byte is silently ignored. 
-   */
-function str2binl(str) {
-  var nblk = (str.length + 8 >> 6) + 1; // number of 16-word blocks  
-  var blks = new Array(nblk * 16);
-  for (var i = 0; i < nblk * 16; i++) {blks[i] = 0;}
-  for (var i = 0; i < str.length; i++) {
-    blks[i >> 2] |= (str.charCodeAt(i) & 0xFF) << i % 4 * 8;}
-  blks[i >> 2] |= 0x80 << i % 4 * 8;
-  blks[nblk * 16 - 2] = str.length * 8;
-  return blks;
-}
-
-/* 
-   * Convert a wide-character string to a sequence of 16-word blocks, stored as 
-   * an array, and append appropriate padding for MD4/5 calculation. 
-   */
-function strw2binl(str) {
-  var nblk = (str.length + 4 >> 5) + 1; // number of 16-word blocks  
-  var blks = new Array(nblk * 16);
-  for (var i = 0; i < nblk * 16; i++) {blks[i] = 0;}
-  for (var i = 0; i < str.length; i++) {
-    blks[i >> 1] |= str.charCodeAt(i) << i % 2 * 16;}
-  blks[i >> 1] |= 0x80 << i % 2 * 16;
-  blks[nblk * 16 - 2] = str.length * 16;
-  return blks;
-}
-
-/* 
-   * External interface 
-   */
-function hexMD5(str) {return binl2hex(coreMD5(str2binl(str)));}
-function hexMD5w(str) {return binl2hex(coreMD5(strw2binl(str)));}
-function b64MD5(str) {return binl2b64(coreMD5(str2binl(str)));}
-function b64MD5w(str) {return binl2b64(coreMD5(strw2binl(str)));}
-/* Backward compatibility */
-function calcMD5(str) {return binl2hex(coreMD5(str2binl(str)));}
-module.exports = {
-  hexMD5: hexMD5 };
-
-/***/ }),
-/* 23 */
-/*!********************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/utils/layer.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.getPlatform = getPlatform;exports.getWindowHeight = getWindowHeight;exports.getWindowWidth = getWindowWidth;exports.getRect = getRect;exports.getContainerHeight = getContainerHeight; /*
-                                                                                                                                                                                                                                                                           * @Author: Aaron
-                                                                                                                                                                                                                                                                           * @Date: 2019-07-26 22:25:29
-                                                                                                                                                                                                                                                                           * @LastEditors: OBKoro1
-                                                                                                                                                                                                                                                                           * @LastEditTime: 2019-08-11 12:10:34
-                                                                                                                                                                                                                                                                           * @Description: 
-                                                                                                                                                                                                                                                                           */
-function getSystemInfo(arg) {
-  var res = uni.getSystemInfoSync();
-  return res[arg];
-}
-
-/**
-   * 操作平台
-   * ios 
-   */
-function getPlatform() {
-  var plat = getSystemInfo("platform");
-  return plat;
-}
-
-/**
-   * 获取窗口高度
-   */
-function getWindowHeight() {
-  return getSystemInfo("windowHeight");
-}
-
-function getWindowWidth() {
-  return getSystemInfo("windowWidth");
-}
-
-
-/**
-   * 获取元素布局
-   * @param {*} e 
-   */
-function getRect(selector, callback) {
-  uni.createSelectorQuery().select(selector).boundingClientRect(function (rect) {
-    callback(rect);
-  }).exec();
-}
-
-/**
-   * 获取内容元素的高度
-   * 只有一个容器的情况下
-   * @param {*} e 
-   */
-function getContainerHeight(selector, callback) {
-  getRect(selector, function (rect) {
-    callback(getWindowHeight() - rect.height - rect.top);
-  });
-}
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 24 */
-/*!*********************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/utils/router.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.gotoSuccessPage = gotoSuccessPage;exports.gotoFailPage = gotoFailPage;exports.gotoPage = gotoPage;exports.getRouterPrevPage = getRouterPrevPage;var _lang = __webpack_require__(/*! ./lang */ 21);
-
-/**
-                                                                                                                                                                                                                                                                   * 去成功页面
-                                                                                                                                                                                                                                                                   */
-function gotoSuccessPage(args) {
-  gotoPage("/common/success/success?data=".concat(JSON.stringify(args)));
-}
-
-/**
-   * 失败页面
-   */
-function gotoFailPage(args) {
-  gotoPage("/common/error/error?data=".concat(JSON.stringify(args)));
-}
-
-/**
-   * 跳页面
-   * navigateTo 保留当前页面，跳页
-   * redirectTo 关闭当前页面，跳页，用于基本不重复的页面，比如注册流程
-   * reLaunch   关闭之前所有页面，一般用于注册完毕
-   * 
-   * 4种情况
-   * 1 gotoPage(url)
-   * 2 gotoPage(reLaunch,url)
-   * 3 gotoPage(url,2000)
-   * 4 gotoPage(reLaunch,url,2000)
-   **/
-function gotoPage(type, url, time) {
-
-  //如果是返回，带时间
-  if (type === "back") {
-    time = url;
-    if (time) {
-      setTimeout(function () {
-        uni.navigateBack({});
-      }, time);
-    } else {
-      uni.navigateBack({});
-    }
-    return;
-  }
-
-  //gotoPage(undefined,url)
-  if (!type && url) {
-    uni.navigateTo({
-      url: url });
-
-    return;
-  }
-
-  var length = arguments.length;
-
-
-  // gotoPage(url)
-  if (length === 1) {
-    uni.navigateTo({
-      url: type });
-
-    return;
-  }
-
-  //gotoPage(url,2000)
-  //gotoPage(reLaunch, url)
-  if (length === 2) {
-    //gotoPage(url,2000)
-    if (lang.isNumber(url)) {
-      setTimeout(function () {
-        uni.navigateTo({
-          url: type });
-
-      }, url);
-    } else {
-      //gotoPage(switchTab, url)
-      ///gotoPage(reLaunch, url)
-      wx[type || navigateTo]({
-        url: url });
-
-    }
-  }
-
-  // gotoPage(reLaunch,url,2000)
-  if (length === 3) {
-    setTimeout(function () {
-      wx[type]({
-        url: url });
-
-    }, time);
-  }
-}
-
-/**
-   * 获取上一个页面路由
-   */
-function getRouterPrevPage(serial) {
-  var pages = getCurrentPages();
-  serial = serial || 2;
-  return pages[pages.length - serial];
-}
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 25 */,
-/* 26 */,
-/* 27 */
-/*!*************************************************************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/main.js?{"page":"pages%2Fcommon%2Faccredit%2Faccredit"} ***!
-  \*************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _accredit = _interopRequireDefault(__webpack_require__(/*! ./pages/common/accredit/accredit.vue */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_accredit.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
-
-/***/ }),
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */
-/*!**********************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/utils/request.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.processData = processData;exports.ajax = ajax;exports.unifyAjax = unifyAjax;exports.deviceAjax = deviceAjax;exports.md5Ajax = md5Ajax;exports.getPhoneCode = getPhoneCode;exports.uploadFile = uploadFile;exports.getBankList = getBankList;exports.getBusinessList = getBusinessList;
-
-var _md = _interopRequireDefault(__webpack_require__(/*! ./md5 */ 22));
-var _config = _interopRequireDefault(__webpack_require__(/*! @/config */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-/**
-                                                                                                                                                         * 字段排序
-                                                                                                                                                         */
-var objKeySort = function objKeySort(arys) {
-  var newkey = Object.keys(arys).sort();
-  var newObj = {};
-  for (var i = 0; i < newkey.length; i++) {
-    newObj[newkey[i]] = arys[newkey[i]];
-  }
-  return newObj;
-};
-
-/**
-    * 返回通用校验字段
-    */
-function processData(data) {
-  data.seq = Date.parse(new Date()) + "";
-  data.timesamp = new Date().Format("yyyyMMddhhmmss");
-  data = objKeySort(data);
-  var md5Str = "";
-  var d2 = new Array();
-  for (var v in data) {
-    if (data[v] != null && data[v] != "") {
-      md5Str += "&" + v + "=" + data[v];
-    }
-  }
-  var sign = _md.default.hexMD5(data.seq + data.timesamp);
-  data.sign = sign;
-  return data;
-}
-
-/**
-   * 获取返回
-   */
-function ajax(config) {
-  return new Promise(function (resolve, reject) {
-    var ajax_data;
-    var header = {
-      "Content-Type": "application/x-www-form-urlencoded" };
-
-
-    //加密请求
-    if (config.md5Request) {
-      ajax_data = config.data;
-    } else {
-      //普通请求
-      ajax_data = {
-        reqJson: JSON.stringify(processData(config.data)),
-        api: globalConfig.api };
-
-    }
-    wx.request({
-      data: ajax_data,
-      url: config.url || globalConfig.requestUrl,
-      method: "POST",
-      header: header,
-      //return repsone.data {
-      //  {retCode: "0001", retMsg: "参数错误,请检查参数合法性"}
-      //}
-      success: resolve,
-      fail: reject });
-
-  });
-}
-
-/**
-   * 统一ajax调用
-   * 统一返回的判断
-   * items.data.retCode === "0000"
-   */
-function unifyAjax(config) {
-  return new Promise(function (resolve, reject) {
-    ajax(config).then(function (response) {
-      if (response.data.retCode == "0000") {
-        //统一判断成功
-        resolve(response);
-      } else {
-        reject(response);
-      }
-    }).catch(function (errResponse) {
-      reject(errResponse);
-    });
-  });
-}
-
-/**
-   * 设备使用接口
-   */
-function deviceAjax(config) {
-  return new Promise(function (resolve, reject) {
-    wx.request({
-      data: JSON.stringify(config.data),
-      url: config.url || globalConfig.deviceUrl,
-      method: "POST",
-      header: {
-        //发送json格式数据
-        "Content-type": "application/json; charset=utf-8" },
-
-      success: resolve,
-      fail: reject });
-
-  });
-}
-
-/**
-   * 服务器非对称加密
-   */
-function serviceMd5(config) {
-  return new Promise(function (resolve, reject) {
-    config.url = globalConfig.md5Url;
-    config.md5Request = true;
-    ajax(config).
-    then(resolve).
-    catch(reject);
-  });
-}
-
-/**
-   * 带md5的统一请求处理
-   * md5Config= ajaxConfig = {
-   *  encrypt :{}加密数据
-   *  request :{}请求的数据,正式发送，可以覆盖encrypt
-   *  funcode 识别码都需要发送
-   *  responseType  返回数据类型 "[array object]" 数组对象
-   * }
-   * return
-   *  resolve reject
-   */
-function md5Ajax(config) {
-  return new Promise(function (resolve, reject) {
-    var funcode = config.funcode;
-    //加密请求
-    serviceMd5(Object.assign(config.encrypt, {
-      //请求参数,合并funcode
-      funcode: funcode })).
-    then(function (md5Response) {
-      //合并md5Response.data参数
-      var ajaxData = {
-        data: Object.assign({}, md5Response.data, { funcode: funcode }) };
-
-      //混入请求的数据
-      if (config.request) {
-        //request的参数，可以覆盖md5Response.data数据
-        Object.assign(ajaxData.data, config.request);
-      }
-
-      //发送正式请求
-      unifyAjax(ajaxData).then(function (response) {
-        //返回对象合集
-        if (config.responseType === "[array object]") {
-          resolve([md5Response, response]);
-        } else {
-          //默认返回请求的
-          resolve(response);
-        }
-      }).catch(reject);
-
-    }).catch(function () {
-
-    });
-  });
-}
-
-/**
-   * 获取手机验证码
-   * 需要加密
-   * mobileno, vertype,
-   * funcode 可配置
-   */
-function getPhoneCode(config) {
-  return new Promise(function (resolve, reject) {
-    md5Ajax({
-      responseType: config.responseType,
-      funcode: config.funcode,
-      encrypt: {
-        data: {
-          mobileno: config.mobileno } },
-
-
-      request: {
-        vertype: config.vertype } }).
-
-    then(function (oc) {
-      resolve(oc);
-    }).catch(function (errResponse) {
-      reject(errResponse.data.retMsg);
-    });
-  });
-}
-
-/**
-   * 唯一标识
-   */
-function generateUUID() {
-  var d = new Date().getTime();
-  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (d + Math.random() * 16) % 16 | 0;
-    d = Math.floor(d / 16);
-    return (c == 'x' ? r : r & 0x3 | 0x8).toString(16);
-  });
-  return uuid;
-}
-
-/**
-   * 上传文件
-   */
-function uploadFile(config) {
-  return new Promise(function (resolve, reject) {
-    wx.request({
-      url: "https://lss.facess.net/card-server/oss/webSts",
-      method: "get",
-      success: function success(res) {
-        var filePath = config.filePath || config.path;
-        var t = filePath.split(".");
-        var imgType = t[t.length - 1];
-
-        var fileName = "".concat(generateUUID(), ".").concat(imgType);
-        var keyPath = "".concat(res.data.dir).concat(fileName);
-
-        wx.uploadFile({
-          url: res.data.host,
-          filePath: filePath,
-          name: 'file',
-          formData: {
-            name: "${name}",
-            key: keyPath,
-            policy: res.data.policy,
-            OSSAccessKeyId: res.data.accessid,
-            success_action_status: res.data.success_action_status,
-            signature: res.data.signature },
-
-          success: function success(res) {
-            resolve(fileName);
-          },
-          fail: reject });
-
-      },
-      fail: reject });
-
-
-  });
-
-}
-
-/**
-   * 获取银行列表
-   */
-function getBankList() {
-  return new Promise(function (resolve, reject) {
-    unifyAjax({
-      data: {
-        funcode: "0005" } }).
-
-    then(resolve).catch(reject);
-  });
-}
-
-/**
-   * 获取业务列表
-   */
-function getBusinessList() {
-  return new Promise(function (resolve, reject) {
-    unifyAjax({
-      data: {
-        funcode: "0018" } }).
-
-    then(resolve).catch(reject);
-  });
-}
-
-/***/ }),
-/* 39 */
-/*!********************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/store/index.js ***!
-  \********************************************************/
+/*!****************************************!*\
+  !*** D:/github/uni-lss/store/index.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 40));
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 12));
 
-var _app = _interopRequireDefault(__webpack_require__(/*! ./modules/app */ 41));
-var _getters = _interopRequireDefault(__webpack_require__(/*! ./getters */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _app = _interopRequireDefault(__webpack_require__(/*! ./modules/app */ 13));
+var _getters = _interopRequireDefault(__webpack_require__(/*! ./getters */ 14));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 _vue.default.use(_vuex.default);
 
 //这里到处，注意循环引用
@@ -9199,7 +7648,7 @@ var store = new _vuex.default.Store({
 store;exports.default = _default;
 
 /***/ }),
-/* 40 */
+/* 12 */
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!
   \********************************************/
@@ -10149,10 +8598,10 @@ var index_esm = {
 
 
 /***/ }),
-/* 41 */
-/*!**************************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/store/modules/app.js ***!
-  \**************************************************************/
+/* 13 */
+/*!**********************************************!*\
+  !*** D:/github/uni-lss/store/modules/app.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10199,10 +8648,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 app;exports.default = _default;
 
 /***/ }),
-/* 42 */
-/*!**********************************************************!*\
-  !*** /Users/wen/develop/github/uni-lss/store/getters.js ***!
-  \**********************************************************/
+/* 14 */
+/*!******************************************!*\
+  !*** D:/github/uni-lss/store/getters.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10210,10 +8659,2573 @@ app;exports.default = _default;
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var getters = {
 
   //app
-  appid: function appid(state) {return state.app.device.appid;},
-  code: function code(state) {return state.app.device.code;} };var _default =
+  $appid: function $appid(state) {return state.app.device.appid;},
+  $code: function $code(state) {return state.app.device.code;} };var _default =
 
 getters;exports.default = _default;
+
+/***/ }),
+/* 15 */
+/*!*****************************************!*\
+  !*** D:/github/uni-lss/utils/common.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.showBusy = showBusy;exports.hideBusy = hideBusy;exports.showToast = showToast;exports.hideToast = hideToast;exports.showModal = showModal;
+function showBusy(title) {
+  uni.showLoading({
+    title: title || "载入中..." });
+
+}
+
+function hideBusy() {
+  uni.hideLoading();
+}
+
+/**
+   * 
+   * @param {*} arg1
+   * @param {*} arg2 
+   * @param {*} arg3 
+   */
+function showToast(arg1, arg2, arg3) {
+
+  // showToast("success","成功",20F00)
+  // showToast("fail","失败",2000)
+  if (arg1 === "success" || arg1 === "fail") {
+
+    //如果是成功，带对象参数，支持回调
+    if (typeof arg2 === "object") {
+      var data = arg2;
+      data.image = "/static/icon/".concat(arg1, ".png");
+      return uni.showToast(data);
+    }
+
+    //不带对象参数
+    return uni.showToast({
+      mask: true,
+      title: arg2,
+      icon: "cancel",
+      image: "/static/icon/".concat(arg1, ".png"),
+      duration: arg3 || 2000 });
+
+  }
+
+  // util.showToast({
+  //   title: '网络异常,语音播放无法正常使用',
+  // })
+  if (typeof arg1 === "object") {
+    return uni.showToast(arg1);
+  }
+
+  // showToast("发送成功",2000,"success")
+  return uni.showToast({
+    mask: true,
+    title: arg1,
+    icon: arg3 || "none",
+    duration: arg2 || 2000 });
+
+}
+
+function hideToast(text, time, icon) {
+  return uni.hideToast();
+}
+
+
+
+function showModal(object) {
+  return uni.showModal(object);
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 16 */
+/*!******************************************************************!*\
+  !*** D:/github/uni-lss/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/index/index.vue */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_index.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */
+/*!****************************************!*\
+  !*** D:/github/uni-lss/utils/index.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });var _accredit = __webpack_require__(/*! ./accredit */ 23);Object.keys(_accredit).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _accredit[key];} });});
+var _lang = __webpack_require__(/*! ./lang */ 25);Object.keys(_lang).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _lang[key];} });});
+var _common = __webpack_require__(/*! ./common */ 15);Object.keys(_common).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _common[key];} });});
+var _md = __webpack_require__(/*! ./md5 */ 26);Object.keys(_md).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _md[key];} });});
+var _layer = __webpack_require__(/*! ./layer */ 27);Object.keys(_layer).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _layer[key];} });});
+var _router = __webpack_require__(/*! ./router */ 28);Object.keys(_router).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _router[key];} });});
+var _request = __webpack_require__(/*! ./request */ 29);Object.keys(_request).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _request[key];} });});
+var _login = __webpack_require__(/*! ./login */ 47);Object.keys(_login).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _login[key];} });});
+var _state = __webpack_require__(/*! ./state */ 48);Object.keys(_state).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _state[key];} });});
+var _countDown = __webpack_require__(/*! ./count-down */ 50);Object.keys(_countDown).forEach(function (key) {if (key === "default" || key === "__esModule") return;Object.defineProperty(exports, key, { enumerable: true, get: function get() {return _countDown[key];} });});
+
+/***/ }),
+/* 23 */
+/*!*******************************************!*\
+  !*** D:/github/uni-lss/utils/accredit.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.getWxOpenId = getWxOpenId;exports.getRegeditQrCode = getRegeditQrCode;exports.getShareQrCode = getShareQrCode;exports.getWinxinAvatarUrl = getWinxinAvatarUrl;exports.getPayQrCode = getPayQrCode;exports.checkAccredit = checkAccredit;exports.getUserInfo = getUserInfo;exports.detectAccredit = detectAccredit;exports.getLocationData = getLocationData;
+
+
+
+
+
+
+var _config = _interopRequireDefault(__webpack_require__(/*! @/common/config */ 49));
+var _common = __webpack_require__(/*! ./common.js */ 15);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
+                                                                                                                                    * @Description: In User Settings Edit
+                                                                                                                                    * @Author: your name
+                                                                                                                                    * @Date: 2019-07-22 16:59:41
+                                                                                                                                    * @LastEditTime: 2019-08-16 16:58:44
+                                                                                                                                    * @LastEditors: Please set LastEditors
+                                                                                                                                    */ /**
+                                                                                                                                        * 获取openid
+                                                                                                                                        */function getWxOpenId(device) {return new Promise(function (resolve, reject) {
+    uni.request({
+      url: _config.default.openIdUrl,
+      data: {
+        appid: device.appid,
+        secret: "",
+        js_code: device.code },
+
+      method: "GET",
+      success: resolve,
+      fail: reject });
+
+  });
+}
+
+/**
+   * 获取注册二维码
+   * @param
+   */
+function getRegeditQrCode(device) {
+  return new Promise(function (resolve, reject) {
+    console.log('device', device);
+    uni.request({
+      url: _config.default.registerQrCodeUrl,
+      data: {
+        appid: device.appid,
+        secret: device.secret,
+        js_code: device.code,
+        agentid: device.agentid },
+
+      method: "GET",
+      success: resolve,
+      fail: reject });
+
+  });
+}
+
+
+/**
+   * 商品分享二维码
+   */
+function getShareQrCode()
+
+
+
+
+{var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},device = _ref.device,agentidsp = _ref.agentidsp,goodsid = _ref.goodsid,fagentid = _ref.fagentid;
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: _config.default.goodsQrCodeUrl,
+      data: {
+        agentidsp: agentidsp,
+        goodsid: goodsid,
+        fagentid: fagentid,
+        appid: device.appid,
+        secret: device.secret,
+        js_code: device.code,
+        agentid: device.agentid },
+
+      method: "GET",
+      success: resolve,
+      fail: reject });
+
+
+  });
+}
+
+
+
+/**
+   * 获取二维码
+   * solid 0 分享
+   * solid 1 付款
+   * @param
+   */
+var wxAvatarUrl = ""; //微信头像缓存
+function getWinxinAvatarUrl(avatarUrl) {
+  return new Promise(function (resolve, reject) {
+    if (wxAvatarUrl) {
+      resolve(wxAvatarUrl);
+    } else {
+      uni.request({
+        url: _config.default.weixin,
+        data: {
+          urls: String(avatarUrl) },
+
+        method: "GET",
+        success: function success(res) {
+          wxAvatarUrl = res.data.tgimg;
+          resolve(wxAvatarUrl);
+        },
+        fail: reject });
+
+    }
+  });
+}
+
+/**
+   * 获取付款二维码
+   */
+function getPayQrCode(device, agentname) {
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: _config.default.payQrCodeUrl,
+      data: {
+        agentname: agentname,
+        appid: device.appid,
+        secret: device.secret,
+        js_code: device.code,
+        agentid: device.agentid },
+
+      method: "get",
+      success: resolve,
+      fail: reject });
+
+  });
+}
+
+/**
+   * 查看是否授权
+   * 查看授权
+   */
+function checkAccredit(scopeName) {
+  return new Promise(function (resolve, reject) {
+    uni.getSetting({
+      success: function success(res) {
+        if (res.authSetting[scopeName]) {
+          resolve();
+        } else {
+          reject();
+        }
+      },
+      fail: function fail() {
+        reject();
+      } });
+
+  });
+}
+
+/**
+   * 获取用户数据
+   */
+function getUserInfo() {
+  return new Promise(function (resolve, reject) {
+    uni.getUserInfo({
+      success: function success(res) {
+        resolve(res.userInfo);
+      },
+      fail: reject });
+
+  });
+}
+
+
+/**
+   * 提前向用户发起授权请求
+   */
+function requestAccredit(scopeName) {
+  return new Promise(function (resolve, reject) {
+    uni.authorize({
+      scope: scopeName,
+      success: function success(res) {
+        resolve();
+      },
+      fail: function fail() {
+        reject();
+      } });
+
+  });
+}
+
+/**
+   * 探测授权
+   * 1.scope.camera
+   * 2.因为有可能取消，所以支持递归检测
+   */
+function detectAccredit(scopeName) {
+  return new Promise(function (resolve, reject) {
+    checkAccredit(scopeName).then(resolve).catch(function () {
+      //未授权,发起新的授权请求
+      requestAccredit(scopeName).then(resolve).catch(reject);
+    });
+  });
+}
+
+/**
+   * 授权成功后
+   * 开始获取定位地址
+   * 1 支持地图定位
+   * 2 直接获取
+   */
+function getLocationData() {var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return new Promise(function (resolve, reject) {
+    var setComplete = function setComplete(res) {
+      if (!res) {
+        res = {};
+      }
+      if (!res.latitude || !res.longitude) {
+        (0, _common.showToast)("定位失败，请确定GPS功能是否打");
+        reject({});
+        return;
+      }
+      resolve(res);
+    };
+
+    // 地图方式
+    if (data.supportMap) {
+      uni.chooseLocation({
+        complete: setComplete });
+
+    } else {
+      //直接获取
+      uni.getLocation({
+        type: "wgs84",
+        complete: setComplete });
+
+    }
+  });
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 24 */
+/*!********************************************!*\
+  !*** D:/github/uni-lss/common/simulate.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+ /*
+               * @Author: Aaron
+               * @Date: 2019-08-11 11:49:22
+               * @LastEditors: OBKoro1
+               * @LastEditTime: 2019-08-27 22:22:25
+               * @Description: 
+               */
+function simulate() {
+
+  var common = {
+    "goods": "/common/goods/goods",
+    "settings": "/common/settings/settings",
+    "search": "/common/search/search",
+
+    // 注册
+    "merchant-login": "/common/login/login?pageType=merchant",
+    "user-login": "/common/login/login?pageType=user",
+    // 人脸
+    face: "/common/face-pay/face-pay",
+    //新增银行卡
+    "add-bank-card": "/common/add-bank-card/add-bank-card",
+    // 绑定快捷
+    success: "/common/success/success",
+    "fast-pay": "/common/fast-pay/fast-pay",
+    // 红包
+    "red-envelope-send": "/common/red-envelope/send/send",
+    "red-envelope-details": "/common/red-envelope/details/details",
+    "red-envelope-business": "/common/red-envelope/business/business",
+    // 密码
+    "change-password": "/common/safety-center/change-password/change-password",
+    "reset-password": "/common/safety-center/reset-password/reset-password",
+    //一分分享
+    "share-schedule": "/common/share-schedule/share-schedule" };
+
+
+  // return common["goods"]
+
+
+  var userUrls = {
+    //bar
+    "homepage": "/pages/tabbar/homepage/homepage",
+    "recommend": "/pages/tabbar/recommend/recommend",
+    "my": "/pages/tabbar/my/my",
+
+    // 注册
+    order: "/pages/user/pages/my/order/order",
+    face: "/pages/user/pages/register/face/face",
+    paypwd: "/pages/user/pages/register/paypwd/paypwd",
+
+    //首页
+    "homepage-discount": "/pages/user/pages/homepage/discount/discount",
+    "homepage-shop": "/pages/user/pages/homepage/shop/shop",
+    "homepage-details": "/pages/user/pages/homepage/details/details",
+
+    //个人中心
+    "my-wallet": "/pages/user/pages/my-wallet/my-wallet",
+    "my-wallet-details": "/pages/user/pages/my-wallet/details/details",
+    "my-withdraw-cash": "/pages/user/pages/my-wallet/withdraw-cash/withdraw-cash",
+
+    "my-team": "/pages/user/pages/my/team/team",
+    "my-partner": "/pages/user/pages/my/partner/partner",
+    "my-partner-order": "/pages/user/pages/my/partner/order/order",
+    "my-partner-pay": "/pages/user/pages/my/partner/pay/pay",
+
+    "my-share": "/pages/user/pages/my/share/share",
+    "my-share-operate": "/pages/user/pages/my/share/operate/operate",
+    "my-share-money": "/pages/user/pages/my/share/money/money",
+    "my-share-copywriter": "/pages/user/pages/my/share/copywriter/copywriter",
+
+    "my-client": "/pages/user/pages/my/client/client",
+    "my-referrer": "/pages/user/pages/my/referrer/referrer",
+    "my-certification": "/pages/user/pages/my/certification/certification",
+
+    "my-issue": "/pages/user/pages/my/issue/issue",
+    "my-rule": "/pages/user/pages/my/rule/rule",
+    "my-service": "/pages/user/pages/my/service/service",
+
+    "my-poster": "/pages/user/pages/my/poster/poster"
+
+
+
+    // return userUrls["order"]
+
+
+    //==============
+    // 商户端
+    //==============
+  };var merchantUrls = {
+    // 首页
+    "homepage": "/pages/merchant/pages/homepage/homepage",
+    "settings": "/pages/merchant/pages/settings/settings",
+    "commodity": "/pages/merchant/pages/commodity/commodity",
+    "commodity-add": "/pages/merchant/pages/commodity/add/add",
+    "commodity-modify": "/pages/merchant/pages/commodity/modify/modify",
+    "commodity-discount": "/pages/merchant/pages/commodity/discount/discount",
+    "shop": "/pages/merchant/pages/shop/shop",
+
+
+    device: "/pages/merchant/pages/device/device",
+    deviceAdvert: "/pages/merchant/pages/device/advert/advert",
+    payment: "/pages/merchant/pages/payment/payment",
+    paymentCode: "/pages/merchant/pages/payment-code/payment-code",
+    order: "/pages/merchant/pages/order/order" };
+
+  // return merchantUrls["commodity-add"]
+
+
+  var subpackageUrl = {
+    // 注册商户,我要开店
+    "shop-info": "/pages/subpackage/setup-shop/shop-info/shop-info",
+    certification: "/pages/subpackage/setup-shop/certification/certification",
+    protocol: "/pages/subpackage/setup-shop/protocol/protocol",
+    settlement: "/pages/subpackage/setup-shop/settlement/settlement",
+
+    "service-for": "/pages/subpackage/service-provider/apply-for/apply-for",
+    "service-protocol": "/pages/subpackage/service-provider/apply-protocol/apply-protocol",
+    "service-order": "/pages/subpackage/service-provider/apply-order/apply-order",
+    "service-pay": "/pages/subpackage/service-provider/apply-pay/apply-pay",
+    "service-data": "/pages/subpackage/service-provider/apply-data/apply-data",
+    "service-settlement": "/pages/subpackage/service-provider/apply-settlement/apply-settlement"
+
+
+
+    // return subpackageUrl["service-data"]
+  };
+}
+
+module.exports = simulate;
+
+/***/ }),
+/* 25 */
+/*!***************************************!*\
+  !*** D:/github/uni-lss/utils/lang.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.splitNumber = splitNumber;exports.removeSpace = removeSpace;exports.removeBorderSpace = removeBorderSpace;exports.formatNumber = formatNumber;exports.formatDate = formatDate;exports.getDayDiff = getDayDiff;exports.getDateTimeDiff = getDateTimeDiff;exports.getYearMonth = getYearMonth;exports.getToday = getToday;exports.getFirstDayMonth = getFirstDayMonth;exports.getPastHalfYear = getPastHalfYear;exports.converByte = converByte;exports.signStartTime = signStartTime;exports.signEndTime = signEndTime;exports.isEmpty = isEmpty;exports.phoneEncrypt = phoneEncrypt;exports.isInteger = isInteger;exports.isNumber = isNumber;exports.checkEmail = checkEmail;exports.def = def;exports.limitFloat = limitFloat; /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * @class String
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * 格式化字符串
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     */
+String.format = function (format) {
+  var args = Xut.toArray(arguments, 1);
+  return format.replace(/\{(\d+)\}/g, function (m, i) {
+    return args[i];
+  });
+};
+
+String.styleFormat = function (format) {
+  return format.replace(/\s+/g, " ");
+};
+
+/**
+    * 格式化日期时间
+    */
+Date.prototype.Format = function (fmt) {
+  //author: meizz
+  var o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    S: this.getMilliseconds() //毫秒
+  };
+  if (/(y+)/.test(fmt))
+  fmt = fmt.replace(
+  RegExp.$1,
+  (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt))
+    fmt = fmt.replace(
+    RegExp.$1,
+    RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));}
+
+  return fmt;
+};
+
+/**
+    * 分割数据，4位+空格
+    */
+function splitNumber(str, type) {
+  if (type === "identity") {
+    return str.replace(/\s/g, "").replace(/(\d{6})(?=\d)/g, "$1 ");
+  }
+  return str.replace(/\s/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
+}
+
+/**
+   * 移除所有空格
+   * @param {*} str
+   */
+function removeSpace(str) {
+  return str.replace(/\s+/g, "");
+}
+
+/**
+   * 移除前后空格
+   * @param {*} str
+   */
+function removeBorderSpace(str) {
+  return str.replace(/^\s+|\s+$/g, "");
+}
+
+function formatNumber(n) {
+  n = n.toString();
+  return n[1] ? n : "0" + n;
+}
+
+Date.prototype.addMonths = function (m) {
+  var temp = new Date(
+  this.getFullYear(),
+  this.getMonth(),
+  this.getDate(),
+  this.getHours(),
+  this.getMinutes(),
+  this.getSeconds(),
+  this.getMilliseconds());
+
+  temp.setMonth(temp.getMonth() + m);
+  return temp;
+};
+Date.prototype.addDays = function (d) {
+  var temp = new Date(
+  this.getFullYear(),
+  this.getMonth(),
+  this.getDate(),
+  this.getHours(),
+  this.getMinutes(),
+  this.getSeconds(),
+  this.getMilliseconds());
+
+  temp.setDate(temp.getDate() + d);
+  return temp;
+};
+Date.prototype.addHours = function (h) {
+  var temp = new Date(
+  this.getFullYear(),
+  this.getMonth(),
+  this.getDate(),
+  this.getHours(),
+  this.getMinutes(),
+  this.getSeconds(),
+  this.getMilliseconds());
+
+  temp.setHours(temp.getHours() + h);
+  return temp;
+};
+Date.prototype.addMinutes = function (m) {
+  var temp = new Date(
+  this.getFullYear(),
+  this.getMonth(),
+  this.getDate(),
+  this.getHours(),
+  this.getMinutes(),
+  this.getSeconds(),
+  this.getMilliseconds());
+
+  temp.setMinutes(temp.getMinutes() + m);
+  return temp;
+};
+
+/**
+    *config = {
+      addMonth :增加月份
+    }
+    * @param {*} date
+    */
+function formatDate(date) {var count = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var year = date.getFullYear();
+  var month = date.getMonth() + count;
+  var day = date.getDate();
+  return [year, month, day].map(formatNumber).join("-");
+}
+
+/**
+   * 为了兼容ios
+   * 格式转化
+   * 1 时间戳 1561099150799 
+   * 2 日期  "2019-06-25 23:59:00"
+   */
+function convertFormat(date) {
+  date = date.valueOf();
+
+  //1561099150799
+  if (/^[0-9]*$/.test(date)) {
+    return Date.parse(new Date(date));
+  }
+
+  //"2019-06-25 23:59:00"\
+  //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式 
+  if (/[-:]/.test(date)) {
+    return Date.parse(date.replace(/-/g, "/"));
+  }
+
+  console.log('checkFormat不认识格式');
+}
+
+
+/**
+   * 获取日期差
+   */
+function getDayDiff(start, end) {
+  var stime = convertFormat(start);
+  var etime = convertFormat(end);
+  var usedTime = etime - stime; //两个时间戳相差的毫秒数
+  if (stime <= etime) {
+    return {
+      valid: true,
+      day: Math.floor(usedTime / (24 * 3600 * 1000)) };
+
+  } else {
+    return {
+      valid: false };
+
+  }
+}
+
+
+/**
+   * 获取日期时间差
+   * @param {} start 
+   * @param {*} end 
+   * @param {*} type 
+   */
+function getDateTimeDiff(start, end, type) {
+  var stime = convertFormat(start);
+  var etime = convertFormat(end);
+  var usedTime = etime - stime; //两个时间戳相差的毫秒数
+  var day = parseInt(usedTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数   
+  var hour = parseInt(usedTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时   
+  var minute = parseInt(usedTime / 1000 / 60 % 60, 10); //计算剩余的分钟   
+  // var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数   
+
+  if (etime < stime) {
+    return '';
+  }
+
+  if (type == 'day') {
+    return day + '天';
+  }
+
+  if (type === 'all') {
+    if (day && hour) {
+      return "".concat(day, "\u5929").concat(parseInt(hour), "\u5C0F\u65F6");
+    }
+    if (!day && hour && minute) {
+      return "".concat(hour, "\u5C0F\u65F6").concat(parseInt(minute), "\u5206\u949F");
+    }
+    if (!day && !hour && minute) {
+      return minute + '分钟';
+    }
+  } else {
+    if (day) {
+      return day + '天';
+    }
+    if (hour) {
+      return hour + '小时';
+    }
+    if (minute) {
+      return minute + '分钟';
+    }
+  }
+}
+
+/**
+   * 获取上一个月 30天前
+   */
+function getYearMonth(date) {
+  return formatDate(new Date(), 0);
+}
+
+/**
+   * 今天
+   */
+function getToday() {
+  return formatDate(new Date());
+}
+
+/**
+   * 获取当月第一天
+   */
+function getFirstDayMonth() {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  return [year, month, 1].map(formatNumber).join("-");
+}
+
+/**
+   * 半年时间
+   */
+function getPastHalfYear() {
+  // 先获取当前时间
+  var curDate = new Date().getTime();
+  // 将半年的时间单位换算成毫秒
+  var halfYear = 365 / 2 * 24 * 3600 * 1000;
+  var pastResult = curDate - halfYear; // 半年前的时间（毫秒单位）
+
+  // 日期函数，定义起点为半年前
+  var pastDate = new Date(pastResult),
+  pastYear = pastDate.getFullYear(),
+  pastMonth = pastDate.getMonth() + 1,
+  pastDay = pastDate.getDate();
+
+  return [pastYear, pastMonth, pastDay].map(formatNumber).join("-");
+}
+
+
+/**
+   * 转化字节=》M
+   */
+function converByte(limit) {
+  var size = "";
+  if (limit < 0.1 * 1024) {
+    //如果小于0.1KB转化成B
+    size = limit.toFixed(2) + "B";
+  } else if (limit < 0.1 * 1024 * 1024) {
+    //如果小于0.1MB转化成KB
+    size = (limit / 1024).toFixed(2) + "KB";
+  } else if (limit < 0.1 * 1024 * 1024 * 1024) {
+    //如果小于0.1GB转化成MB
+    size = (limit / (1024 * 1024)).toFixed(2) + "MB";
+  } else {
+    //其他转化成GB
+    size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB";
+  }
+
+  var sizestr = size + "";
+  var len = sizestr.indexOf(".");
+  var dec = sizestr.substr(len + 1, 2);
+  if (dec == "00") {
+    //当小数点后为00时 去掉小数部分
+    return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
+  }
+  return sizestr;
+}
+
+function signStartTime() {
+  return new Date();
+}
+
+function signEndTime(startTime) {
+  var end = new Date();
+  var date3 = end.getTime() - startTime.getTime();
+  // //计算出相差天数
+  // var days = Math.floor(date3 / (24 * 3600 * 1000))
+  // //计算出小时数
+  // var leave1 = date3 % (24 * 3600 * 1000) //计算天数后剩余的毫秒数
+  // var hours = Math.floor(leave1 / (3600 * 1000))
+  // //计算相差分钟数
+  // var leave2 = leave1 % (3600 * 1000) //计算小时数后剩余的毫秒数
+  // var minutes = Math.floor(leave2 / (60 * 1000))
+  // //计算相差秒数
+  // var leave3 = leave2 % (60 * 1000) //计算分钟数后剩余的毫秒数
+  // var seconds = Math.round(leave3 / 1000)
+  return "\u7528\u65F6".concat(date3 / 1000, "\u79D2");
+}
+
+/**
+   * 判断为空
+   * 排除未定义
+   */
+function isEmpty(value) {
+  if (!value) {
+    return true;
+  }
+  if (value == undefined) {
+    return true;
+  }
+  if (value == "undefined") {
+    return true;
+  }
+}
+
+/**
+   * 电话加密
+   * 134****0000
+   */
+function phoneEncrypt(phone) {
+  return phone && phone.replace(/^(\d{3})\d{4}(\d+)/, "$1****$2");
+}
+
+
+
+/**
+   * 必须是整数
+   */
+function isInteger(num) {
+  if (!/(^[1-9]\d*$)/.test(num)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/**
+   * 是数字
+   * @param {*} obj 
+   */
+function isNumber(obj) {
+  return typeof obj === 'number' && !isNaN(obj);
+}
+
+/**
+   * 验证邮箱
+   * @param {*} text 
+   */
+function checkEmail(text) {
+  if (!text.match(/^\w+([._-]\w+)*@(\w+\.)+\w+$/)) {
+    return false;
+  }
+  return true;
+}
+
+
+/**
+   * 定义一个属性
+   */
+function def(obj, key, val) {var writable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+  Object.defineProperty(obj, key, {
+    value: val,
+    enumerable: true,
+    writable: writable,
+    configurable: true });
+
+}
+
+/**
+   *两位小数、不能0或.开头 只能输入数字和.
+   *
+   * @export
+   * @param {*} val
+   * @returns
+   */
+function limitFloat(val) {
+  var sNum = val.toString(); //先转换成字符串类型
+  if (sNum.indexOf('.') == 0) {//第一位就是 .
+    console.log('first str is .');
+    sNum = '0' + sNum;
+  }
+  sNum = sNum.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符
+  sNum = sNum.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+  sNum = sNum.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+  sNum = sNum.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+  //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+  if (sNum.indexOf(".") < 0 && sNum != "") {
+    sNum = parseFloat(sNum);
+  }
+  return sNum;
+}
+
+/***/ }),
+/* 26 */
+/*!**************************************!*\
+  !*** D:/github/uni-lss/utils/md5.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+ /* 
+               * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message 
+               * Digest Algorithm, as defined in RFC 1321. 
+               * Version 1.1 Copyright (C) Paul Johnston 1999 - 2002. 
+               * Code also contributed by Greg Holt 
+               */
+
+/* 
+                   * Add integers, wrapping at 2^32. This uses 16-bit operations internally 
+                   * to work around bugs in some JS interpreters. 
+                   */
+function safe_add(x, y) {
+  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+  return msw << 16 | lsw & 0xFFFF;
+}
+
+/* 
+   * Bitwise rotate a 32-bit number to the left. 
+   */
+function rol(num, cnt) {
+  return num << cnt | num >>> 32 - cnt;
+}
+
+/* 
+   * These functions implement the four basic operations the algorithm uses. 
+   */
+function cmn(q, a, b, x, s, t) {
+  return safe_add(rol(safe_add(safe_add(a, q), safe_add(x, t)), s), b);
+}
+function ff(a, b, c, d, x, s, t) {
+  return cmn(b & c | ~b & d, a, b, x, s, t);
+}
+function gg(a, b, c, d, x, s, t) {
+  return cmn(b & d | c & ~d, a, b, x, s, t);
+}
+function hh(a, b, c, d, x, s, t) {
+  return cmn(b ^ c ^ d, a, b, x, s, t);
+}
+function ii(a, b, c, d, x, s, t) {
+  return cmn(c ^ (b | ~d), a, b, x, s, t);
+}
+
+/* 
+   * Calculate the MD5 of an array of little-endian words, producing an array 
+   * of little-endian words. 
+   */
+function coreMD5(x) {
+  var a = 1732584193;
+  var b = -271733879;
+  var c = -1732584194;
+  var d = 271733878;
+
+  for (var i = 0; i < x.length; i += 16) {
+    var olda = a;
+    var oldb = b;
+    var oldc = c;
+    var oldd = d;
+
+    a = ff(a, b, c, d, x[i + 0], 7, -680876936);
+    d = ff(d, a, b, c, x[i + 1], 12, -389564586);
+    c = ff(c, d, a, b, x[i + 2], 17, 606105819);
+    b = ff(b, c, d, a, x[i + 3], 22, -1044525330);
+    a = ff(a, b, c, d, x[i + 4], 7, -176418897);
+    d = ff(d, a, b, c, x[i + 5], 12, 1200080426);
+    c = ff(c, d, a, b, x[i + 6], 17, -1473231341);
+    b = ff(b, c, d, a, x[i + 7], 22, -45705983);
+    a = ff(a, b, c, d, x[i + 8], 7, 1770035416);
+    d = ff(d, a, b, c, x[i + 9], 12, -1958414417);
+    c = ff(c, d, a, b, x[i + 10], 17, -42063);
+    b = ff(b, c, d, a, x[i + 11], 22, -1990404162);
+    a = ff(a, b, c, d, x[i + 12], 7, 1804603682);
+    d = ff(d, a, b, c, x[i + 13], 12, -40341101);
+    c = ff(c, d, a, b, x[i + 14], 17, -1502002290);
+    b = ff(b, c, d, a, x[i + 15], 22, 1236535329);
+
+    a = gg(a, b, c, d, x[i + 1], 5, -165796510);
+    d = gg(d, a, b, c, x[i + 6], 9, -1069501632);
+    c = gg(c, d, a, b, x[i + 11], 14, 643717713);
+    b = gg(b, c, d, a, x[i + 0], 20, -373897302);
+    a = gg(a, b, c, d, x[i + 5], 5, -701558691);
+    d = gg(d, a, b, c, x[i + 10], 9, 38016083);
+    c = gg(c, d, a, b, x[i + 15], 14, -660478335);
+    b = gg(b, c, d, a, x[i + 4], 20, -405537848);
+    a = gg(a, b, c, d, x[i + 9], 5, 568446438);
+    d = gg(d, a, b, c, x[i + 14], 9, -1019803690);
+    c = gg(c, d, a, b, x[i + 3], 14, -187363961);
+    b = gg(b, c, d, a, x[i + 8], 20, 1163531501);
+    a = gg(a, b, c, d, x[i + 13], 5, -1444681467);
+    d = gg(d, a, b, c, x[i + 2], 9, -51403784);
+    c = gg(c, d, a, b, x[i + 7], 14, 1735328473);
+    b = gg(b, c, d, a, x[i + 12], 20, -1926607734);
+
+    a = hh(a, b, c, d, x[i + 5], 4, -378558);
+    d = hh(d, a, b, c, x[i + 8], 11, -2022574463);
+    c = hh(c, d, a, b, x[i + 11], 16, 1839030562);
+    b = hh(b, c, d, a, x[i + 14], 23, -35309556);
+    a = hh(a, b, c, d, x[i + 1], 4, -1530992060);
+    d = hh(d, a, b, c, x[i + 4], 11, 1272893353);
+    c = hh(c, d, a, b, x[i + 7], 16, -155497632);
+    b = hh(b, c, d, a, x[i + 10], 23, -1094730640);
+    a = hh(a, b, c, d, x[i + 13], 4, 681279174);
+    d = hh(d, a, b, c, x[i + 0], 11, -358537222);
+    c = hh(c, d, a, b, x[i + 3], 16, -722521979);
+    b = hh(b, c, d, a, x[i + 6], 23, 76029189);
+    a = hh(a, b, c, d, x[i + 9], 4, -640364487);
+    d = hh(d, a, b, c, x[i + 12], 11, -421815835);
+    c = hh(c, d, a, b, x[i + 15], 16, 530742520);
+    b = hh(b, c, d, a, x[i + 2], 23, -995338651);
+
+    a = ii(a, b, c, d, x[i + 0], 6, -198630844);
+    d = ii(d, a, b, c, x[i + 7], 10, 1126891415);
+    c = ii(c, d, a, b, x[i + 14], 15, -1416354905);
+    b = ii(b, c, d, a, x[i + 5], 21, -57434055);
+    a = ii(a, b, c, d, x[i + 12], 6, 1700485571);
+    d = ii(d, a, b, c, x[i + 3], 10, -1894986606);
+    c = ii(c, d, a, b, x[i + 10], 15, -1051523);
+    b = ii(b, c, d, a, x[i + 1], 21, -2054922799);
+    a = ii(a, b, c, d, x[i + 8], 6, 1873313359);
+    d = ii(d, a, b, c, x[i + 15], 10, -30611744);
+    c = ii(c, d, a, b, x[i + 6], 15, -1560198380);
+    b = ii(b, c, d, a, x[i + 13], 21, 1309151649);
+    a = ii(a, b, c, d, x[i + 4], 6, -145523070);
+    d = ii(d, a, b, c, x[i + 11], 10, -1120210379);
+    c = ii(c, d, a, b, x[i + 2], 15, 718787259);
+    b = ii(b, c, d, a, x[i + 9], 21, -343485551);
+
+    a = safe_add(a, olda);
+    b = safe_add(b, oldb);
+    c = safe_add(c, oldc);
+    d = safe_add(d, oldd);
+  }
+  return [a, b, c, d];
+}
+
+/* 
+   * Convert an array of little-endian words to a hex string. 
+   */
+function binl2hex(binarray) {
+  var hex_tab = "0123456789abcdef";
+  var str = "";
+  for (var i = 0; i < binarray.length * 4; i++) {
+    str += hex_tab.charAt(binarray[i >> 2] >> i % 4 * 8 + 4 & 0xF) +
+    hex_tab.charAt(binarray[i >> 2] >> i % 4 * 8 & 0xF);
+  }
+  return str;
+}
+
+/* 
+   * Convert an array of little-endian words to a base64 encoded string. 
+   */
+function binl2b64(binarray) {
+  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  var str = "";
+  for (var i = 0; i < binarray.length * 32; i += 6) {
+    str += tab.charAt(binarray[i >> 5] << i % 32 & 0x3F |
+    binarray[i >> 5 + 1] >> 32 - i % 32 & 0x3F);
+  }
+  return str;
+}
+
+/* 
+   * Convert an 8-bit character string to a sequence of 16-word blocks, stored 
+   * as an array, and append appropriate padding for MD4/5 calculation. 
+   * If any of the characters are >255, the high byte is silently ignored. 
+   */
+function str2binl(str) {
+  var nblk = (str.length + 8 >> 6) + 1; // number of 16-word blocks  
+  var blks = new Array(nblk * 16);
+  for (var i = 0; i < nblk * 16; i++) {blks[i] = 0;}
+  for (var i = 0; i < str.length; i++) {
+    blks[i >> 2] |= (str.charCodeAt(i) & 0xFF) << i % 4 * 8;}
+  blks[i >> 2] |= 0x80 << i % 4 * 8;
+  blks[nblk * 16 - 2] = str.length * 8;
+  return blks;
+}
+
+/* 
+   * Convert a wide-character string to a sequence of 16-word blocks, stored as 
+   * an array, and append appropriate padding for MD4/5 calculation. 
+   */
+function strw2binl(str) {
+  var nblk = (str.length + 4 >> 5) + 1; // number of 16-word blocks  
+  var blks = new Array(nblk * 16);
+  for (var i = 0; i < nblk * 16; i++) {blks[i] = 0;}
+  for (var i = 0; i < str.length; i++) {
+    blks[i >> 1] |= str.charCodeAt(i) << i % 2 * 16;}
+  blks[i >> 1] |= 0x80 << i % 2 * 16;
+  blks[nblk * 16 - 2] = str.length * 16;
+  return blks;
+}
+
+/* 
+   * External interface 
+   */
+function hexMD5(str) {return binl2hex(coreMD5(str2binl(str)));}
+function hexMD5w(str) {return binl2hex(coreMD5(strw2binl(str)));}
+function b64MD5(str) {return binl2b64(coreMD5(str2binl(str)));}
+function b64MD5w(str) {return binl2b64(coreMD5(strw2binl(str)));}
+/* Backward compatibility */
+function calcMD5(str) {return binl2hex(coreMD5(str2binl(str)));}
+module.exports = {
+  hexMD5: hexMD5 };
+
+/***/ }),
+/* 27 */
+/*!****************************************!*\
+  !*** D:/github/uni-lss/utils/layer.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.getPlatform = getPlatform;exports.getWindowHeight = getWindowHeight;exports.getWindowWidth = getWindowWidth;exports.getRect = getRect;exports.getContainerHeight = getContainerHeight; /*
+                                                                                                                                                                                                                                                                           * @Author: Aaron
+                                                                                                                                                                                                                                                                           * @Date: 2019-07-26 22:25:29
+                                                                                                                                                                                                                                                                           * @LastEditors: OBKoro1
+                                                                                                                                                                                                                                                                           * @LastEditTime: 2019-08-11 12:10:34
+                                                                                                                                                                                                                                                                           * @Description: 
+                                                                                                                                                                                                                                                                           */
+function getSystemInfo(arg) {
+  var res = uni.getSystemInfoSync();
+  return res[arg];
+}
+
+/**
+   * 操作平台
+   * ios 
+   */
+function getPlatform() {
+  var plat = getSystemInfo("platform");
+  return plat;
+}
+
+/**
+   * 获取窗口高度
+   */
+function getWindowHeight() {
+  return getSystemInfo("windowHeight");
+}
+
+function getWindowWidth() {
+  return getSystemInfo("windowWidth");
+}
+
+
+/**
+   * 获取元素布局
+   * @param {*} e 
+   */
+function getRect(selector, callback) {
+  uni.createSelectorQuery().select(selector).boundingClientRect(function (rect) {
+    callback(rect);
+  }).exec();
+}
+
+/**
+   * 获取内容元素的高度
+   * 只有一个容器的情况下
+   * @param {*} e 
+   */
+function getContainerHeight(selector, callback) {
+  getRect(selector, function (rect) {
+    callback(getWindowHeight() - rect.height - rect.top);
+  });
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 28 */
+/*!*****************************************!*\
+  !*** D:/github/uni-lss/utils/router.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.gotoSuccessPage = gotoSuccessPage;exports.gotoFailPage = gotoFailPage;exports.gotoPage = gotoPage;exports.getRouterPrevPage = getRouterPrevPage;var _lang = __webpack_require__(/*! ./lang */ 25);
+
+/**
+                                                                                                                                                                                                                                                                   * 去成功页面
+                                                                                                                                                                                                                                                                   */
+function gotoSuccessPage(args) {
+  gotoPage("/common/success/success?data=".concat(JSON.stringify(args)));
+}
+
+/**
+   * 失败页面
+   */
+function gotoFailPage(args) {
+  gotoPage("/common/error/error?data=".concat(JSON.stringify(args)));
+}
+
+/**
+   * 跳页面
+   * navigateTo 保留当前页面，跳页
+   * redirectTo 关闭当前页面，跳页，用于基本不重复的页面，比如注册流程
+   * reLaunch   关闭之前所有页面，一般用于注册完毕
+   * 
+   * 4种情况
+   * 1 gotoPage(url)
+   * 2 gotoPage(reLaunch,url)
+   * 3 gotoPage(url,2000)
+   * 4 gotoPage(reLaunch,url,2000)
+   **/
+function gotoPage(type, url, time) {
+
+  //如果是返回，带时间
+  if (type === "back") {
+    time = url;
+    if (time) {
+      setTimeout(function () {
+        uni.navigateBack({});
+      }, time);
+    } else {
+      uni.navigateBack({});
+    }
+    return;
+  }
+
+  //gotoPage(undefined,url)
+  if (!type && url) {
+    uni.navigateTo({
+      url: url });
+
+    return;
+  }
+
+  var length = arguments.length;
+
+
+  // gotoPage(url)
+  if (length === 1) {
+    uni.navigateTo({
+      url: type });
+
+    return;
+  }
+
+  //gotoPage(url,2000)
+  //gotoPage(reLaunch, url)
+  if (length === 2) {
+    //gotoPage(url,2000)
+    if (lang.isNumber(url)) {
+      setTimeout(function () {
+        uni.navigateTo({
+          url: type });
+
+      }, url);
+    } else {
+      //gotoPage(switchTab, url)
+      ///gotoPage(reLaunch, url)
+      wx[type || navigateTo]({
+        url: url });
+
+    }
+  }
+
+  // gotoPage(reLaunch,url,2000)
+  if (length === 3) {
+    setTimeout(function () {
+      wx[type]({
+        url: url });
+
+    }, time);
+  }
+}
+
+/**
+   * 获取上一个页面路由
+   */
+function getRouterPrevPage(serial) {
+  var pages = getCurrentPages();
+  serial = serial || 2;
+  return pages[pages.length - serial];
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 29 */
+/*!******************************************!*\
+  !*** D:/github/uni-lss/utils/request.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.processData = processData;exports.ajax = ajax;exports.unifyAjax = unifyAjax;exports.deviceAjax = deviceAjax;exports.md5Ajax = md5Ajax;exports.getPhoneCode = getPhoneCode;exports.uploadFile = uploadFile;exports.getBankList = getBankList;exports.getBusinessList = getBusinessList;
+
+var _md = _interopRequireDefault(__webpack_require__(/*! ./md5 */ 26));
+var _config = _interopRequireDefault(__webpack_require__(/*! @/common/config */ 49));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+/**
+                                                                                                                                                                * 字段排序
+                                                                                                                                                                */
+var objKeySort = function objKeySort(arys) {
+  var newkey = Object.keys(arys).sort();
+  var newObj = {};
+  for (var i = 0; i < newkey.length; i++) {
+    newObj[newkey[i]] = arys[newkey[i]];
+  }
+  return newObj;
+};
+
+/**
+    * 返回通用校验字段
+    */
+function processData(data) {
+  data.seq = Date.parse(new Date()) + "";
+  data.timesamp = new Date().Format("yyyyMMddhhmmss");
+  data = objKeySort(data);
+  var md5Str = "";
+  var d2 = new Array();
+  for (var v in data) {
+    if (data[v] != null && data[v] != "") {
+      md5Str += "&" + v + "=" + data[v];
+    }
+  }
+  var sign = _md.default.hexMD5(data.seq + data.timesamp);
+  data.sign = sign;
+  return data;
+}
+
+/**
+   * 获取返回
+   */
+function ajax(config) {
+  return new Promise(function (resolve, reject) {
+    var ajax_data;
+    var header = {
+      "Content-Type": "application/x-www-form-urlencoded" };
+
+
+    //加密请求
+    if (config.md5Request) {
+      ajax_data = config.data;
+    } else {
+      //普通请求
+      ajax_data = {
+        reqJson: JSON.stringify(processData(config.data)),
+        api: _config.default.api };
+
+    }
+    uni.request({
+      data: ajax_data,
+      url: config.url || _config.default.requestUrl,
+      method: "POST",
+      header: header,
+      //return repsone.data {
+      //  {retCode: "0001", retMsg: "参数错误,请检查参数合法性"}
+      //}
+      success: resolve,
+      fail: reject });
+
+  });
+}
+
+/**
+   * 统一ajax调用
+   * 统一返回的判断
+   * items.data.retCode === "0000"
+   */
+function unifyAjax(config) {
+  return new Promise(function (resolve, reject) {
+    ajax(config).then(function (response) {
+      if (response.data.retCode == "0000") {
+        //统一判断成功
+        resolve(response);
+      } else {
+        reject(response);
+      }
+    }).catch(function (errResponse) {
+      reject(errResponse);
+    });
+  });
+}
+
+/**
+   * 设备使用接口
+   */
+function deviceAjax(config) {
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      data: JSON.stringify(config.data),
+      url: config.url || _config.default.deviceUrl,
+      method: "POST",
+      header: {
+        //发送json格式数据
+        "Content-type": "application/json; charset=utf-8" },
+
+      success: resolve,
+      fail: reject });
+
+  });
+}
+
+/**
+   * 服务器非对称加密
+   */
+function serviceMd5(config) {
+  return new Promise(function (resolve, reject) {
+    config.url = _config.default.md5Url;
+    config.md5Request = true;
+    ajax(config).
+    then(resolve).
+    catch(reject);
+  });
+}
+
+/**
+   * 带md5的统一请求处理
+   * md5Config= ajaxConfig = {
+   *  encrypt :{}加密数据
+   *  request :{}请求的数据,正式发送，可以覆盖encrypt
+   *  funcode 识别码都需要发送
+   *  responseType  返回数据类型 "[array object]" 数组对象
+   * }
+   * return
+   *  resolve reject
+   */
+function md5Ajax(config) {
+  return new Promise(function (resolve, reject) {
+    var funcode = config.funcode;
+    //加密请求
+    serviceMd5(Object.assign(config.encrypt, {
+      //请求参数,合并funcode
+      funcode: funcode })).
+    then(function (md5Response) {
+      //合并md5Response.data参数
+      var ajaxData = {
+        data: Object.assign({}, md5Response.data, { funcode: funcode }) };
+
+      //混入请求的数据
+      if (config.request) {
+        //request的参数，可以覆盖md5Response.data数据
+        Object.assign(ajaxData.data, config.request);
+      }
+
+      //发送正式请求
+      unifyAjax(ajaxData).then(function (response) {
+        //返回对象合集
+        if (config.responseType === "[array object]") {
+          resolve([md5Response, response]);
+        } else {
+          //默认返回请求的
+          resolve(response);
+        }
+      }).catch(reject);
+
+    }).catch(function () {
+
+    });
+  });
+}
+
+/**
+   * 获取手机验证码
+   * 需要加密
+   * mobileno, vertype,
+   * funcode 可配置
+   */
+function getPhoneCode(config) {
+  return new Promise(function (resolve, reject) {
+    md5Ajax({
+      responseType: config.responseType,
+      funcode: config.funcode,
+      encrypt: {
+        data: {
+          mobileno: config.mobileno } },
+
+
+      request: {
+        vertype: config.vertype } }).
+
+    then(function (oc) {
+      resolve(oc);
+    }).catch(function (errResponse) {
+      reject(errResponse.data.retMsg);
+    });
+  });
+}
+
+/**
+   * 唯一标识
+   */
+function generateUUID() {
+  var d = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == 'x' ? r : r & 0x3 | 0x8).toString(16);
+  });
+  return uuid;
+}
+
+/**
+   * 上传文件
+   */
+function uploadFile(config) {
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: "https://lss.facess.net/card-server/oss/webSts",
+      method: "get",
+      success: function success(res) {
+        var filePath = config.filePath || config.path;
+        var t = filePath.split(".");
+        var imgType = t[t.length - 1];
+
+        var fileName = "".concat(generateUUID(), ".").concat(imgType);
+        var keyPath = "".concat(res.data.dir).concat(fileName);
+
+        uni.uploadFile({
+          url: res.data.host,
+          filePath: filePath,
+          name: 'file',
+          formData: {
+            name: "${name}",
+            key: keyPath,
+            policy: res.data.policy,
+            OSSAccessKeyId: res.data.accessid,
+            success_action_status: res.data.success_action_status,
+            signature: res.data.signature },
+
+          success: function success(res) {
+            resolve(fileName);
+          },
+          fail: reject });
+
+      },
+      fail: reject });
+
+
+  });
+
+}
+
+/**
+   * 获取银行列表
+   */
+function getBankList() {
+  return new Promise(function (resolve, reject) {
+    unifyAjax({
+      data: {
+        funcode: "0005" } }).
+
+    then(resolve).catch(reject);
+  });
+}
+
+/**
+   * 获取业务列表
+   */
+function getBusinessList() {
+  return new Promise(function (resolve, reject) {
+    unifyAjax({
+      data: {
+        funcode: "0018" } }).
+
+    then(resolve).catch(reject);
+  });
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 30 */,
+/* 31 */,
+/* 32 */
+/*!*********************************************************************************!*\
+  !*** D:/github/uni-lss/main.js?{"page":"pages%2Fcommon%2Faccredit%2Faccredit"} ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _accredit = _interopRequireDefault(__webpack_require__(/*! ./pages/common/accredit/accredit.vue */ 33));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_accredit.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */
+/*!******************************************!*\
+  !*** D:/github/uni-lss/common/global.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var _lang = __webpack_require__(/*! @/utils/lang */ 25);
+
+
+
+var version = '1.0.8';
+
+/**
+                        * 微信认证
+                        */
+var device = {
+  agentid: '', //商户ID
+  openid: '', //注册最后一步需要，用来判断登录
+  code: '', //登录凭证
+  //zheng
+  appid: 'wx3ae92fa03906e0f7',
+  secret: ''
+
+
+  /**
+              * 扫描
+              */ };
+var qrPay = {};
+
+/**
+                 * 通过分享获取的数据接口
+                 */
+var _share = {
+  posterImageUrls: [], //海报分享图
+  prize_pz_id: '', //
+  fagentid: '' //推荐，商户，用户都需要, 通过二维码转发 获取
+
+
+  /**
+   * 用户信息
+   */ };
+var _userInfo = {};
+
+/**
+                     * 坐标信息
+                     */
+var _location = {};
+
+/**
+                     * 登录信息
+                     */
+var login = {};
+
+
+/**
+                 * @param {Object} data
+                 * 这只全局login数据
+                 */
+function setGolbal(data) {
+  var taccountId = data.taccountId;
+  if (!(0, _lang.isEmpty)(taccountId)) {
+
+    for (var key in data) {
+      login[key] = data[key];
+    }
+
+    //扩展login
+    taccountId = String(taccountId);
+    device.agentid = taccountId;
+    login.taccountid = taccountId;
+
+    //0-普通会员，1-创客,2-金牌创客,3-钻石创客,4-机构
+    login.user_level_name = getUserLevel(data.user_level);
+
+    //是否已经实名认证
+    login.isfact = data.isfact == 1;
+
+    ///是否开通四大券平台 0-未开通，1-已开通
+    login.is_volume = data.is_volume;
+    //四大券平台邀请码
+    login.referral_code = data.referral_code;
+
+    if (data.agenttype == "0") {
+      login.platform = "h5";
+    } else if (data.agenttype == "1") {
+      login.platform = "user";
+    } else if (data.agenttype == "2") {
+      login.platform = "merchant";
+    }
+
+    // 设置类型
+    setDl(data.dl_type, data.is_fws);
+  }
+}
+
+/**
+   * 用户级别
+   */
+function getUserLevel(user_level) {
+  if (user_level == "0") {
+    return "普通会员";
+  } else if (user_level == "1") {
+    return "创客";
+  } else if (user_level == "2") {
+    return "钻石创客";
+  } else if (user_level == "2") {
+    return "机构";
+  }
+  return "";
+}
+
+/**
+   * 设置类型
+      dl_type;//代理类型  0-省代理，1-市代理，3-商圈合人,4-商铺
+   */
+function setDl(dl_type, is_fws) {
+  var dl_name = "";
+  switch (dl_type) {
+    case "0":
+      dl_name = "省代理";
+      break;
+    case "1":
+      dl_name = "市代理";
+      break;
+    case "3":
+      // 0-未审核，1-已审核
+      if (!is_fws) {
+        dl_name = "商圈服务商";
+      } else if (is_fws == "0") {
+        dl_name = "已申请服务商，等待审核";
+      } else if (is_fws == "1") {
+        dl_name = "服务商";
+      }
+      break;
+    case "4":
+      dl_name = "商家";
+      break;}
+
+  login.has_fws = is_fws == 1;
+  login.dl_type = dl_type;
+  login.dl_name = dl_name;
+}
+
+module.exports = {
+  $$set: {
+    login: function login(value) {
+      setGolbal(value);
+    },
+    userInfo: function userInfo(value) {
+      _userInfo = value;
+    },
+    location: function location(latitude, longitude) {
+      _location.latitude = latitude;
+      _location.longitude = longitude;
+    },
+    code: function code(value) {
+      device.code = value;
+    },
+    openid: function openid(value) {
+      device.openid = value;
+    },
+    share: function share(value) {
+      for (var key in value) {
+        _share[key] = value[key];
+      }
+    } },
+
+  $$get: {
+    appid: function appid() {
+      return device.appid;
+    },
+    openid: function openid() {
+      return device.openid;
+    },
+    avatarUrl: function avatarUrl() {
+      return _userInfo.avatarUrl;
+    },
+    nickName: function nickName() {
+      return _userInfo.nickName;
+    },
+    /**
+        * @param {Object} arg
+        * 获取分享数据
+        */
+    share: function share(key) {
+      var v = _share[key];
+      if (v) {
+        return v;
+      } else {
+        console.log('没有找到share:' + key);
+      }
+    } } };
+
+/***/ }),
+/* 44 */
+/*!*************************************************!*\
+  !*** D:/github/uni-lss/pages/index/accredit.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.accreditUserInfo = accreditUserInfo;exports.accreditUserLocation = accreditUserLocation;exports.getLocation = getLocation;var util = _interopRequireWildcard(__webpack_require__(/*! @/utils */ 22));
+var _global = __webpack_require__(/*! @/common/global */ 43);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * 检测用户权限，设置数据
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * 获取微信用户基本信息
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+function accreditUserInfo(success, fail) {
+  util.
+  checkAccredit('scope.userInfo').
+  then(function () {
+    util.getUserInfo().then(function (data) {
+      success(data);
+    });
+  }).
+  catch(fail);
+}
+
+/**
+   * 检测用户定位
+   */
+function accreditUserLocation(success, fail) {
+  util.
+  detectAccredit('scope.userLocation').
+  then(success).
+  catch(function () {
+    var data = {
+      content: '您未选择地理位置，我们无法为您提供服务！',
+      scope: 'scope.userLocation',
+      buttonText: '重新获取地理位置',
+      describe: '亲，我们未获得您的位置授权，将无法为您提供推荐的商圈以及相关的一些活动！' };
+
+    util.gotoPage("/pages/common/accredit/accredit?data=".concat(JSON.stringify(data)));
+    fail && fail();
+  });
+}
+
+/**
+   * 获取坐标位置
+   */
+function getLocation(callback) {
+  util.getLocationData().then(function (res) {
+    _global.$$set.location(res.latitude, res.longitude);
+    // app.globalData.location.latitude = res.latitude;
+    // app.globalData.location.longitude = res.longitude;
+    callback && callback();
+  });
+}
+
+/***/ }),
+/* 45 */
+/*!*********************************************!*\
+  !*** D:/github/uni-lss/pages/index/code.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var util = _interopRequireWildcard(__webpack_require__(/*! @/utils */ 22));
+var _global = __webpack_require__(/*! @/common/global */ 43);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}
+
+
+
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * 解析二维码
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+function _default(options) {
+
+  //固码支付
+  // $$set.share({
+  // 	fagentid: "708000719740", //推荐id
+  // 	type: "qrPay"
+  // })
+
+  // 分享转发
+  // $$set.share({
+  // 	fagentid: "708000719740", //推荐id
+  // 	agentidsp: "708000722290", //商家id
+  // 	goodsid: "102", //商品id
+  // 	type: "register"
+  // })
+
+  console.log('index options', options);
+
+  // 通过转发注册
+  //"?fagentid=708000719740&agentidsp=1111111111&goodsid=222222"
+  if (!util.isEmpty(options.fagentid) &&
+  !util.isEmpty(options.agentidsp) &&
+  !util.isEmpty(options.goodsid)) {
+    _global.$$set.share({
+      fagentid: options.fagentid, //推荐id
+      agentidsp: options.agentidsp, //商家id
+      goodsid: options.goodsid, //商品id
+      type: "goods" });
+
+  }
+
+  //通过扫描二维码
+  var scene = decodeURIComponent(options.scene);
+  if (!util.isEmpty(scene)) {
+    var sceneData = scene.split("-");
+    var tickName = sceneData[0];
+
+    //固码支付 pay-708000719740
+    if (tickName == 'pay') {
+      _global.$$set.share({
+        fagentid: sceneData[1],
+        type: "qrPay" });
+
+    }
+
+    //海报推广 zc-708000719740
+    if (tickName == 'zc') {
+      _global.$$set.share({
+        fagentid: sceneData[1],
+        type: "register" });
+
+    }
+
+    //sp-fagentid-agentidsp-goodsid
+    //sp-2222222-111111-33333
+    if (tickName == 'sp') {
+      _global.$$set.share({
+        fagentid: sceneData[1], //推荐id
+        agentidsp: sceneData[2], //商家id
+        goodsid: sceneData[3], //商品id
+        type: "goods" });
+
+    }
+  }
+
+  //保存下次注册状态
+  // if (app.globalData.share.fagentid) {
+  // 	//这2种模式下，保留下次进来的注册记录
+  // 	if (app.globalData.share.type === "goods" || app.globalData.share.type === "register") {
+  // 		util.setStorage('fagentid', app.globalData.share.fagentid)
+  // 	}
+  // }
+
+}
+
+/***/ }),
+/* 46 */
+/*!***********************************************!*\
+  !*** D:/github/uni-lss/pages/index/device.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var util = _interopRequireWildcard(__webpack_require__(/*! @/utils */ 22));
+var _global = __webpack_require__(/*! @/common/global */ 43);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}
+
+
+
+
+function _default(options) {
+  return new Promise(function (reslove, reject) {
+    uni.login({
+      provider: 'weixin',
+      success: function success(loginRes) {
+        if (!loginRes.code) {
+          util.showToast('登录失败！' + loginRes.errMsg);
+          return reject();
+        }
+        _global.$$set.code(loginRes.code);
+        util.
+        getWxOpenId({
+          appid: _global.$$get.appid(),
+          code: loginRes.code }).
+
+        then(function (openRes) {
+          //获取openid
+          var openid = openRes.data.openid;
+          if (openid) {
+            _global.$$set.openid(openid);
+            reslove();
+          } else {
+            util.showToast('没有获取设备编号,请再次点击');
+            return;
+          }
+        }).
+        catch(function (err) {
+          util.showToast('服务器连接失败');
+          reject();
+        });
+      },
+      fail: function fail() {
+        util.showToast(' 获取微信登录凭证失败');
+        reject();
+      } });
+
+  });
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 47 */
+/*!****************************************!*\
+  !*** D:/github/uni-lss/utils/login.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.accessLogin = accessLogin;var _global = __webpack_require__(/*! @/common/global */ 43);
+
+
+
+
+var _request = __webpack_require__(/*! ./request */ 29);
+
+
+
+var _lang = __webpack_require__(/*! ./lang */ 25);
+
+
+
+
+//=========================
+//	登录数据数据接口存取
+//=========================
+
+/**
+ * 登录数据数据接口存取
+ * logout true 注销清理
+ */
+function accessLogin() {
+  return new Promise(function (resolve, reject) {
+    (0, _request.md5Ajax)({
+      funcode: "0147",
+      encrypt: {
+        data: {
+          openid: _global.$$get.openid() } },
+
+
+      request: {
+        avatarUrl: _global.$$get.avatarUrl(),
+        nickName: _global.$$get.nickName() } }).
+
+    then(function (response) {
+      if (response.data) {
+        _global.$$set.login(response.data);
+        resolve();
+      } else {
+        reject();
+      }
+    }).catch(reject);
+  });
+}
+
+/***/ }),
+/* 48 */
+/*!****************************************!*\
+  !*** D:/github/uni-lss/utils/state.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.getUserState = getUserState;exports.getBankCardAssembly = getBankCardAssembly;exports.getGangedData = getGangedData;exports.pay_verify_step = pay_verify_step;exports.getAdvert = getAdvert;exports.checkVersion = checkVersion;var _config = _interopRequireDefault(__webpack_require__(/*! @/common/config */ 49));
+var _request = __webpack_require__(/*! ./request */ 29);
+
+
+
+var _common = __webpack_require__(/*! ./common */ 15);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+
+
+
+/**
+                                                                                                                                 * 获取用户状态
+                                                                                                                                 */
+function getUserState(openid, fagentid) {
+  return new Promise(function (resolve, reject) {
+    (0, _request.md5Ajax)({
+      funcode: '0114',
+      encrypt: {
+        data: {
+          openid: openid } },
+
+
+      request: {
+        agentid: fagentid //商家id
+      } }).
+
+    then(resolve).
+    catch(reject);
+  });
+}
+
+/**
+   * 获取银行名字
+   */
+function getBankCardName(bankname) {
+  return bankname.match(/\[(\S+)\]/)[1];
+}
+
+/**
+   * 获取银行卡列表
+   * data
+   *  cardType: "2",
+   *  taccountid: app.globalData.login.taccountid
+   */
+function getBankCard(taccountid, cardType) {
+  return new Promise(function (resolve, reject) {
+    (0, _request.unifyAjax)({
+      data: {
+        funcode: '0006',
+        cardType: cardType,
+        taccountid: taccountid } }).
+
+
+    then(resolve).
+    catch(reject);
+  });
+}
+
+/**
+   * 获取银行卡的拼接组装数据集
+   */
+function getBankCardAssembly(taccountid, cardType) {
+  return new Promise(function (resolve, reject) {
+    getBankCard(taccountid, cardType).
+    then(function (response) {
+      var listData;
+      if (
+      response &&
+      response.data.banklist &&
+      response.data.banklist.length)
+      {
+        listData = response.data.banklist.map(function (item) {
+          var bankname = getBankCardName(item.bankname);
+          var cardType = item.cardType == 1 ? '信用卡' : '储蓄卡';
+          var no = item.bankaccount.substr(item.bankaccount.length - 4);
+          var title = "".concat(bankname).concat(cardType, "(").concat(no, ")");
+          return {
+            bankuserid: item.bankuserid,
+            userName: item.drawname,
+            idcard: item.cert_no,
+            title: title,
+            image: "".concat(_config.default.imgDomain, "/images/").concat(
+            item.bankico, "@2x.png"),
+
+            xx_no: item.bankaccount2 };
+
+        });
+      }
+      resolve(listData);
+    }).
+    catch(reject);
+  });
+}
+
+/**
+   * 获取联动数据
+   * @param {*} fareaid
+   */
+function getGangedData(fareaid) {
+  return new Promise(function (resolve, reject) {
+    (0, _request.unifyAjax)({
+      data: {
+        funcode: '0017',
+        fareaid: fareaid } }).
+
+    then(function (item) {
+      resolve(item.data.arealist);
+    });
+  });
+}
+
+/**
+   * 支付检测验证处理
+   */
+function pay_verify_step(loginType) {
+  //没有注册
+  if (loginType == 1) {
+    (0, _common.showModal)({
+      title: '未注册',
+      content: '无法支付,请先注册',
+      confirmText: '注册',
+      complete: function complete(res) {
+        if (res.confirm) {
+          //注册完毕后，会继续调用pay_verify_step走绑卡流程
+          wx.hideToast();
+          common.gotoPage("/common/login/login?pageType=merchant");
+        }
+      } });
+
+    return false;
+  }
+
+  //已注册未绑卡
+  if (loginType == 2) {
+    (0, _common.showModal)({
+      title: '未绑卡',
+      content: '请先绑定银行卡',
+      confirmText: '绑卡',
+      complete: function complete(res) {
+        if (res.confirm) {
+          //退出上个页面，会显示这个状态
+          wx.hideToast();
+          //直接绑卡
+          common.gotoPage("/common/add-bank-card/add-bank-card");
+        }
+      } });
+
+    return false;
+  }
+
+  //已注册已绑卡未激活
+  // if (loginType == 3) {
+  //   showModal({
+  //     title: "未激活",
+  //     content: "银行卡已绑卡,但没开通快捷支付",
+  //     confirmText: "开通快捷",
+  //     complete: (res) => {
+  //       if (res.confirm) {
+  //         wx.hideToast()
+  //         common.gotoPage(`/common/fast-pay/fast-pay`)
+  //       }
+  //     }
+  //   })
+  //   return false
+  // }
+
+  //loginType ==4
+  return true;
+}
+
+
+/**
+   * 获取广告
+   */
+function getAdvert() {
+  return new Promise(function (reslove, reject) {
+    (0, _request.unifyAjax)({
+      data: {
+        funcode: "0109" } }).
+
+    then(reslove).catch(reject);
+  });
+}
+
+/**
+   * 检测版本
+   */
+function checkVersion() {
+  // this.checkVersion().then(response => {
+  //   if (response && response.data) {
+  //     //启动功能
+  //     //0-不显示，1-显示
+  //     if (response.data.isxx == '1') {
+  //       app.globalData.displayModule = true
+  //     }
+  //   }
+  //   this.nextProcess()
+  // })
+  return new Promise(function (resolve, reject) {
+    (0, _request.unifyAjax)({
+      data: {
+        funcode: "0125",
+        translateno: app.globalData.version } }).
+
+    then(resolve).catch(resolve);
+  });
+}
+
+/***/ }),
+/* 49 */
+/*!******************************************!*\
+  !*** D:/github/uni-lss/common/config.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var lcc = "https://lss.facess.net/lssSys";
+var pay = "https://lcc.facess.net/pay";
+var imgDomain = "https://img.facess.net/"; //加/
+
+var config = {
+
+  api: "appaccount/appbase",
+  /**
+                              * 获取openid请求
+                              */
+  openIdUrl: "".concat(lcc, "/loginAction!weixingcode2session.ilf"),
+
+  /**
+                                                                      * 人脸识别设备请求
+                                                                      */
+  deviceUrl: "".concat(pay, "/smallProgram"),
+  /**
+                                               * 普通请求
+                                               */
+  requestUrl: "".concat(lcc, "/loginAction!currency.ilf"),
+  /**
+                                                            * 加密请求
+                                                            */
+  md5Url: "".concat(lcc, "/lssSys/loginAction!des.ilf"),
+
+
+  /***
+                                                          * 图片域名
+                                                          */
+  imgDomain: imgDomain,
+
+  //=================== 二维码 =============================
+
+  /**
+   * 二维码请求地址
+   * 支付
+   */
+  payQrCodeUrl: "".concat(lcc, "/loginAction!weixingSolidImage.ilf"),
+  /**
+                                                                       * 商品二维码请求地址
+                                                                       * sp-2222222-111111-33333
+                                                                       * 分享
+                                                                       */
+  goodsQrCodeUrl: "".concat(lcc, "/loginAction!weixingShopImage.ilf"),
+  /**
+                                                                        * 推广海报,注册
+                                                                        * weixingRegisterImage的格式是zc-agentid
+                                                                        * 分享
+                                                                        */
+  registerQrCodeUrl: "".concat(lcc, "/loginAction!weixingRegisterImage.ilf"),
+  /** 
+                                                                               * 微信哦图像
+                                                                               */
+  weixin: "".concat(lcc, "/loginAction!weixingAutomatic.ilf") };
+
+
+
+module.exports = config;
+
+/***/ }),
+/* 50 */
+/*!*********************************************!*\
+  !*** D:/github/uni-lss/utils/count-down.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.CountDown = void 0;var _observer = __webpack_require__(/*! ./observer */ 51);function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _possibleConstructorReturn(self, call) {if (call && (typeof call === "object" || typeof call === "function")) {return call;}return _assertThisInitialized(self);}function _assertThisInitialized(self) {if (self === void 0) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function _getPrototypeOf(o) {_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {return o.__proto__ || Object.getPrototypeOf(o);};return _getPrototypeOf(o);}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function");}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });if (superClass) _setPrototypeOf(subClass, superClass);}function _setPrototypeOf(o, p) {_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {o.__proto__ = p;return o;};return _setPrototypeOf(o, p);}
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * 验证码倒计时处理.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              checkTime = 60, //默认检测时间
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              start, //开始回调
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              change, //变化回调
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              end //结束回调
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             */var
+CountDown = /*#__PURE__*/function (_Observer) {_inherits(CountDown, _Observer);
+
+  function CountDown(args) {var _this;_classCallCheck(this, CountDown);
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CountDown).call(this));
+    _this.checkTime = args.checkTime || 60;
+    _this.timer = null;
+    _this.recordIndex = _this.checkTime; //倒计时索引
+    //开始回调
+    _this.$$emit('init', _this.checkTime);return _this;
+  }_createClass(CountDown, [{ key: "_nextCheck", value: function _nextCheck()
+
+    {var _this2 = this;
+      this.timer = setInterval(function () {
+        if (_this2.recordIndex == 1) {
+          _this2.$$emit('end', _this2.checkTime);
+          _this2._clearInterval();
+          return;
+        }
+        _this2.recordIndex--;
+        _this2.$$emit('change', _this2.recordIndex);
+      }, 1000);
+    } }, { key: "_clearInterval", value: function _clearInterval()
+
+    {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+
+    //===========对外接口==============
+  }, { key: "start", value: function start()
+    {
+      this._nextCheck();
+    } }, { key: "destory", value: function destory()
+
+    {
+      this._clearInterval();
+    } }]);return CountDown;}(_observer.Observer);exports.CountDown = CountDown;
+
+/***/ }),
+/* 51 */
+/*!*******************************************!*\
+  !*** D:/github/uni-lss/utils/observer.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.Observer = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var ArrayProto = Array.prototype;
+var nativeIndexOf = ArrayProto.indexOf;
+var slice = ArrayProto.slice;
+var _indexOf = function _indexOf(array, needle) {
+  var i, l;
+  if (nativeIndexOf && array.indexOf === nativeIndexOf) {
+    return array.indexOf(needle);
+  }
+  for (i = 0, l = array.length; i < l; i++) {
+    if (array[i] === needle) {
+      return i;
+    }
+  }
+  return -1;
+};var
+
+Observer = /*#__PURE__*/function () {
+
+  function Observer() {_classCallCheck(this, Observer);
+    this.$$watch = this.bind;
+    this.$$unWatch = this.unbind;
+    this.$$emit = this.trigger;
+    this.$$once = this.one;
+
+    //触发列表名称
+    //防止同步触发
+    this._handleName = {};
+  }_createClass(Observer, [{ key: "bind", value: function bind(
+
+    event, fn) {
+      var i, part;
+      var events = this.events = this.events || {};
+      var parts = event.split(/\s+/);
+      var num = parts.length;
+
+      for (i = 0; i < num; i++) {
+        events[part = parts[i]] = events[part] || [];
+        if (_indexOf(events[part], fn) === -1) {
+          events[part].push(fn);
+        }
+      }
+
+      //假如存在同步句柄
+      //执行
+      var data;
+      if (data = this._handleName[event]) {
+        this.$$emit(event, data[0]);
+      }
+
+      return this;
+    } }, { key: "one", value: function one(
+
+    event, fn) {
+      // [notice] The value of fn and fn1 is not equivalent in the case of the following MSIE.
+      // var fn = function fn1 () { alert(fn === fn1) } ie.<9 false
+      var fnc = function fnc() {
+        this.unbind(event, fnc);
+        fn.apply(this, slice.call(arguments));
+      };
+      this.bind(event, fnc);
+      return this;
+    }
+
+    //event = 'a b c' 空格分离多个事件名
+    //提供fn 指定在某个事件中删除某一个
+    //否则只提供事件名 ，全删除
+  }, { key: "unbind", value: function unbind(event, fn) {
+
+      var eventName, i, index, num, parts;
+      var events = this.events;
+
+      if (!events) return this;
+
+      //指定
+      if (arguments.length) {
+        parts = event.split(/\s+/);
+        for (i = 0, num = parts.length; i < num; i++) {
+          if ((eventName = parts[i]) in events !== false) {
+            //如果提供函数引用
+            //那么就是在数组中删除其中一个
+            if (fn) {
+              index = _indexOf(events[eventName], fn);
+              if (index !== -1) {
+                events[eventName].splice(index, 1);
+              }
+            } else {
+              //如果只提供了名字，则全删除
+              events[eventName] = null;
+            }
+
+            //如果没有内容了
+            if (!events[eventName] || !events[eventName].length) {
+              delete events[eventName];
+            }
+          }
+        }
+      } else {
+        this.events = null;
+      }
+
+
+      return this;
+    } }, { key: "trigger", value: function trigger(
+
+    event) {
+      var args, i;
+      var events = this.events,
+      handlers;
+
+      //参数
+      args = slice.call(arguments, 1);
+
+      if (!events || event in events === false) {
+        // console.log(event)
+        //同步的情况
+        //如果除非了事件，可能事件句柄还没有加载
+        this._handleName[event] = args;
+        return this;
+      }
+
+      handlers = events[event];
+      for (i = 0; i < handlers.length; i++) {
+        handlers[i].apply(this, args);
+      }
+      return this;
+    } }]);return Observer;}();exports.Observer = Observer;
 
 /***/ })
 ]]);

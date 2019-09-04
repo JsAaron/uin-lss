@@ -5,7 +5,7 @@
  * @LastEditTime: 2019-08-16 16:58:44
  * @LastEditors: Please set LastEditors
  */
-import config from "@/config";
+import config from "@/common/config";
 import {
 	showToast
 } from "./common.js"

@@ -6,8 +6,7 @@
 	"setting": {
 		"urlCheck": false,
 		"postcss": true,
-		"minified": true,
-		"checkSiteMap":false
+		"minified": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.0",

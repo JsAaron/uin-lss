@@ -1,7 +1,7 @@
 
 
 import md5 from "./md5"
-import config from "@/config";
+import globalConfig from "@/common/config";
 
 /**
  * 字段排序
@@ -54,7 +54,7 @@ export function ajax(config) {
         api: globalConfig.api
       };
     }
-    wx.request({
+    uni.request({
       data: ajax_data,
       url: config.url || globalConfig.requestUrl,
       method: "POST",
@@ -93,7 +93,7 @@ export function unifyAjax(config) {
  */
 export function deviceAjax(config) {
   return new Promise((resolve, reject) => {
-    wx.request({
+    uni.request({
       data: JSON.stringify(config.data),
       url: config.url || globalConfig.deviceUrl,
       method: "POST",
@@ -211,7 +211,7 @@ function generateUUID() {
  */
 export function uploadFile(config) {
   return new Promise((resolve, reject) => {
-    wx.request({
+    uni.request({
       url: "https://lss.facess.net/card-server/oss/webSts",
       method: "get",
       success: res => {
@@ -222,7 +222,7 @@ export function uploadFile(config) {
         let fileName = `${generateUUID()}.${imgType}`
         let keyPath = `${res.data.dir}${fileName}`
 
-        wx.uploadFile({
+        uni.uploadFile({
           url: res.data.host,
           filePath: filePath,
           name: 'file',

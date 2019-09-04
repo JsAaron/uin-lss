@@ -7,8 +7,9 @@ import {
 	hideBusy,
 	showToast,
 	hideToast,
-	showModal
-} from '@/utils/common'
+	showModal,
+	accessLogin
+} from '@/utils'
 
 Vue.config.productionTip = false
 
@@ -19,7 +20,8 @@ Vue.prototype.$api = {
 	showToast, 
 	hideToast,
 	showModal,
-	gotoPage
+	gotoPage,
+	accessLogin
 }
 
 
