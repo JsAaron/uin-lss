@@ -4,7 +4,7 @@
 		<view v-if="hasAdvert" class="advert">
 			<swiper indicator-dots="true" autoplay="true" interval="2000" duration="1000">
 				<block v-for="(item, index) in advertImgUrls" :key="index">
-					<swiper-item><image mode="aspectFill" :src="item" class="slide-image" /></swiper-item>
+					<swiper-item><image mode="aspectFill" :src="item" class="advert__image" /></swiper-item>
 				</block>
 			</swiper>
 			<view class="time" bindtap="bindSkipAdvert">
@@ -246,9 +246,10 @@ export default {
 		width: 100vw;
 		height: 100vh;
 	}
-	.slide-image {
-		width: 100vw;
-		height: 100vh;
+		
+	&__image{
+		width: 100%;
+		height: 100%;
 	}
 }
 
