@@ -181,7 +181,7 @@ module.exports = {
 			if (v) {
 				return v
 			} else {
-				console.log('没有找到share:' + key)
+				// console.log('没有找到share:' + key)
 			}
 		}
 	}

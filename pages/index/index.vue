@@ -190,11 +190,6 @@ export default {
 		},
 
 		/**
-		 * 开始页面操作
-		 */
-		nextProcess() {},
-
-		/**
 		 * 获取用户授权数据
 		 */
 		onGetUserAccredit() {
@@ -214,6 +209,24 @@ export default {
 						content: '亲！拒绝将无法进入哦！您确定这么做吗'
 					});
 				});
+		},
+
+		/**
+		 * 开始页面操作
+		 */
+		nextProcess() {
+			accreditUserLocation(() => {
+				getLocation(() => {
+					this.initDeviceData(() => {
+						let testUrl = simulate();
+						if (testUrl) {
+							util.gotoPage('reLaunch', testUrl);
+							return;
+						}
+						this.runAdvert();
+					});
+				});
+			});
 		},
 
 		/**
