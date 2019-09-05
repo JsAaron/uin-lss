@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store'
+import config from '@/common/config'
 import {
 	gotoPage,
 	showBusy,
@@ -21,7 +22,8 @@ Vue.prototype.$api = {
 	hideToast,
 	showModal,
 	gotoPage,
-	accessLogin
+	accessLogin,
+	imgDomain:config.imgDomain
 }
 
 
