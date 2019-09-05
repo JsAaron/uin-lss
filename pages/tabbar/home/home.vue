@@ -36,6 +36,7 @@ export default {
 		return {
 			avatarUrl: '',
 			biz_id: '',
+			biz_name:'',
 
 			// 商圈数据
 			businessDisplay: false,
@@ -187,7 +188,7 @@ export default {
 	
 	.area {
 	  @include flex-h-align;
-	  background: @blue;
+	  background: $blue;
 	  padding: 20rpx 30rpx 0 30rpx;
 	
 	  &__map {
