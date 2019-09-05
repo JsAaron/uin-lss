@@ -55,6 +55,12 @@ $color-fail: $red;
 //  横向X
 //======================
 
+@mixin flex-h-align($align:center) {
+  display: flex;
+  flex-direction:row;
+  align-items:$align;
+}
+
 //横向设置,默认居中
 @mixin flex-h($justify: center, $align: center) {
 	@include flex(row, $justify, $align);
@@ -86,3 +92,27 @@ $color-fail: $red;
 @mixin flex-v($justify: center, $align: center){
 		@include flex(column, $justify, $align);
 }
+
+
+
+//======================
+//  position定位
+//======================
+@mixin position($position, $top, $left, $z-index: 0) {
+  position: $position;
+  top: $top;
+  left: $left;
+  z-index: $z-index;
+}
+
+@mixin position-transform($left: 50%, $top: 50%, $zIndex: 0) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  z-index: $zIndex;
+  transform: translate(-$top, -$left);
+}
+
+@mixin position-center($z-index: 0) {
+  @include position-transform(50%, 50%, $z-index);
+} 
