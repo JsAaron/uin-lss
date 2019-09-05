@@ -18,9 +18,10 @@
 				</lss-scroll-view>
 			</view>
 		</view>
-
+		
+		<!-- 定位 -->
 		<view class="area" bindtap="onOpenBusiness">
-			<image class="area__map" src="/static/home/map.png" />
+			<image class="area__map" src="/static/tabbar/home/map.png" />
 			<view class="area__city">
 				<text>{{ biz_name }}</text>
 			</view>
