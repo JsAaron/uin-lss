@@ -11,7 +11,13 @@
 			"style": {
 				"navigationBarTitleText": "申请权限"
 			}
-		}
+		},
+		{
+			"path": "pages/tabbar/home/home",
+			"style": {
+				"navigationBarTitleText": "刷脸友惠"
+			}
+		},
 	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#4f96ff",

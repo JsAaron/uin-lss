@@ -167,11 +167,7 @@ export default {
 		 */
 		startApp() {
 			this.$api.hideBusy();
-
-			//隐藏广告
 			this.hasAdvert = false;
-
-			//如果是分享进来,直接个人中心
 			this.$api.gotoPage('reLaunch', '/pages/tabbar/homepage/homepage');
 		},
 
@@ -246,8 +242,8 @@ export default {
 		width: 100vw;
 		height: 100vh;
 	}
-		
-	&__image{
+
+	&__image {
 		width: 100%;
 		height: 100%;
 	}
