@@ -38,7 +38,7 @@ function simulate() {
 
   const userUrls = {
     //bar
-    "homepage": "/pages/tabbar/homepage/homepage",
+    "home": "/pages/tabbar/home/home",
     "recommend": "/pages/tabbar/recommend/recommend",
     "my": "/pages/tabbar/my/my",
 
@@ -79,7 +79,7 @@ function simulate() {
 
   }
 
-  // return userUrls["order"]
+  return userUrls["home"]
 
 
   //==============

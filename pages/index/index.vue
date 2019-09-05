@@ -124,7 +124,6 @@ export default {
 				this.countDown.destory();
 				this.countDown = null;
 			}
-			this.autoplay = false;
 		},
 
 		/**
@@ -168,7 +167,7 @@ export default {
 		startApp() {
 			this.$api.hideBusy();
 			this.hasAdvert = false;
-			this.$api.gotoPage('reLaunch', '/pages/tabbar/homepage/homepage');
+			this.$api.gotoPage('reLaunch', '/pages/tabbar/home/home');
 		},
 
 		//==========================================

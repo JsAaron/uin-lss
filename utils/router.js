@@ -1,17 +1,19 @@
-import {isNumber} from "./lang";
+import {
+	isNumber
+} from "./lang";
 
 /**
  * 去成功页面
  */
-export function gotoSuccessPage (args) {
-  gotoPage(`/common/success/success?data=${JSON.stringify(args)}`);
+export function gotoSuccessPage(args) {
+	gotoPage(`/common/success/success?data=${JSON.stringify(args)}`);
 }
 
 /**
  * 失败页面
  */
-export function gotoFailPage (args) {
-  gotoPage(`/common/error/error?data=${JSON.stringify(args)}`);
+export function gotoFailPage(args) {
+	gotoPage(`/common/error/error?data=${JSON.stringify(args)}`);
 }
 
 /**
@@ -26,74 +28,74 @@ export function gotoFailPage (args) {
  * 3 gotoPage(url,2000)
  * 4 gotoPage(reLaunch,url,2000)
  **/
-export function gotoPage (type, url, time) {
+export function gotoPage(type, url, time) {
 
-  //如果是返回，带时间
-  if (type === "back") {
-    time = url
-    if (time) {
-      setTimeout(() => {
-        uni.navigateBack({})
-      }, time)
-    } else {
-      uni.navigateBack({})
-    }
-    return
-  }
+	//如果是返回，带时间
+	if (type === "back") {
+		time = url
+		if (time) {
+			setTimeout(() => {
+				uni.navigateBack({})
+			}, time)
+		} else {
+			uni.navigateBack({})
+		}
+		return
+	}
 
-  //gotoPage(undefined,url)
-  if (!type && url) {
-    uni.navigateTo({
-      url: url
-    });
-    return
-  }
+	//gotoPage(undefined,url)
+	if (!type && url) {
+		uni.navigateTo({
+			url: url
+		});
+		return
+	}
 
-  const length = arguments.length
+	const length = arguments.length
 
 
-  // gotoPage(url)
-  if (length === 1) {
-    uni.navigateTo({
-      url: type
-    });
-    return
-  }
+	// gotoPage(url)
+	if (length === 1) {
+		uni.navigateTo({
+			url: type
+		});
+		return
+	}
 
-  //gotoPage(url,2000)
-  //gotoPage(reLaunch, url)
-  if (length === 2) {
-    //gotoPage(url,2000)
-    if (lang.isNumber(url)) {
-      setTimeout(() => {
-        uni.navigateTo({
-          url: type
-        });
-      }, url)
-    } else {
-      //gotoPage(switchTab, url)
-      ///gotoPage(reLaunch, url)
-      wx[type || navigateTo]({
-        url
-      });
-    }
-  }
+	//gotoPage(url,2000)
+	//gotoPage(reLaunch, url)
+	if (length === 2) {
+		//gotoPage(url,2000)
+		if (isNumber(url)) {
+			setTimeout(() => {
+				uni.navigateTo({
+					url: type
+				});
+			}, url)
+		} else {
+			//gotoPage(switchTab, url)
+			///gotoPage(reLaunch, url)
+			wx[type || navigateTo]({
+				url
+			});
+		}
+	}
 
-  // gotoPage(reLaunch,url,2000)
-  if (length === 3) {
-    setTimeout(() => {
-      wx[type]({
-        url
-      });
-    }, time)
-  }
+	// gotoPage(reLaunch,url,2000)
+	if (length === 3) {
+		setTimeout(() => {
+			wx[type]({
+				url
+			});
+		}, time)
+	}
 }
 
 /**
  * 获取上一个页面路由
  */
-export function getRouterPrevPage (serial) {
-  var pages = getCurrentPages();
-  serial = serial || 2
-  return pages[pages.length - serial];
+export function getRouterPrevPage(serial) {
+	var pages = getCurrentPages();
+	serial = serial || 2
+	return pages[pages.length - serial];
 }

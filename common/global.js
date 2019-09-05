@@ -137,8 +137,18 @@ function setDl(dl_type, is_fws) {
 
 module.exports = {
 	$$set: {
-		login(value) {
-			setGolbal(value)
+		login(key, value) {
+			
+			//设置对象
+			if (key && !value) {
+				setGolbal(key)
+				return
+			}
+				
+			//设置属性
+			if(key && value){
+				login[key] = value
+			}
 		},
 		userInfo(value) {
 			userInfo = value
@@ -160,6 +170,9 @@ module.exports = {
 		}
 	},
 	$$get: {
+		agentid(){
+			return login.taccountid
+		},
 		appid() {
 			return device.appid
 		},
@@ -172,10 +185,12 @@ module.exports = {
 		nickName() {
 			return userInfo.nickName
 		},
-		/**
-		 * @param {Object} arg
-		 * 获取分享数据
-		 */
+		location(key) {
+			if (key) {
+				return location[key]
+			}
+			return location
+		},
 		share(key) {
 			let v = share[key]
 			if (v) {
