@@ -270,6 +270,10 @@
 	};
 </script>
 <style lang="scss">
+	page {
+		background: rgb(242, 242, 242);
+	}
+
 	.area {
 		@include flex-h-align;
 		background: $blue;
