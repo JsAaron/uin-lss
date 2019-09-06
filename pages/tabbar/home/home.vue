@@ -117,7 +117,7 @@
 								<view class="discount__left">
 									<uni-icon
 									 class="shop__map shop__map--small"
-									 type="location-o"
+									 type="location"
 									 size="16"
 									></uni-icon>
 									<view class="discount__text-site">{{ item.compaddress }}</view>
@@ -183,13 +183,20 @@
 			</view>
 		</view>
 
+		<w-loading
+		 text="加载中.."
+		 mask="true"
+		 click="false"
+		 ref="loading"
+		></w-loading>
+
 		<!-- 加载更多 -->
 		<lss-load-more
 		 :total="listTotalPage"
 		 :nomore="nomore"
 		/>
 
-	</view>
+	</view> 
 </template>
 <script>
 	import uniIcon from '@/components/uni-icon/uni-icon';
@@ -208,7 +215,8 @@
 		},
 		data() {
 			return {
-				nomore:false,
+				nomore: false,
+				title: "loading",
 
 				//====数据===
 
@@ -234,7 +242,11 @@
 				agentlistData: [] //附近商家
 			};
 		},
+		onReady() {
+			this.$refs.loading.open()
+		},
 		onLoad() {
+			uni.startPullDownRefresh();
 			this.imgDomain = this.$api.imgDomain;
 			this.avatarUrl = $$get.avatarUrl();
 			util.getLocationData().then(res => {
@@ -245,6 +257,17 @@
 			});
 		},
 		methods: {
+
+			/**
+			 * 下拉刷新
+			 */
+			onPullDownRefresh() {
+				this.$api.refresh((startRefresh, stopRefresh) => {
+					startRefresh()
+					this.getAllData(this.businessid, "refresh").then(stopRefresh).catch(stopRefresh)
+				})
+			},
+
 			/*
 			 * 加载更多
 			 */
@@ -327,7 +350,7 @@
 			 * 获取所有数据
 			 * businessid 类型
 			 */
-			getAllData(bid) {
+			getAllData(bid, isRefresh) {
 				this.businessid = bid;
 				return new Promise((resolve, reject) => {
 					let data = {
@@ -382,10 +405,6 @@
 	};
 </script>
 <style lang="scss">
-	page {
-		background: $background-color-gray-light;
-	}
-
 	.home {
 		&__top {
 			background: $blue;

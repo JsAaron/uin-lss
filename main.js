@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import config from '@/common/config'
+import wLoading from "@/components/loading/w-loading";
 import {
 	gotoPage,
 	showBusy,
@@ -11,6 +12,10 @@ import {
 	showModal,
 	accessLogin
 } from '@/utils'
+
+
+//全局注入w-loading组件
+Vue.component('w-loading',wLoading)
 
 Vue.config.productionTip = false
 
@@ -23,9 +28,16 @@ Vue.prototype.$api = {
 	showModal,
 	gotoPage,
 	accessLogin,
-	imgDomain:config.imgDomain
+	imgDomain:config.imgDomain,
+	refresh(callback){
+		callback(()=>{
+			uni.showNavigationBarLoading()
+		},()=>{
+			uni.stopPullDownRefresh();
+			uni.hideNavigationBarLoading()
+		})
+	}
 }
-
 
 App.mpType = 'app'
 
