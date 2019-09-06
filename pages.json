@@ -15,7 +15,8 @@
 		{
 			"path": "pages/tabbar/home/home",
 			"style": {
-				"navigationBarTitleText": "刷脸友惠"
+				"navigationBarTitleText": "刷脸友惠",
+				 "enablePullDownRefresh": true
 			}
 		}
 	],

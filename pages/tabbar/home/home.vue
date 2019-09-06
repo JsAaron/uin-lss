@@ -12,186 +12,188 @@
 			</view>
 		</view>
 
-		<mescroll-uni
-		 :down="downOption"
-		 @down="downCallback"
-		 @init="mescrollInit"
-		>
-			<view class="home__top">
-				<!-- 定位 -->
-				<view
-				 class="area"
-				 @tap="onOpenBusiness"
-				>
-					<image
-					 class="area__map"
-					 src="/static/tabbar/home/map.png"
-					/>
-					<view class="area__city">
-						<text>{{ biz_name }}</text>
-					</view>
+		<!-- 顶部 -->
+		<view class="home__top">
+			<!-- 定位 -->
+			<view
+			 class="area"
+			 @tap="onOpenBusiness"
+			>
+				<image
+				 class="area__map"
+				 src="/static/tabbar/home/map.png"
+				/>
+				<view class="area__city">
+					<text>{{ biz_name }}</text>
 				</view>
-				<!-- 头部 -->
-				<view
-				 class="header"
-				 @tap="onSearch"
-				>
-					<view class="header__left">
-						<image
-						 class="header__avatar"
-						 :src="avatarUrl"
-						/>
-					</view>
-					<view class="header__rigth">
-						<view class="header__search">
-							<text class="header__search-text">搜{{ biz_name }}看当地吃喝玩乐</text>
-						</view>
+			</view>
+			<!-- 头部 -->
+			<view
+			 class="header"
+			 @tap="onSearch"
+			>
+				<view class="header__left">
+					<image
+					 class="header__avatar"
+					 :src="avatarUrl"
+					/>
+				</view>
+				<view class="header__rigth">
+					<view class="header__search">
+						<text class="header__search-text">搜{{ biz_name }}看当地吃喝玩乐</text>
 					</view>
 				</view>
 			</view>
-			<!-- 导航 -->
-			<view class="nav">
-				<view class="nav__row">
+		</view>
+		<!-- 导航 -->
+		<view class="nav">
+			<view class="nav__row">
+				<block
+				 v-for="(item, index) in busslistData"
+				 :key="index"
+				>
+					<view
+					 class="nav__col"
+					 :data-id="item.businessid"
+					 @tap="onSwitchType"
+					>
+						<image
+						 class="nav__logo"
+						 :src="imgDomain + item.imgpath"
+						/>
+						<text
+						 class="nav__text"
+						 :class="[item.businessid == businessid ? 'nav__text--active' : '']"
+						>{{ item.businessname }}</text>
+						<view
+						 class="nav__line"
+						 :class="[item.businessid == businessid ? 'nav__line--active' : '']"
+						/>
+					</view>
+				</block>
+			</view>
+		</view>
+		<!-- 劲爆 -->
+		<block v-if="goodslistData.length">
+			<view class="discount">
+				<view class="discount__header">
+					<text class="discount__header-title">劲爆商品</text>
+					<view class="discount__header-right">
+						<text
+						 class="discount__header-more lss-color-active--blue"
+						 @tap="onDiscountMore"
+						>更多
+						</text>
+						<uni-icon
+						 class="discount__header-more-icon"
+						 type="more-o"
+						 size="16"
+						></uni-icon>
+					</view>
+				</view>
+				<view class="discount__content">
 					<block
-					 v-for="(item, index) in busslistData"
+					 v-for="(item, index) in goodslistData"
 					 :key="index"
 					>
 						<view
-						 class="nav__col"
-						 :data-id="item.businessid"
-						 @tap="onSwitchType"
+						 class="discount__col"
+						 :data-index="index"
+						 @tap="onGoods"
 						>
 							<image
-							 class="nav__logo"
-							 :src="imgDomain + item.imgpath"
+							 class="discount__image"
+							 top
+							 :src="imgDomain + item.goodsimg"
 							/>
-							<text
-							 class="nav__text"
-							 :class="[item.businessid == businessid ? 'nav__text--active' : '']"
-							>{{ item.businessname }}</text>
-							<view
-							 class="nav__line"
-							 :class="[item.businessid == businessid ? 'nav__line--active' : '']"
-							/>
+							<view class="discount__row">
+								<text class="discount__title">{{ item.goodsname }}</text>
+							</view>
+							<view class="discount__row">
+								<text class="discount__text-price">￥{{ item.goodsprice }}</text>
+								<text class="discount__cost">￥{{ item.originalprice }}</text>
+							</view>
+							<view class="discount__row">
+								<view class="discount__left">
+									<uni-icon
+									 class="shop__map shop__map--small"
+									 type="location-o"
+									 size="16"
+									></uni-icon>
+									<view class="discount__text-site">{{ item.compaddress }}</view>
+								</view>
+							</view>
 						</view>
 					</block>
 				</view>
 			</view>
-			<!-- 劲爆 -->
-			<block v-if="goodslistData.length">
-				<view class="discount">
-					<view class="discount__header">
-						<text class="discount__header-title">劲爆商品</text>
-						<view class="discount__header-right">
-							<text
-							 class="discount__header-more lss-color-active--blue"
-							 @tap="onDiscountMore"
-							>更多
-							</text>
-							<uni-icon
-							 class="discount__header-more-icon"
-							 type="more-o"
-							 size="16"
-							></uni-icon>
-						</view>
-					</view>
-					<view class="discount__content">
-						<block
-						 v-for="(item, index) in goodslistData"
-						 :key="index"
+		</block>
+		<!-- 商店 -->
+		<view class="shop">
+			<view class="shop__list">
+				<block
+				 v-for="(item, index) in listData"
+				 :key="index"
+				>
+					<view class="shop__row">
+						<view
+						 v-if="index == 0"
+						 class="discount__header shop__solt"
 						>
-							<view
-							 class="discount__col"
-							 :data-index="index"
-							 @tap="onGoods"
-							>
-								<image
-								 class="discount__image"
-								 top
-								 :src="imgDomain + item.goodsimg"
-								/>
-								<view class="discount__row">
-									<text class="discount__title">{{ item.goodsname }}</text>
-								</view>
-								<view class="discount__row">
-									<text class="discount__text-price">￥{{ item.goodsprice }}</text>
-									<text class="discount__cost">￥{{ item.originalprice }}</text>
-								</view>
-								<view class="discount__row">
-									<view class="discount__left">
-										<uni-icon
-										 class="shop__map shop__map--small"
-										 type="location-o"
-										 size="16"
-										></uni-icon>
-										<view class="discount__text-site">{{ item.compaddress }}</view>
-									</view>
-								</view>
-							</view>
-						</block>
-					</view>
-				</view>
-			</block>
-			<!-- 商店 -->
-			<view class="shop">
-				<view class="shop__list">
-					<block
-					 v-for="(item, index) in listData"
-					 :key="index"
-					>
-						<view class="shop__row">
-							<view
-							 v-if="index == 0"
-							 class="discount__header shop__solt"
-							>
-								<text class="discount__header-title">优惠商家</text>
-								<view class="discount__header-right"><text
-									 class="discount__header-more lss-color-active--blue"
-									 @tap="onShopMore"
-									>更多</text></view>
-							</view>
-							<view
-							 class="shop__header"
-							 :data-id="item.agentid"
-							 @tap="onDetails"
-							>
-								<text class="shop__title">{{ item.agentname }}</text>
-								<view class="shop__header-right">
-									<view>{{ item.distancecd }}km</view>
-								</view>
-							</view>
-							<view
-							 class="shop__article"
-							 :data-id="item.agentid"
-							 @tap="onDetails"
-							>
-								<block
-								 v-for="(col, index) in item.goods_list"
-								 :key="index"
-								>
-									<view class="shop__col">
-										<view class="shop__image-box">
-											<image
-											 class="shop__image"
-											 lazy-load="true"
-											 :src="imgDomain + col.goodsimg"
-											/>
-											<view class="shop__price">￥{{ col.goodsprice }}</view>
-										</view>
-										<view class="shop__goodsname lss-ellipsis--text">{{ col.goodsname }}</view>
-									</view>
-								</block>
+							<text class="discount__header-title">优惠商家</text>
+							<view class="discount__header-right"><text
+								 class="discount__header-more lss-color-active--blue"
+								 @tap="onShopMore"
+								>更多</text></view>
+						</view>
+						<view
+						 class="shop__header"
+						 :data-id="item.agentid"
+						 @tap="onDetails"
+						>
+							<text class="shop__title">{{ item.agentname }}</text>
+							<view class="shop__header-right">
+								<view>{{ item.distancecd }}km</view>
 							</view>
 						</view>
-					</block>
-				</view>
+						<view
+						 class="shop__article"
+						 :data-id="item.agentid"
+						 @tap="onDetails"
+						>
+							<block
+							 v-for="(col, index) in item.goods_list"
+							 :key="index"
+							>
+								<view class="shop__col">
+									<view class="shop__image-box">
+										<image
+										 class="shop__image"
+										 lazy-load="true"
+										 :src="imgDomain + col.goodsimg"
+										/>
+										<view class="shop__price">￥{{ col.goodsprice }}</view>
+									</view>
+									<view class="shop__goodsname lss-ellipsis--text">{{ col.goodsname }}</view>
+								</view>
+							</block>
+						</view>
+					</view>
+				</block>
 			</view>
-		</mescroll-uni>
+		</view>
+
+		<!-- 加载更多 -->
+		<lss-load-more
+		 :total="listTotalPage"
+		 :nomore="nomore"
+		/>
+
 	</view>
 </template>
 <script>
-	import uniIcon from '@/components/uni-icon/uni-icon.vue';
-	import MescrollUni from '@/components/mescroll-uni/mescroll-uni.vue';
+	import uniIcon from '@/components/uni-icon/uni-icon';
+	import lssLoadMore from '@/components/lss-load-more/lss-load-more';
 	import * as util from '@/utils';
 	import {
 		$$set,
@@ -202,20 +204,12 @@
 	export default {
 		components: {
 			uniIcon,
-			MescrollUni
+			lssLoadMore
 		},
 		data() {
 			return {
-				mescroll: null, //mescroll实例对象
-				// 下拉刷新
-				downOption: {
-					auto: false //是否在初始化后,自动执行下拉回调callback; 默认true
-				},
-				//上拉加载
-				upOption:{
-					
-				},
-	
+				loadingType: 'loading', //加载更多状态
+
 				//====数据===
 
 				avatarUrl: '',
@@ -251,19 +245,17 @@
 			});
 		},
 		methods: {
-			// mescroll组件初始化的回调,可获取到mescroll对象
-			mescrollInit(mescroll) {
-				this.mescroll = mescroll;
+			/*
+			 * 加载更多
+			 */
+			onReachBottom() {
+				if (this.listCurrentPage >= this.listTotalPage) {
+					this.nomore = true
+					return;
+				}
+				this.getShopData({ isPull: true })
 			},
 
-			/*下拉刷新的回调 */
-			downCallback(mescroll) {
-				this.getAllData(this.businessid, 'refresh').then(() => {
-					mescroll.endSuccess();
-				}).catch(() => {
-					mescroll.endErr();
-				});
-			},
 
 			initData() {
 				this.getBusinessData().then(() => {
