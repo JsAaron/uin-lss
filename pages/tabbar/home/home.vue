@@ -208,7 +208,7 @@
 		},
 		data() {
 			return {
-				loadingType: 'loading', //加载更多状态
+				nomore:false,
 
 				//====数据===
 
@@ -256,7 +256,9 @@
 				this.getShopData({ isPull: true })
 			},
 
-
+			/**
+			 * 初始化数据
+			 */
 			initData() {
 				this.getBusinessData().then(() => {
 					this.getAllData();
@@ -325,8 +327,8 @@
 			 * 获取所有数据
 			 * businessid 类型
 			 */
-			getAllData(businessid, refresh) {
-				this.businessid = businessid;
+			getAllData(bid) {
+				this.businessid = bid;
 				return new Promise((resolve, reject) => {
 					let data = {
 						agentid: $$get.agentid() || '111', //没有登陆传111
@@ -334,7 +336,7 @@
 						longitude: $$get.location('longitude')
 					};
 					let request = {
-						businessid: businessid,
+						businessid: bid,
 						biz_id: this.biz_id
 					};
 					util.md5Ajax({
