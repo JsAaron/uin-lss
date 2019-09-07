@@ -35,51 +35,13 @@ function simulate() {
 
   // return common["goods"]
 
-
+	//用户端
   const userUrls = {
-    //bar
     "home": "/pages/tabbar/home/home",
-    "recommend": "/pages/tabbar/recommend/recommend",
-    "my": "/pages/tabbar/my/my",
-
-    // 注册
-    order: "/pages/user/pages/my/order/order",
-    face: "/pages/user/pages/register/face/face",
-    paypwd: "/pages/user/pages/register/paypwd/paypwd",
-
-    //首页
-    "homepage-discount": "/pages/user/pages/homepage/discount/discount",
-    "homepage-shop": "/pages/user/pages/homepage/shop/shop",
-    "homepage-details": "/pages/user/pages/homepage/details/details",
-
-    //个人中心
-    "my-wallet": "/pages/user/pages/my-wallet/my-wallet",
-    "my-wallet-details": "/pages/user/pages/my-wallet/details/details",
-    "my-withdraw-cash": "/pages/user/pages/my-wallet/withdraw-cash/withdraw-cash",
-
-    "my-team": "/pages/user/pages/my/team/team",
-    "my-partner": "/pages/user/pages/my/partner/partner",
-    "my-partner-order": "/pages/user/pages/my/partner/order/order",
-    "my-partner-pay": "/pages/user/pages/my/partner/pay/pay",
-
-    "my-share": "/pages/user/pages/my/share/share",
-    "my-share-operate": "/pages/user/pages/my/share/operate/operate",
-    "my-share-money": "/pages/user/pages/my/share/money/money",
-    "my-share-copywriter": "/pages/user/pages/my/share/copywriter/copywriter",
-
-    "my-client": "/pages/user/pages/my/client/client",
-    "my-referrer": "/pages/user/pages/my/referrer/referrer",
-    "my-certification": "/pages/user/pages/my/certification/certification",
-
-    "my-issue": "/pages/user/pages/my/issue/issue",
-    "my-rule": "/pages/user/pages/my/rule/rule",
-    "my-service": "/pages/user/pages/my/service/service",
-
-    "my-poster": "/pages/user/pages/my/poster/poster"
-
+    "product": "/pages/tabbar/product/product",
   }
 
-  return userUrls["home"]
+  return userUrls["product"]
 
 
   //==============

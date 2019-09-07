@@ -18,6 +18,12 @@
 				"navigationBarTitleText": "刷脸友惠",
 				 "enablePullDownRefresh": true
 			}
+		},
+		{
+			"path": "pages/tabbar/product/product",
+			"style": {
+				"navigationBarTitleText": "精品分享"
+			}
 		}
 	],
 	"globalStyle": {

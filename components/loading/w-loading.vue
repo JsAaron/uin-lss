@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<!-- 加载动画结束 -->
-		<view class="title">{{text}}</view>
+		<!-- 		<view class="title">{{text}}</view> -->
 	</view>
 	<!-- 遮罩层-->
 </template>
@@ -59,8 +59,8 @@
 
 <style>
 	.loading-21 view {
-		width: 60upx;
-		height: 60upx;
+		width: 60rpx;
+		height: 60rpx;
 		border-radius: 50%;
 		backface-visibility: hidden;
 		position: absolute;
@@ -68,7 +68,7 @@
 		animation-timing-function: cubic-bezier(0.4, 0, 1, 0.8);
 		animation-iteration-count: infinite;
 		animation-duration: 3s;
-		top: calc(50% - 20upx);
+		top: 45%;
 		left: 50%;
 		transform-origin: -20upx center;
 	}

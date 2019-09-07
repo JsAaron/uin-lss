@@ -196,7 +196,7 @@
 		 :nomore="nomore"
 		/>
 
-	</view> 
+	</view>
 </template>
 <script>
 	import uniIcon from '@/components/uni-icon/uni-icon';
@@ -246,7 +246,6 @@
 			this.$refs.loading.open()
 		},
 		onLoad() {
-			uni.startPullDownRefresh();
 			this.imgDomain = this.$api.imgDomain;
 			this.avatarUrl = $$get.avatarUrl();
 			util.getLocationData().then(res => {
@@ -276,7 +275,9 @@
 					this.nomore = true
 					return;
 				}
-				this.getShopData({ isPull: true })
+				this.getShopData({
+					isPull: true
+				})
 			},
 
 			/**
@@ -288,7 +289,9 @@
 					//获取商家数据
 					this.getShopData({
 						businessid: ''
-					});
+					}).then(() => {
+						this.$refs.loading.close()
+					})
 				});
 			},
 
