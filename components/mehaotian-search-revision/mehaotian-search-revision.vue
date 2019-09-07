@@ -172,7 +172,7 @@
 			display: flex;
 			align-items: center;
 			width: 100%;
-			height: 60upx;
+			height: 60rpx;
 			//border: 1px #ccc solid; //HM修改 去掉边框
 			background: #fff;
 			overflow: hidden;
@@ -189,10 +189,10 @@
 				}
 
 				.icon {
-					padding: 0 15upx;
+					padding: 0 15rpx;
 
 					&.icon-del {
-						font-size: 38upx;
+						font-size: 38rpx;
 
 						&:before {
 							content: "\e644";
@@ -207,12 +207,12 @@
 				.input {
 					width: 100%;
 					max-width: 100%;
-					line-height: 60upx;
-					height: 60upx;
+					line-height: 60rpx;
+					height: 60rpx;
 					transition: all 0.2s linear;
 
 					&.center {
-						width: 200upx;
+						width: 200rpx;
 					}
 
 					&.sub {
@@ -226,11 +226,11 @@
 			.serachBtn {
 				height: 100%;
 				flex-shrink: 0;
-				padding: 0 30upx;
+				padding: 0 30rpx;
 				//HM修改 按钮背景色
 				background: linear-gradient(to right, #ff9801, #ff570a);
 				//background: $uni-color-success;
-				line-height: 60upx;
+				line-height: 60rpx;
 				color: #fff;
 				//border-left: 1px #ccc solid; //HM修改 去掉边框
 				transition: all 0.3s;
@@ -249,8 +249,8 @@
 			overflow: hidden;
 
 			&.active {
-				padding-left: 15upx;
-				width: 100upx;
+				padding-left: 15rpx;
+				width: 100rpx;
 			}
 		}
 	}
@@ -264,7 +264,7 @@
 
 	.icon {
 		font-family: iconfont;
-		font-size: 32upx;
+		font-size: 32rpx;
 		font-style: normal;
 		color: #999;
 
