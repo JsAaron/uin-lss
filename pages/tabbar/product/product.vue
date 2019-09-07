@@ -10,20 +10,29 @@
 			 v-model="keyword"
 			></mSearch>
 		</view>
+		<!-- 导航 -->
+		<type-nav :list-data="busslistData"></type-nav>
 	</view>
 </template>
 
 <script>
-	// import Name from './components/Name.vue'
-	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
+	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision';
+	import typeNav from '../../common/type-bar'
+
 	export default {
 		components: {
-			mSearch
+			mSearch,
+			typeNav
 		},
 		data() {
 			return {
-				defaultKeyword: "搜索商品名",
-				keyword: "",
+				defaultKeyword: '搜索商品名',
+				keyword: '',
+
+				biz_id: '', //商圈id
+				busslistData: [], //分类数据
+				businessid: '', //分类id
+
 			}
 		},
 		props: {
@@ -39,12 +48,29 @@
 
 		},
 		onLoad() {
-
+			this.getClassifyData().then(response => {
+				this.busslistData = response.data.businesslist
+				this.businessid = ""
+				this.biz_id = this.$api.$$get.login('biz_id')
+				// this.getDiscountData()
+			})
 		},
 		methods: {
 			//执行搜索
 			doSearch(key) {
 				console.log(key)
+			},
+			/**
+			 * 获取分类数据
+			 */
+			getClassifyData() {
+				return new Promise((resolve, reject) => {
+					this.$api.unifyAjax({
+						data: {
+							funcode: '0018'
+						}
+					}).then(resolve).catch(reject)
+				});
 			},
 		}
 	}

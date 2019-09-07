@@ -170,6 +170,9 @@ module.exports = {
 		}
 	},
 	$$get: {
+		login(key){
+			return login[key]
+		},
 		agentid(){
 			return login.taccountid
 		},

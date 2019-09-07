@@ -4,6 +4,8 @@ import store from './store'
 import config from '@/common/config'
 import wLoading from "@/components/loading/w-loading";
 import {
+	unifyAjax,
+	md5Ajax,
 	gotoPage,
 	showBusy,
 	hideBusy,
@@ -13,26 +15,38 @@ import {
 	accessLogin
 } from '@/utils'
 
+import {
+	$$set,
+	$$get
+}
+from '@/common/global';
+
 
 //全局注入w-loading组件
-Vue.component('w-loading',wLoading)
+Vue.component('w-loading', wLoading)
 
 Vue.config.productionTip = false
 
 Vue.prototype.$store = store;
 Vue.prototype.$api = {
+
+	$$set,
+	$$get,
+
+	unifyAjax,
+	md5Ajax,
 	showBusy,
 	hideBusy,
-	showToast, 
+	showToast,
 	hideToast,
 	showModal,
 	gotoPage,
 	accessLogin,
-	imgDomain:config.imgDomain,
-	refresh(callback){
-		callback(()=>{
+	imgDomain: config.imgDomain,
+	refresh(callback) {
+		callback(() => {
 			uni.showNavigationBarLoading()
-		},()=>{
+		}, () => {
 			uni.stopPullDownRefresh();
 			uni.hideNavigationBarLoading()
 		})
