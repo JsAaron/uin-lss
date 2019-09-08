@@ -159,7 +159,7 @@ export default {
 			this.businessid = id;
 			this.getDiscountData({
 				businessid: id,
-				reset:true
+				reset: true
 			});
 		},
 

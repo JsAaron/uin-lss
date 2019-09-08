@@ -1,42 +1,20 @@
 <template>
-	<view>
-		
-	</view>
+	<view></view>
 </template>
 
 <script>
-	import Name from './components/Name.vue'
-	
-	export default {
-		data:{
-			return{
-				
-			} 
-		},
-		props:{
-			
-		},
-		computed:{
-			
-		},
-		created(){
-			
-		},
-		mounted(){
-			
-		},
-		onLoad(){
-			
-		},
-		components: {
-			Name
-		},
-		methods:{
-			
-		}
-	}
+import * as util from '@/utils';
+import { $$set, $$get } from '@/common/global';
+export default {
+	components: {},
+	data() {
+		return {};
+	},
+	props: {},
+	created() {},
+	onLoad() {},
+	methods: {}
+};
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

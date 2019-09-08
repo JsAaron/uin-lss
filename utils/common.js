@@ -1,7 +1,7 @@
 
 export function showBusy(title) {
 	uni.showLoading({
-		title: title || "载入中..."
+		title: title || "正在加载"
 	});
 }
 

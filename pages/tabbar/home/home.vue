@@ -112,7 +112,8 @@
 								>
 									更多
 								</text>
-							</view>`
+							</view>
+							`
 						</view>
 						<view class="shop__header" :data-id="item.agentid" @tap="onDetails">
 							<text class="shop__title">{{ item.agentname }}</text>
@@ -131,9 +132,7 @@
 										/>
 										<view class="shop__price">￥{{ col.goodsprice }}</view>
 									</view>
-									<view class="shop__goodsname">
-										{{ col.goodsname }}
-									</view>
+									<view class="shop__goodsname">{{ col.goodsname }}</view>
 								</view>
 							</block>
 						</view>
