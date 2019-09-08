@@ -5,8 +5,8 @@
 				class="mSearch-input-box"
 				button="inside"
 				:placeholder="defaultKeyword"
-				@search="doSearch(false)"
-				@confirm="doSearch(false)"
+				@search="onSearchBar"
+				@confirm="onSearchBar"
 				v-model="keyword"
 			></mSearch>
 		</view>
@@ -98,12 +98,20 @@ export default {
 		});
 	},
 	methods: {
+		resetArgs() {
+			this.listCurrentPage = 0;
+		},
+
 		/**
 		 * @param {Object} key
 		 * 执行搜索
 		 */
-		doSearch(key) {
-			console.log(key);
+		onSearchBar(key) {
+			this.resetArgs();
+			this.getDiscountData({
+				busyName: '搜索中...',
+				goodsname: key
+			});
 		},
 
 		/**
@@ -151,6 +159,7 @@ export default {
 		 * 获取分类id
 		 */
 		onGetTypeId(id) {
+			this.resetArgs();
 			this.businessid = id;
 			this.getDiscountData({
 				businessid: id
@@ -159,7 +168,7 @@ export default {
 
 		/**
 		 * 获取特价数据
-		 */
+		 */ 
 		getDiscountData({
 			goodsname = '',
 			businessid = '',
