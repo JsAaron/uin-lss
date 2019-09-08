@@ -30,7 +30,7 @@ export function accreditUserLocation(success, fail) {
 				buttonText: '重新获取地理位置',
 				describe: '亲，我们未获得您的位置授权，将无法为您提供推荐的商圈以及相关的一些活动！'
 			};
-			util.gotoPage(`/pages/common/accredit/accredit?data=${JSON.stringify(data)}`);
+			util.gotoPage(`/pages/common/accredit?data=${JSON.stringify(data)}`);
 			fail && fail();
 		});
 }

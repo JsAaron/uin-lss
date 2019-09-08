@@ -7,12 +7,6 @@
 			}
 		},
 		{
-			"path": "pages/common/accredit/accredit",
-			"style": {
-				"navigationBarTitleText": "申请权限"
-			}
-		},
-		{
 			"path": "pages/tabbar/home/home",
 			"style": {
 				"navigationBarTitleText": "刷脸友惠",
@@ -20,9 +14,21 @@
 			}
 		},
 		{
-			"path": "pages/tabbar/product/product",
+			"path": "pages/tabbar/category/category",
 			"style": {
 				"navigationBarTitleText": "精品分享"
+			}
+		},
+		{
+			"path": "pages/common/accredit",
+			"style": {
+				"navigationBarTitleText": "申请权限"
+			}
+		},
+		{
+			"path": "pages/common/product",
+			"style": {
+				"navigationBarTitleText": "商品详情"
 			}
 		}
 	],

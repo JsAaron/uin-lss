@@ -38,9 +38,10 @@ function simulate() {
 	//用户端
   const userUrls = {
     "home": "/pages/tabbar/home/home",
-    "product": "/pages/tabbar/product/product",
+    "category": "/pages/tabbar/category/category",
+		"product": "/pages/common/product",
   }
-
+ 
   return userUrls["product"]
 
 

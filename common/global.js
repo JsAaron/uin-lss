@@ -138,15 +138,15 @@ function setDl(dl_type, is_fws) {
 module.exports = {
 	$$set: {
 		login(key, value) {
-			
+
 			//设置对象
 			if (key && !value) {
 				setGolbal(key)
 				return
 			}
-				
+
 			//设置属性
-			if(key && value){
+			if (key && value) {
 				login[key] = value
 			}
 		},
@@ -170,10 +170,10 @@ module.exports = {
 		}
 	},
 	$$get: {
-		login(key){
+		login(key) {
 			return login[key]
 		},
-		agentid(){
+		agentid() {
 			return login.taccountid
 		},
 		appid() {
@@ -182,11 +182,23 @@ module.exports = {
 		openid() {
 			return device.openid
 		},
+		device(key) {
+			if (key) {
+				return device[key]
+			}
+			return device
+		},
 		avatarUrl() {
 			return userInfo.avatarUrl
 		},
 		nickName() {
 			return userInfo.nickName
+		},
+		userInfo(key) {
+			if (key) {
+				return userInfo[key]
+			}
+			return userInfo
 		},
 		location(key) {
 			if (key) {

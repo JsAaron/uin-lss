@@ -75,7 +75,7 @@ export default {
 		typeNav,
 		uniIcon,
 		lssLoadMore
-	}, 
+	},
 	data() {
 		return {
 			defaultKeyword: '搜索商品名',
@@ -123,7 +123,7 @@ export default {
 		 */
 		onShare(e) {
 			const data = this.listData[e.currentTarget.dataset.index];
-			util.gotoPage(`/common/goods/goods?data=${JSON.stringify(data)}`);
+			util.gotoPage(`../../common/product?data=${JSON.stringify(data)}`);
 		},
 
 		/**
