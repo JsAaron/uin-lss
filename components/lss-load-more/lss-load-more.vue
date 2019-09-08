@@ -24,7 +24,7 @@
 					<text class="load-more__text">{{ nomoreText }}</text>
 				</block>
 				<!-- 加载 -->
-				<block wx:else>
+				<block v-else>
 					<text class="load-more__text">{{ loadmoreText }}</text>
 				</block>
 			</view>
@@ -91,7 +91,8 @@
 					this.showLoadMore = false
 					return
 				}
-
+				
+				console.log('val',val)
 				//如果val与1 关闭加载更多
 				if (val == 1) {
 					this.hasData = true

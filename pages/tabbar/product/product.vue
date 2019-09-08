@@ -98,19 +98,16 @@ export default {
 		});
 	},
 	methods: {
-		resetArgs() {
-			this.listCurrentPage = 0;
-		},
-
 		/**
 		 * @param {Object} key
 		 * 执行搜索
 		 */
 		onSearchBar(key) {
-			this.resetArgs();
+			if (!key) return;
 			this.getDiscountData({
 				busyName: '搜索中...',
-				goodsname: key
+				goodsname: key,
+				reset: true
 			});
 		},
 
@@ -159,23 +156,29 @@ export default {
 		 * 获取分类id
 		 */
 		onGetTypeId(id) {
-			this.resetArgs();
 			this.businessid = id;
 			this.getDiscountData({
-				businessid: id
+				businessid: id,
+				reset:true
 			});
 		},
 
 		/**
 		 * 获取特价数据
-		 */ 
+		 */
+
 		getDiscountData({
 			goodsname = '',
 			businessid = '',
 			busyName = '',
+			reset = false,
 			isPull = false //下拉加载
 		} = {}) {
 			return new Promise((resolve, reject) => {
+				if (reset) {
+					this.listCurrentPage = 0;
+				}
+
 				let hasBusy = !isPull;
 				hasBusy && this.$api.showBusy(busyName);
 
@@ -201,6 +204,7 @@ export default {
 						} else {
 							this.listData = response.data.goodslist;
 							this.listTotalPage = response.data.totalPage;
+							console.log(this.listTotalPage);
 						}
 						hasBusy && this.$api.hideBusy();
 						resolve();
