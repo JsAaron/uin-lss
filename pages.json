@@ -22,9 +22,7 @@
 		{
 			"path": "pages/tabbar/product/product",
 			"style": {
-				"navigationBarTitleText": "精品分享",
-				"enablePullDownRefresh": true
-
+				"navigationBarTitleText": "精品分享"
 			}
 		}
 	],
