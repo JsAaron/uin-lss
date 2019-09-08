@@ -1,3 +1,5 @@
+//======== 类型导航模块 ========
+
 <template>
 	<view class="content">
 		<view class="search-box">
@@ -11,7 +13,11 @@
 			></mSearch>
 		</view>
 		<!-- 导航 -->
-		<type-nav :list-data="busslistData" @get-typeid="onGetTypeId"></type-nav>
+		<type-nav
+			:bid="businessid"
+			:list-data="busslistData"
+			@get-typeid="onGetTypeId"
+		></type-nav>
 
 		<!-- 内容 -->
 		<view class="discount">
@@ -59,7 +65,7 @@
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision';
 import lssLoadMore from '@/components/lss-load-more/lss-load-more';
 import uniIcon from '@/components/uni-icon/uni-icon';
-import typeNav from '../../common/type-bar';
+import typeNav from '../../common/type-nav';
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
 
@@ -69,7 +75,7 @@ export default {
 		typeNav,
 		uniIcon,
 		lssLoadMore
-	},
+	}, 
 	data() {
 		return {
 			defaultKeyword: '搜索商品名',
@@ -155,10 +161,10 @@ export default {
 		 * @param {Object} id
 		 * 获取分类id
 		 */
-		onGetTypeId(id) {
-			this.businessid = id;
+		onGetTypeId(bid) {
+			this.businessid = bid;
 			this.getDiscountData({
-				businessid: id,
+				businessid: bid,
 				reset: true
 			});
 		},
@@ -204,7 +210,6 @@ export default {
 						} else {
 							this.listData = response.data.goodslist;
 							this.listTotalPage = response.data.totalPage;
-							console.log(this.listTotalPage);
 						}
 						hasBusy && this.$api.hideBusy();
 						resolve();
