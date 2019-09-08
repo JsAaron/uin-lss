@@ -16,22 +16,24 @@
 			"path": "pages/tabbar/home/home",
 			"style": {
 				"navigationBarTitleText": "刷脸友惠",
-				 "enablePullDownRefresh": true
+				"enablePullDownRefresh": true
 			}
 		},
 		{
 			"path": "pages/tabbar/product/product",
 			"style": {
-				"navigationBarTitleText": "精品分享"
+				"navigationBarTitleText": "精品分享",
+				"enablePullDownRefresh": true
+
 			}
 		}
 	],
 	"globalStyle": {
-    "navigationBarBackgroundColor": "#4f96ff",
-    "navigationBarTextStyle": "white",
-    "navigationStyle": "default",
-    "backgroundTextStyle": "light",
-    "backgroundColor": "#4f96ff"
+		"navigationBarBackgroundColor": "#4f96ff",
+		"navigationBarTextStyle": "white",
+		"navigationStyle": "default",
+		"backgroundTextStyle": "light",
+		"backgroundColor": "#4f96ff"
 	},
 	"tabBar": {
 		"color": "#777777",

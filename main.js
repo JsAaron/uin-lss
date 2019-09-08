@@ -29,12 +29,6 @@ Vue.config.productionTip = false
 
 Vue.prototype.$store = store;
 Vue.prototype.$api = {
-
-	$$set,
-	$$get,
-
-	unifyAjax,
-	md5Ajax,
 	showBusy,
 	hideBusy,
 	showToast,

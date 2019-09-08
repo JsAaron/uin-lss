@@ -49,9 +49,11 @@
 		},
 		components: {
 
-		},
+		}, 
 		methods: {
-
+			onSwitchType(e) {
+				this.$emit('get-typeid', e.currentTarget.dataset.id)
+			}
 		}
 	}
 </script>
