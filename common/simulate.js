@@ -42,7 +42,7 @@ function simulate() {
 		"product": "/pages/common/product",
   }
  
-  return userUrls["product"]
+  // return userUrls["product"]
 
 
   //==============

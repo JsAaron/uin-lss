@@ -50,9 +50,9 @@
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/tabbar/home/home",
-				"iconPath": "static/tabbar/recommend.png",
-				"selectedIconPath": "static/tabbar/recommend-on.png",
+				"pagePath": "pages/tabbar/category/category",
+				"iconPath": "static/tabbar/category.png",
+				"selectedIconPath": "static/tabbar/category-on.png",
 				"text": "推荐"
 			},
 			{

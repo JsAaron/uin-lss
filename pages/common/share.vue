@@ -3,7 +3,7 @@
 		<canvas
 			v-if="poster"
 			class="goods"
-			style="{width:boxWidth+'px',height:boxHeight + 'px',top:boxTop + 'px'}"
+			:style="{ width: boxWidth + 'px', height: boxHeight + 'px', top: boxTop + 'px' }"
 			canvas-id="myCanvas"
 			@longtap="onShare"
 		/>
@@ -63,6 +63,7 @@ import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
 export default {
 	components: {},
+
 	data() {
 		return {
 			poster: false,
@@ -76,6 +77,10 @@ export default {
 			price: '', //商品价格
 			delPrice: '', //划线价
 			canvasUrl: '', //canvas
+
+			windowWidth: '',
+			windowHeight: '',
+			posterHandle: false,
 
 			userImgSrc: '',
 			qrImgSrc: '',
@@ -138,17 +143,18 @@ export default {
 		},
 
 		createBox() {
-			let windowWidth = util.getWindowWidth();
-			let windowHeight = util.getWindowHeight();
+			this.windowWidth = util.getWindowWidth();
+			this.windowHeight = util.getWindowHeight();
 
 			//容器的宽高
-			let boxWidth = windowWidth * 0.7;
-			let boxHeight = windowHeight;
+			let boxWidth = this.windowWidth * 0.7;
+			let boxHeight = this.windowHeight;
 
 			//图片尺寸
 			let imgHeight = (boxWidth / 5) * 4;
 			this.boxWidth = boxWidth;
 			this.boxHeight = boxHeight;
+
 			this.offsetX = 0;
 			this.spaceY = 10;
 			this.imgWidth = boxWidth;
@@ -328,9 +334,7 @@ export default {
 			//二维码
 			this.createQr(ctx);
 
-			this.setData({
-				boxHeight: this.data.priceTop + 20
-			});
+			this.boxHeight = this.priceTop + 20;
 
 			ctx.draw();
 
@@ -339,9 +343,7 @@ export default {
 			setTimeout(() => {
 				util.hideBusy();
 				this.hasCanvas = true;
-				this.setData({
-					top: (this.windowHeight - this.priceTop - 20) / 4
-				});
+				this.boxTop = (this.windowHeight - this.priceTop - 20) / 4;
 			}, 0);
 		},
 
@@ -355,9 +357,7 @@ export default {
 					success: res => {
 						wx.hideLoading();
 						var tempFilePath = res.tempFilePath;
-						this.setData({
-							canvasUrl: tempFilePath
-						});
+						this.canvasUrl = tempFilePath;
 						if (tempFilePath !== '') {
 							wx.hideLoading();
 							wx.previewImage({

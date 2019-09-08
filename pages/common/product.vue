@@ -36,6 +36,23 @@ import { $$set, $$get } from '@/common/global';
 import share from './share';
 export default {
 	components: { share },
+
+	/**
+	 * 分享
+	 * @param {*} res
+	 */
+	onShareAppMessage(res) {
+		if (res.from === 'button') {
+		}
+		return {
+			title: `${this.listData.goodsname} 惊爆价:${this.listData.goodsprice}元`,
+			imageUrl: `${this.imgDomain}${this.listData.goodsimg}`,
+			path: `/pages/index/index?fagentid=${$$get.login('taccountid')}&agentidsp=${
+				this.listData.agentid
+			}&goodsid=${this.listData.id}` //商户分享注册id
+		};
+	},
+
 	data() {
 		return {
 			filter: '',
@@ -122,7 +139,7 @@ export default {
 		 * 关闭分享
 		 */
 		onCloseShareFriend() {
-			this.showShare = false
+			this.showShare = false;
 		}
 	}
 };

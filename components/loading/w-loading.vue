@@ -59,8 +59,8 @@
 
 <style>
 	.loading-21 view {
-		width: 60rpx;
-		height: 60rpx;
+		width: 40rpx;
+		height: 40rpx;
 		border-radius: 50%;
 		backface-visibility: hidden;
 		position: absolute;
