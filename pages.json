@@ -20,6 +20,12 @@
 			}
 		},
 		{
+			"path": "pages/tabbar/center/center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
 			"path": "pages/common/accredit",
 			"style": {
 				"navigationBarTitleText": "申请权限"

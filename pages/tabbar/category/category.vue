@@ -3,38 +3,17 @@
 <template>
 	<view class="content">
 		<view class="search-box">
-			<mSearch
-				class="mSearch-input-box"
-				button="inside"
-				:placeholder="defaultKeyword"
-				@search="onSearchBar"
-				@confirm="onSearchBar"
-				v-model="keyword"
-			></mSearch>
+			<mSearch class="mSearch-input-box" button="inside" :placeholder="defaultKeyword" @search="onSearchBar" @confirm="onSearchBar" v-model="keyword"></mSearch>
 		</view>
 		<!-- 导航 -->
-		<type-nav
-			:bid="businessid"
-			:list-data="busslistData"
-			@get-typeid="onGetTypeId"
-		></type-nav>
+		<type-nav :bid="businessid" :list-data="busslistData" @get-typeid="onGetTypeId"></type-nav>
 
 		<!-- 内容 -->
 		<view class="discount">
 			<view class="discount__content">
 				<block v-for="(item, index) in listData" :key="index">
-					<view
-						class="discount__col lss-hairline--bottom"
-						:data-index="index"
-						@tap="onShare"
-					>
-						<view class="discount__image-wrapper">
-							<image
-								class="discount__image"
-								mode="aspectFill"
-								:src="imgDomain + item.goodsimg"
-							/>
-						</view>
+					<view class="discount__col lss-hairline--bottom" :data-index="index" @tap="onShare">
+						<view class="discount__image-wrapper"><image class="discount__image" mode="aspectFill" :src="imgDomain + item.goodsimg" /></view>
 						<view class="discount__row">
 							<text class="discount__title">{{ item.goodsname }}</text>
 						</view>
@@ -44,10 +23,7 @@
 						</view>
 						<view class="discount__row">
 							<view v-if="item.compaddress" class="discount__left">
-								<image
-									class="discount__map discount__map--small"
-									src="/static/tabbar/product/2.png"
-								/>
+								<image class="discount__map discount__map--small" src="/static/tabbar/product/2.png" />
 								<view class="discount__text-site">{{ item.compaddress }}</view>
 							</view>
 						</view>

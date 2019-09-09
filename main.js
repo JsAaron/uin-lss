@@ -36,6 +36,30 @@ Vue.prototype.$api = {
 	showModal,
 	gotoPage,
 	accessLogin,
+	/**
+	 * 检测是否已经登录
+	 *  hint  是否提示
+	 * isBack 是否回退
+	 * backUrl 如果是新注册，返回的url，给固码使用
+	 */
+	hasLogin({ hint = false, isBack = "", backUrl = "" } = {}) {
+		if ($$get.login('taccountid')) {
+			return true
+		}
+		if (hint) {
+			showModal({
+				content: `亲,您还没有注册/登录哦！`,
+				confirmText: "确定",
+				success(res) {
+					if (res.confirm) {
+						console.log('1111111111111111111')
+					//	util.gotoPage(`/common/login/login?pageType=user&isBack=${isBack}&backUrl=${backUrl}`)
+					}
+				}
+			})
+		}
+		return false
+	},
 	imgDomain: config.imgDomain,
 	refresh(callback) {
 		callback(() => {

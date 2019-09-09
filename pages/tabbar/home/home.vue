@@ -1,12 +1,7 @@
 <template>
 	<view class="home">
 		<!-- 商圈 -->
-		<view
-			v-if="businessDisplay"
-			class="business-area"
-			catchtouchmove="true"
-			@tap="onCloseBusiness"
-		>
+		<view v-if="businessDisplay" class="business-area" catchtouchmove="true" @tap="onCloseBusiness">
 			<view class="business-area__wapper {businessZoom}">
 				<view class="business-area__title"><text>附近商圈</text></view>
 			</view>
@@ -23,9 +18,7 @@
 			</view>
 			<!-- 头部 -->
 			<view class="header" @tap="onSearch">
-				<view class="header__left">
-					<image class="header__avatar" :src="avatarUrl" />
-				</view>
+				<view class="header__left"><image class="header__avatar" :src="avatarUrl" /></view>
 				<view class="header__rigth">
 					<view class="header__search">
 						<text class="header__search-text">搜{{ biz_name }}看当地吃喝玩乐</text>
@@ -39,16 +32,8 @@
 				<block v-for="(item, index) in busslistData" :key="index">
 					<view class="nav__col" :data-id="item.businessid" @tap="onSwitchType">
 						<image class="nav__logo" :src="imgDomain + item.imgpath" />
-						<text
-							class="nav__text"
-							:class="[item.businessid == businessid ? 'nav__text--active' : '']"
-						>
-							{{ item.businessname }}
-						</text>
-						<view
-							class="nav__line"
-							:class="[item.businessid == businessid ? 'nav__line--active' : '']"
-						/>
+						<text class="nav__text" :class="[item.businessid == businessid ? 'nav__text--active' : '']">{{ item.businessname }}</text>
+						<view class="nav__line" :class="[item.businessid == businessid ? 'nav__line--active' : '']" />
 					</view>
 				</block>
 			</view>
@@ -59,17 +44,8 @@
 				<view class="discount__header">
 					<text class="discount__header-title">劲爆商品</text>
 					<view class="discount__header-right">
-						<text
-							class="discount__header-more lss-color-active--blue"
-							@tap="onDiscountMore"
-						>
-							更多
-						</text>
-						<uni-icon
-							class="discount__header-more-icon"
-							type="more-o"
-							size="16"
-						></uni-icon>
+						<text class="discount__header-more lss-color-active--blue" @tap="onDiscountMore">更多</text>
+						<uni-icon class="discount__header-more-icon" type="more-o" size="16"></uni-icon>
 					</view>
 				</view>
 				<view class="discount__content">
@@ -85,11 +61,7 @@
 							</view>
 							<view class="discount__row">
 								<view class="discount__left">
-									<uni-icon
-										class="shop__map shop__map--small"
-										type="location"
-										size="16"
-									></uni-icon>
+									<uni-icon class="shop__map shop__map--small" type="location" size="16"></uni-icon>
 									<view class="discount__text-site">{{ item.compaddress }}</view>
 								</view>
 							</view>
@@ -105,14 +77,7 @@
 					<view class="shop__row">
 						<view v-if="index == 0" class="discount__header shop__solt">
 							<text class="discount__header-title">优惠商家</text>
-							<view class="discount__header-right">
-								<text
-									class="discount__header-more lss-color-active--blue"
-									@tap="onShopMore"
-								>
-									更多
-								</text>
-							</view>
+							<view class="discount__header-right"><text class="discount__header-more lss-color-active--blue" @tap="onShopMore">更多</text></view>
 							`
 						</view>
 						<view class="shop__header" :data-id="item.agentid" @tap="onDetails">
@@ -125,11 +90,7 @@
 							<block v-for="(col, index) in item.goods_list" :key="index">
 								<view class="shop__col">
 									<view class="shop__image-box">
-										<image
-											class="shop__image"
-											lazy-load="true"
-											:src="imgDomain + col.goodsimg"
-										/>
+										<image class="shop__image" lazy-load="true" :src="imgDomain + col.goodsimg" />
 										<view class="shop__price">￥{{ col.goodsprice }}</view>
 									</view>
 									<view class="shop__goodsname">{{ col.goodsname }}</view>
@@ -188,7 +149,7 @@ export default {
 		};
 	},
 	onReady() {
-		this.$refs.loading.open();
+		// this.$refs.loading.open();
 	},
 	onLoad() {
 		this.imgDomain = this.$api.imgDomain;
@@ -239,7 +200,7 @@ export default {
 				this.getShopData({
 					businessid: ''
 				}).then(() => {
-					this.$refs.loading.close();
+					// this.$refs.loading.close();
 				});
 			});
 		},

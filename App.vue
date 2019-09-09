@@ -40,4 +40,10 @@ button[plain] {
 button::after {
 	border: none;
 }
+
+input {
+	outline: none;
+	border: none;
+	list-style: none;
+}
 </style>

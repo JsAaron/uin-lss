@@ -213,12 +213,19 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	.QS_WavesButton {
+		@include flex-h;
 		position: relative;
 		overflow: hidden;
+		border: none;
+		outline: none;
+		background: transparent;
+		margin: 0;
+		padding: 0;
+		line-height:none;
 	}
-
+	
 	.waves-ripple {
 		position: absolute;
 		border-radius: 100%;

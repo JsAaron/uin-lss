@@ -48,7 +48,7 @@ export default {
 	font-weight: normal;
 	font-style: normal;
 	line-height: 1;
-	display: inline-block;
+	/* display: inline-block; */
 	text-decoration: none;
 	-webkit-font-smoothing: antialiased;
 }
