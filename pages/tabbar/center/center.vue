@@ -8,7 +8,14 @@
 					<view class="banner__t">
 						<text>{{ nickName }}</text>
 						<text v-if="isfact" class="banner__shimimg">已认证</text>
-						<text v-else class="banner__shimimg" bindtap="gotoPage" data-url="/pages/user/pages/my/certification/certification">{{ hasLogin ? '未实名' : '未登录' }}</text>
+						<text
+							v-else
+							class="banner__shimimg"
+							bindtap="gotoPage"
+							data-url="/pages/user/pages/my/certification/certification"
+						>
+							{{ hasLogin ? '未实名' : '未登录' }}
+						</text>
 					</view>
 					<view class="banner__t banner__t2">
 						<text>{{ mobileno }}</text>
@@ -38,7 +45,87 @@
 				</view>
 			</view>
 			<view class="statistics__button">
-				<waves-button btnStyle="background:linear-gradient(to right,#FF9A29, #FF6B0E);height:65rpx;border-radius:10px" wavesColor="rgba(255,101,16,.6)" txt="提现"></waves-button>
+				<waves-button
+					btnStyle="background:linear-gradient(to right,#FF9A29, #FF6B0E);height:65rpx;border-radius:10px"
+					wavesColor="rgba(255,101,16,.6)"
+					txt="提现"
+				></waves-button>
+			</view>
+		</view>
+
+		<!-- 订单 -->
+		<view class="order">
+			<view class="order__tab lss-hairline--bottom">
+				<text>我的订单</text>
+				<view class="order__all">
+					<text>查看全部订单</text>
+					<uni-icon type="arrow" size="16"></uni-icon>
+				</view>
+			</view>
+			<view class="order__nav">
+				<view class="order__col">
+					<image src="/static/tabbar/center/5.png"></image>
+					<text>全部</text>
+				</view>
+				<view class="order__col">
+					<image src="/static/tabbar/center/6.png"></image>
+					<text>待付款</text>
+				</view>
+				<view class="order__col">
+					<image src="/static/tabbar/center/7.png"></image>
+					<text>待使用</text>
+				</view>
+				<view class="order__col">
+					<image src="/static/tabbar/center/8.png"></image>
+					<text>待评价</text>
+				</view>
+			</view>
+		</view>
+
+		<!-- 必备工具 -->
+		<view class="tools">
+			<view class="tools__tab lss-hairline--bottom"><text>必备工具</text></view>
+			<view class="tools__nav">
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t1.png"></image>
+					<text>银行卡</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t2.png"></image>
+					<text>我的团队</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t3.png"></image>
+					<text>分享推广</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t4.png"></image>
+					<text>个人设置</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t5.png"></image>
+					<text>常见问答</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t6.png"></image>
+					<text>结算规则</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t7.png"></image>
+					<text>联系客服</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t8.png"></image>
+					<text>申请商户</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t9.png"></image>
+					<text>我的奖券</text>
+				</view>
+				<view class="tools__col">
+					<image src="/static/tabbar/center/t10.png"></image>
+					<text>我的收藏</text>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -158,11 +245,11 @@ export default {
 //统计
 .statistics {
 	width: 690rpx;
-	position: relative;
+	position: absolute;
 	padding: 30rpx 0;
 	left: 30rpx;
 	z-index: 1;
-	top: -60rpx;
+	top: 140rpx;
 	background: $background-color-white;
 	border-radius: 10rpx;
 	&__row {
@@ -171,10 +258,10 @@ export default {
 	&__col {
 		@include flex-v;
 	}
-	&__arrow{
+	&__arrow {
 		@include flex-h;
 	}
-	&__arrow-icon{
+	&__arrow-icon {
 		height: 30rpx;
 	}
 	&__button {
@@ -186,8 +273,73 @@ export default {
 		color: $text-color-orange;
 		font-weight: bold;
 	}
-	&__t{
+	&__t {
 		font-size: 26rpx;
+	}
+}
+
+//订单
+.order {
+	width: 690rpx;
+	margin: 200rpx auto 0;
+	background: $background-color-white;
+	border-radius: 10rpx;
+	&__tab {
+		@include flex-h-between;
+		padding: 20rpx 30rpx;
+		font-size: 14px;
+	}
+	&__all {
+		@include flex-h;
+				font-size: 12px;
+				color:$text-color-gray;
+	}
+	&__nav {
+		padding: 30rpx 0;
+		@include flex-h-around;
+	}
+	&__col {
+		@include flex-v;
+		font-size: 12px;
+		image {
+			width: 42rpx;
+			height: 42rpx;
+		}
+		text {
+			margin-top: 10rpx;
+		}
+	}
+}
+
+//必备工具
+.tools {
+	width: 690rpx;
+	margin: 20rpx auto 0;
+	background: $background-color-white;
+	border-radius: 10rpx;
+	&__tab {
+		@include flex-h-between;
+		padding: 20rpx 30rpx;
+		font-size: 14px;
+	}
+	&__nav {
+		display: flex;
+		flex-wrap: wrap;
+		padding:10rpx 0 30rpx 0;
+	}
+	&__col {
+		@include flex-v;
+		width: 25%;
+
+		margin-top: 50rpx;
+		image {
+			width: 64rpx;
+			height: 64rpx;
+		}
+		text {
+			margin-top: 10rpx;
+			font-size: 12px;
+		}
 	}
 }
 </style>
