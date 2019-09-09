@@ -20,12 +20,6 @@
 			}
 		},
 		{
-			"path": "pages/tabbar/center/center",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
-		{
 			"path": "pages/common/accredit",
 			"style": {
 				"navigationBarTitleText": "申请权限"
@@ -35,6 +29,24 @@
 			"path": "pages/common/product",
 			"style": {
 				"navigationBarTitleText": "商品详情"
+			}
+		},
+		{
+			"path": "pages/common/add-bank-card",
+			"style": {
+				"navigationBarTitleText": "新增银行卡"
+			}
+		},
+		{
+			"path": "pages/tabbar/center/center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/tabbar/center/bank-card",
+			"style": {
+				"navigationBarTitleText": "我的银行卡"
 			}
 		}
 	],

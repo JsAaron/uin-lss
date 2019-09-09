@@ -57,7 +57,10 @@
 @mixin flex-v($justify: center, $align: center) {
 	@include flex(column, $justify, $align);
 }
-
+//竖直左边，设置上下
+@mixin flex-v-left($justify: center) {
+	@include flex(column, $justify, flex-start);
+}
 @mixin flex-v-around($align: center) {
 	@include flex(column, space-around, $align);
 }

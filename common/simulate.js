@@ -41,9 +41,12 @@ function simulate() {
 		"category": "/pages/tabbar/category/category",
 		"center": "/pages/tabbar/center/center",
 		"product": "/pages/common/product",
+		
+		//我的银行卡
+		"center-bankcard": "/pages/tabbar/center/bank-card",
 	}
 
-	return userUrls["center"]
+	return userUrls["center-bankcard"]
 
 
 	//==============
