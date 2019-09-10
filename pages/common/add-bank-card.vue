@@ -120,7 +120,7 @@ export default {
 			otherSet: {
 				getCodeSet: {
 					securityCodePlaceholder: '输入短信验证码',
-					phoneNum: '13407316600',
+					phoneNum: '',
 					customId: 'add-back-card' //自定义标识
 				},
 				segmentationTitleSet: {
@@ -172,18 +172,13 @@ export default {
 			],
 
 			// 步骤流程
-			step: 3,
+			step: 1,
 			//激活样式
 			stepClass1: true,
 			stepClass2: false,
-			stepClass3: false,
-
-			activeClass: '',
-			showCreditCard: true //是否为信用卡
+			stepClass3: false
 		};
 	},
-	props: {},
-	created() {},
 	onLoad(options) {
 		if (options) {
 			//添加多张卡
@@ -254,8 +249,11 @@ export default {
 					util.hideBusy();
 					//信用卡
 					if (response.data.iscs == 1) {
-						this.showCreditCard = true;
+						this.inputsArray3[0].hide = false;
+						this.inputsArray3[1].hide = false;
 					}
+					//更新手机号
+					this.otherSet.getCodeSet.phoneNum = this.mobileno;
 					this.nextPage();
 				})
 				.catch(errResponse => {
@@ -268,7 +266,37 @@ export default {
 		 * 注册第三步
 		 */
 		onNextPage3(res) {
-			console.log(res)
+			util.showBusy('绑卡中...');
+			const _data = {
+				funcode: '0081',
+				encrypt: {
+					data: {
+						cardno: util.removeSpace(this.cardno),
+						mobileno: this.mobileno
+					}
+				},
+				request: {
+					randnum: res.randnum, //随机码
+					vernum: res.vernum, //验证码
+					cvn2: this.cvn2, //cvn2安全码
+					validate: this.validate, //有效期
+					taccountId: $$get.login('taccountid')
+				}
+			};
+			util
+				.md5Ajax(_data)
+				.then(() => {
+					util.hideBusy();
+					util.showToast('success', '绑卡成功');
+					if (util.getRouterPrevPage().$$refreshBackCard) {
+						util.getRouterPrevPage().$$refreshBackCard();
+					}
+					util.gotoPage('back', 2000);
+				})
+				.catch(errResponse => {
+					util.hideBusy();
+					util.showToast('fail', errResponse.data.retMsg);
+				});
 		},
 
 		/**
@@ -296,14 +324,6 @@ export default {
 					}
 				}
 				this.step = value;
-				this.userName = this.userName;
-				this.idcard = this.idcard;
-				this.cardno = this.cardno;
-				this.mobileno = this.mobileno;
-				this.cvn2 = this.cvn2;
-				this.validate = this.validate;
-				this.randnum = this.randnum; //随机码
-				this.vernum = this.vernum; //验证码
 			}
 		},
 
@@ -315,40 +335,6 @@ export default {
 		},
 		onStep3() {
 			this.setStep(3);
-		},
-
-		//========================
-		//  银行卡修改
-		//========================
-
-		//姓名
-		getUserName(e) {
-			this.userName = e.detail.value;
-		},
-		//身份证
-		getIdcard(e) {
-			this.idcard = e.detail.value;
-		},
-		//银行卡号
-		getCardNo(e) {
-			let value = e.detail.value;
-			this.cardno = util.splitNumber(value);
-		},
-		//电话
-		getPhone(e) {
-			this.mobileno = e.detail.value;
-		},
-		//信用卡安全码
-		getCvn2(e) {
-			this.cvn2 = e.detail.value;
-		},
-		//信用卡有效日期
-		getValidate(e) {
-			this.validate = e.detail.value;
-		},
-		//验证码
-		getVerify(e) {
-			this.vernum = e.detail.value;
 		}
 	}
 };

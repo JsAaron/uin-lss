@@ -1893,7 +1893,8 @@
 						const variableName = d[res[i].index1].variableName || onLoadData; // 自定义变量名或默认变量名
 						inputsDataObj[variableName] = _app.pics_splice(inputsDataObj[variableName], res[i].data);
 					}
-					inputsDataObj.code = _this.code
+					inputsDataObj.randnum = _this.code
+					inputsDataObj.vernum = _this.userCode
 					_this.$emit('activeFc', inputsDataObj); // 把用户输入数据对象输出给父级
 					_this.inputs_reSet(); //提交后重置
 				}).catch((err)=>{
