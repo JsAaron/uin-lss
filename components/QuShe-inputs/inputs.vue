@@ -1449,7 +1449,7 @@
 						this.inputs_changeFc(value, index, filterfc, filtertype, true);
 					}else{
 						inputDebounce[debounceName+index] = setTimeout(()=>{
-							log('防抖', 'inputs_change');
+							// log('防抖', 'inputs_change');
 							this.inputs_changeFc(value, index, filterfc, filtertype);
 						}, this.inputDebounceSet.delay||500);
 					}
@@ -1599,7 +1599,7 @@
 			getCode() { // 判断是否正确输入手机号后发送验证码并倒计时
 				let _this = this;
 				if(_this.startCode) return;
-				let phone;
+				let phone;  
 				let customId;
 				if(_this.otherSet&&_this.otherSet.getCodeSet&&_this.otherSet.getCodeSet.phoneNum) {
 					phone = _this.otherSet.getCodeSet.phoneNum;
@@ -1641,7 +1641,10 @@
 					customId = obj.customId;
 				}
 				if (_app.regTest('Tel', phone)) { //正则判断
-					_this.code = _app.sendSMS(customId, phone);
+					// _this.code = _app.sendSMS(customId, phone);
+					_app.sendSMS(customId, phone).then(code=>{
+						_this.code = code
+					})
 				} else {
 					_app.showToast('请正确输入11位手机号');
 					return;
@@ -1806,12 +1809,13 @@
 					} else if (!_this.userCode) {
 						_app.showToast('填写验证码');
 						return;
-					} else if (_this.userCode !== _this.code) {
-						_app.showToast('验证码不正确');
-						_this.userCode = '';
-						_this.code = '';
-						return;
 					}
+					// } else if (_this.userCode !== _this.code) {
+					// 	_app.showToast('验证码不正确');
+					// 	_this.userCode = '';
+					// 	// _this.code = '';
+					// 	return;
+					// }
 				}
 				// 如果用了图片类型， 则上传并返回数据
 				const pic_promise = [];
@@ -1889,6 +1893,7 @@
 						const variableName = d[res[i].index1].variableName || onLoadData; // 自定义变量名或默认变量名
 						inputsDataObj[variableName] = _app.pics_splice(inputsDataObj[variableName], res[i].data);
 					}
+					inputsDataObj.code = _this.code
 					_this.$emit('activeFc', inputsDataObj); // 把用户输入数据对象输出给父级
 					_this.inputs_reSet(); //提交后重置
 				}).catch((err)=>{
@@ -1898,8 +1903,8 @@
 			},
 			inputs_reSet() {
 				//提交后重置验证码
-				this.code = '';
-				this.userCode = '';
+				// this.code = '';
+				// this.userCode = '';
 				this.Igree = false;
 				//若submit为true，重置表单为初始化
 				if(this.submitReSet) this.init();

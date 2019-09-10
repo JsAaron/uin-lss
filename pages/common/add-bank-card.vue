@@ -86,47 +86,15 @@
 
 			<!-- 步骤3 -->
 			<view v-if="step === 3">
-				
-				<view v-if="showCreditCard">
-					<inputs
-						ifCode
-						:inputsArray="inputsArray3"
-						@activeFc="onNextPage3"
-						:buttonStyle="buttonStyle"
-						activeName="绑卡"
-						:fontSizeScaleSet="fontSizeScaleSet"
-					/>
-				</view>
-
-				<!-- 					<label class="bank-card__content-label">CVV2</label>
-				  <input value="{{cvn2}}" class="bank-card__content-number" type="text" bindinput="getCvn2"
-          placeholder="请输入信用卡背后签名栏的最后三位数" maxlength="3"></input> 
-				</view>
-				
-				<view v-if="showCreditCard" class="bank-card__content-card">
-					<label class="bank-card__content-label">有效期</label>
-					      <input value="{{validate}}" bindinput="getValidate" class="bank-card__content-number" type="number"
-          placeholder="有效日期格式月年.如(0421)" maxlength="4"></input> 
-				</view>
-				 -->
-
-<!-- 				<view class="bank-card__content-card">
-					<label class="bank-card__content-label">验证码</label>
-				     <input class="bank-card__register-input" value="{{vernum}}" bindinput="getVerify" placeholder="输入验证码"
-          type="number" maxlength="6" /> 
-					<button
-						class="bank-card__register-button bank-card__code"
-						v-if="!isShowCode"
-						@tap="getVerifyCode"
-					>
-						获取验证码
-					</button>
-					<button class="bank-card__register-button bank-card__code bank-card__code--{{activeClass}}" wx:if="{{isShowCode}}">{{secCode}}秒后重新发送</button> 
-				</view>
-				<button @tap="__bind_next_page3" class="lss-button-top--max lss-button-max--main">
-					绑卡
-				</button> -->
-				
+				<inputs
+					ifCode
+					:otherSet="otherSet"
+					:inputsArray="inputsArray3"
+					@activeFc="onNextPage3"
+					:buttonStyle="buttonStyle"
+					activeName="绑卡"
+					:fontSizeScaleSet="fontSizeScaleSet"
+				/>
 			</view>
 		</view>
 	</view>
@@ -146,7 +114,19 @@ export default {
 				allScale: 0.04
 			},
 			buttonStyle: {
-				activeButton: 'background-color: #4f96ff;box-shadow: 2px 2px 1px 1px #4f96ff;'
+				activeButton: 'background-color: #4f96ff;box-shadow: 2px 2px 1px 1px #4f96ff;',
+				getcodeButton: 'background-color: #4f96ff;'
+			},
+			otherSet: {
+				getCodeSet: {
+					securityCodePlaceholder: '输入短信验证码',
+					phoneNum: '13407316600',
+					customId: 'add-back-card' //自定义标识
+				},
+				segmentationTitleSet: {
+					segmentationTitleFontSizeScale: 0.032,
+					segmentationTitleStyle: 'color: #f5105c;'
+				}
 			},
 			inputsArray1: [
 				{
@@ -174,14 +154,20 @@ export default {
 			],
 			inputsArray3: [
 				{
+					segmentationTitle: '请输入信用卡背后签名栏的最后三位数',
+					border_top: '1px solid #f2f2f2', //上划线
 					title: 'CVV2',
 					verifyType: 'Number',
-					verifyErr: '银行卡必须是数字'
+					verifyErr: '银行卡必须是数字',
+					hide: true
 				},
 				{
+					segmentationTitle: '有效日期格式月年.如(0421)',
+					border_top: '1px solid #f2f2f2', //上划线
 					title: '有效期',
 					verifyType: 'Tel',
-					verifyErr: '手机号码输入有误'
+					verifyErr: '手机号码输入有误',
+					hide: true
 				}
 			],
 
@@ -193,20 +179,7 @@ export default {
 			stepClass3: false,
 
 			activeClass: '',
-
-			showCreditCard: true, //是否为信用卡
-
-			cvn2: '', //信用卡安全码
-			validate: '', //信用卡有效日期
-
-			randnum: '', //随机码
-			vernum: '', //验证码
-
-			addMore: false,
-
-			//====状态======
-			secCode: '', //设置倒计时
-			isShowCode: false //验证码
+			showCreditCard: true //是否为信用卡
 		};
 	},
 	props: {},
@@ -289,6 +262,13 @@ export default {
 					util.hideBusy();
 					util.showToast(errResponse.data.retMsg);
 				});
+		},
+
+		/**
+		 * 注册第三步
+		 */
+		onNextPage3(res) {
+			console.log(res)
 		},
 
 		/**
