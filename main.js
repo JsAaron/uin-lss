@@ -3,6 +3,7 @@ import App from './App'
 import store from './store'
 import config from '@/common/config'
 import wLoading from "@/components/loading/w-loading";
+import inputs from '@/components/QuShe-inputs/inputs.vue';
 import {
 	unifyAjax,
 	md5Ajax,
@@ -22,7 +23,7 @@ import {
 from '@/common/global';
 
 
-//全局注入w-loading组件
+Vue.component('inputs', inputs);
 Vue.component('w-loading', wLoading)
 
 Vue.config.productionTip = false

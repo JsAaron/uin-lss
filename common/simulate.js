@@ -44,9 +44,10 @@ function simulate() {
 		
 		//我的银行卡
 		"center-bankcard": "/pages/tabbar/center/bank-card",
+		"add-bank-card": "/pages/common/add-bank-card",
 	}
 
-	return userUrls["center-bankcard"]
+	return userUrls["add-bank-card"]
 
 
 	//==============

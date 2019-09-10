@@ -60,7 +60,7 @@
             "urlCheck" : false,
             "postcss" : true,
             "minified" : true,
-						"checkSiteMap":false
+            "checkSiteMap" : false
         },
         "usingComponents" : true,
         "permission" : {

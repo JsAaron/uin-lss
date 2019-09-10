@@ -291,8 +291,8 @@ export default {
 	}
 	&__all {
 		@include flex-h;
-				font-size: 12px;
-				color:$text-color-gray;
+		font-size: 12px;
+		color: $text-color-gray;
 	}
 	&__nav {
 		padding: 30rpx 0;
@@ -325,7 +325,7 @@ export default {
 	&__nav {
 		display: flex;
 		flex-wrap: wrap;
-		padding:10rpx 0 30rpx 0;
+		padding: 10rpx 0 30rpx 0;
 	}
 	&__col {
 		@include flex-v;
