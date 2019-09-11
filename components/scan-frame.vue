@@ -6,7 +6,7 @@
 		</view>
 		<view class="content">
 			<camera device-position="back" flash="auto" @error="error" style="width: 100%; height: 500upx;">
-				<cover-image :src="image?image:bg" class="scan-img"></cover-image>
+				<cover-image :src="image?image:bg" class="scan-img" :class="{scano:image}"></cover-image>
 			</camera>
 		</view>
 		<button type="primary" style="position: absolute;bottom: 50rpx;width: 80%;left:10%;" @click="takePhoto">
@@ -113,6 +113,9 @@ export default {
 	opacity: 0.4;
 	width: 100%;
 	height: 500rpx;
+}
+.scano{
+	opacity: 1;
 }
 .scan-text {
 	font-size: 20px;
