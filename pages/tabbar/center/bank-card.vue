@@ -1,8 +1,16 @@
 <template>
 	<view>
+		<payment-password
+		  ref="pay"
+			:show="payFlag"
+			:forget="true"
+			digits="6"
+			@submit="onCheckPwd"
+			@cancel="togglePayment"
+		></payment-password>
 		<view v-if="hasCard" class="bank-card">
 			<block v-for="(item, index) in listData" :key="index">
-				<view class="bank-card__my-card lss-background-active--opacity" :data-index="index" @longtap="onDeleteCard">
+				<view class="bank-card__my-card lss-background-active--opacity" :data-index="index" @longpress="onDeleteCard">
 					<view class="bank-card__image_v1">
 						<view class="bank-card__image_v2"><image class="bank-card__image" :src="getUrl(item.icon)" /></view>
 					</view>
@@ -23,12 +31,17 @@
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
+import paymentPassword from '@/components/payment-password/payment-password';
 export default {
-	components: {},
+	components: {
+		paymentPassword
+	},
 	data() {
 		return {
-			force_update_card: true,
+			payFlag: false,
+
 			banklist: [], //银行卡列表
+			deleteIndex:'',//删除的索引
 
 			hasCard: false,
 			listData: [],
@@ -52,6 +65,7 @@ export default {
 		getUrl(icon) {
 			return `${this.$api.imgDomain}/images/${icon}@2x.png`;
 		},
+
 		/**
 		 * 更新卡
 		 */
@@ -145,29 +159,60 @@ export default {
 		 * 删除绑定银行卡
 		 */
 		deleteCard(index) {
-			const _data = this.data.bank_list_data[index];
-			if (_data) {
+			const deleteData = this.listData[this.deleteIndex];
+			if (deleteData) {
 				util
 					.unifyAjax({
 						data: {
 							funcode: '0025',
-							bankuserid: _data.bankuserid
+							bankuserid: deleteData.bankuserid
 						}
 					})
 					.then(() => {
 						util.showToast('success', '解绑成功');
 						// 更新卡数据
-						if (this.data.bank_list_data) {
-							this.data.bank_list_data.splice(index, 1);
-							this.setData({
-								bank_list_data: this.data.bank_list_data
-							});
-						}
+						this.listData = this.listData.splice(index, 1);
+						this.togglePayment()
 					})
 					.catch(errResponse => {
 						util.showToast('fail', errResponse.data.retMsg);
 					});
 			}
+		},
+
+		togglePayment() {
+			this.payFlag = !this.payFlag;
+		},
+
+		/**
+		 * 检测密码
+		 */
+		onCheckPwd(password) {
+			util.showBusy('验证密码...');
+			util
+				.verifyPassword({
+					code: '805013',
+					password: String(password),
+					mobileno: $$get.login('mobileno'),
+					money: String(10),
+					agentid: $$get.login('taccountid'), //用户id
+					parent_agentid: '7080007' //固定商户id
+				})
+				.then(couponInfo => {
+					util.hideBusy();
+					this.deleteCard();
+				})
+				.catch(error => {
+					util.hideBusy();
+					if (error) {
+						if (error.data) {
+							util.showToast(error.data.data.Mesg);
+						} else {
+							console.log(error);
+						}
+					}
+					this.$refs.pay.emptyPassword()
+				});
 		},
 
 		onDeleteCard(e) {
@@ -176,40 +221,8 @@ export default {
 				confirmText: '确定',
 				success: res => {
 					if (res.confirm) {
-						$wuxKeyBoard().show({
-							inputText: '输入支付密码, 已验证身份',
-							disorder: false,
-							fullDisplay: true, //全屏显示
-							callback: password => {
-								util.showBusy('验证密码...');
-								util
-									.verifyPassword({
-										code: '805013',
-										password: String(password),
-										mobileno: app.globalData.login.mobileno,
-										money: String(10),
-										agentid: app.globalData.login.taccountid, //用户id
-										parent_agentid: '7080007' //固定商户id
-									})
-									.then(couponInfo => {
-										util.hideBusy();
-										$wuxKeyBoard().hide();
-										this.__delete_bank(e.currentTarget.dataset.index);
-									})
-									.catch(error => {
-										util.hideBusy();
-										if (error) {
-											if (error.data) {
-												util.showToast(error.data.data.Mesg);
-											} else {
-												console.log(error);
-											}
-										}
-										$wuxKeyBoard().empty();
-									});
-								return false;
-							}
-						});
+						this.deleteIndex = e.currentTarget.dataset.index
+						this.togglePayment();
 					}
 				}
 			});

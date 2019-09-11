@@ -21,6 +21,7 @@ export default {
 			var path = getRouterPath();
 			if(this.route[path]){
 				delete this.route[path] //删除
+				console.log('刷新页面onshow方法',path)
 				//可以刷新
 				return true
 			}
