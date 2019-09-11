@@ -19,19 +19,31 @@
 			<block>
 				<view class="applyData__id-card lss-hairline--bottom">
 					<view class="applyData__card-view">
-						<view class="applyData__image--id-card" data-type="front" @tap="onUploadImage">
+						<view
+							class="applyData__image--id-card"
+							data-type="front"
+							@tap="onUploadImage"
+						>
 							<!-- <image src="{{frontImageLocalPath?frontImageLocalPath:'/assets/images/register/1.jpg'}}" /> -->
 						</view>
 						<text>身份证正面</text>
 					</view>
 					<view class="applyData__card-view">
-						<view class="applyData__image--id-card" data-type="back" @tap="onUploadImage">
-							<!-- <image src="{{backImageLocalPath?backImageLocalPath:'/assets/images/register/2.jpg'}}" /> -->
+						<view
+							class="applyData__image--id-card"
+							data-type="back"
+							@tap="onUploadImage"
+						>
+							<!-- <image src="{{backImageLocalPath?bckImageLocalPath:'/assets/images/register/2.jpg'}}" /> -->
 						</view>
 						<text>身份证反面</text>
 					</view>
 					<view class="applyData__card-view">
-						<view class="applyData__image--id-card" data-type="hand" @tap="onUploadImage">
+						<view
+							class="applyData__image--id-card"
+							data-type="hand"
+							@tap="onUploadImage"
+						>
 							<!-- <image src="{{handImageLocalPath?handImageLocalPath:'/assets/images/register/3.jpg'}}" /> -->
 						</view>
 						<text>手持正面照</text>
@@ -49,9 +61,8 @@
 				:fontSizeScaleSet="fontSizeScaleSet"
 			/>
 		</view>
-		
-		<scan-frame>1</scan-frame>
-		
+
+		<scan-frame :dataSet="scanData"></scan-frame>
 	</view>
 </template>
 
@@ -65,6 +76,9 @@ export default {
 	},
 	data() {
 		return {
+			showScan: false,
+			scanData:{},
+
 			platform: '',
 			avatarUrl: '',
 			avatarName: '',
@@ -92,13 +106,13 @@ export default {
 					inputType: 'text',
 					content: '扫描身份证图片自动识别',
 					title: '真实姓名',
-					type: "text"
+					type: 'text'
 				},
 				{
 					inputType: 'idcard',
 					content: '扫描身份证图片自动识别',
 					title: '身份证号',
-					type: "text"
+					type: 'text'
 				}
 			]
 		};
@@ -106,11 +120,41 @@ export default {
 	props: {},
 	created() {},
 	onLoad() {
+		this.test = 1
 		this.platform = $$get.login('platform');
 		this.avatarUrl = $$get.login('avatarUrl');
 		this.avatarName = $$get.login('facename') || $$get.userInfo('nickName');
 	},
-	methods: {}
+	methods: {
+		onUploadImage(e) {
+			switch (e.currentTarget.dataset.type) {
+				case 'front':
+					console.log(123)
+					this.scanData = {
+						poptitle: '身份证正面照',
+						poptype: 'front',
+						test:++this.test
+					};
+					break;
+				case 'back':
+					this.setData({
+						poptitle: '上传反面照',
+						poptip: '证件上的照片文字需要能够清晰辨认',
+						popimage: '/assets/images/register/2.jpg',
+						poptype: 'back'
+					});
+					break;
+				case 'hand':
+					this.setData({
+						poptitle: '上传手持身份证正面照',
+						poptip: '请参考示例照片拍摄，请勿遮挡或模糊',
+						popimage: '/assets/images/register/3.jpg',
+						poptype: 'hand'
+					});
+					break;
+			}
+		}
+	}
 };
 </script>
 
