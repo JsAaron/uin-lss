@@ -2,25 +2,29 @@
 	<view class="bank-card">
 		<!-- 多卡增加的时候处理 -->
 		<block v-if="addMore">
+			<!-- 增加卡的时候，步骤只有2个 -->
 			<view class="bank-card__steps">
-				<view class="bank-card__wapper bank-card__wapper--active" @tap="__bind_step2">
-					<!-- <view class="bank-card__icon bank-card--text bank-card--{{stepClass2}}"><text>1</text></view> -->
+				<view class="bank-card__wapper bank-card__wapper--active" @tap="onStep2">
+					<view class="bank-card__icon bank-card--text" :class="{ 'bank-card--active': stepClass2 }">
+						<text>1</text>
+					</view>
 				</view>
-				<view class="bank-card__wapper bank-card__wapper--active">
-					<text class="bank-card__line"></text>
-				</view>
-				<view class="bank-card__wapper bank-card__wapper--active" @tap="__bind_step3">
-					<!-- <view class="bank-card__icon bank-card--text bank-card--{{stepClass3}}"><text>2</text></view> -->
+				<view class="bank-card__wapper bank-card__wapper--active"><text class="bank-card__line"></text></view>
+				<view class="bank-card__wapper bank-card__wapper--active" @tap="onStep3">
+					<view class="bank-card__icon bank-card--text" :class="{ 'bank-card--active': stepClass3 }">
+						<text>2</text>
+					</view>
 				</view>
 			</view>
+			<!-- 单独增加 -->
 			<view class="bank-card__add">
 				<view class="bank-card__content-card">
 					<label class="bank-card__content-label">持卡人</label>
-					<!-- <input class="bank-card__content-input" value="{{userName}}" disabled /> -->
+					<input class="bank-card__content-input" :value="userName" disabled />
 				</view>
 				<view class="bank-card__content-card">
 					<label class="bank-card__content-label">身份证</label>
-					<!-- <input class="bank-card__content-input" value="{{idcard}}" disabled /> -->
+					<input class="bank-card__content-input" :value="idcard" disabled />
 				</view>
 			</view>
 		</block>
@@ -28,32 +32,19 @@
 			<!-- 进度条 -->
 			<view class="bank-card__steps">
 				<view class="bank-card__wapper bank-card__wapper--active" @tap="onStep1">
-					<view
-						class="bank-card__icon bank-card--text"
-						:class="{ 'bank-card--active': stepClass1 }"
-					>
+					<view class="bank-card__icon bank-card--text" :class="{ 'bank-card--active': stepClass1 }">
 						<text>1</text>
 					</view>
 				</view>
-				<view class="bank-card__wapper bank-card__wapper--active">
-					<text class="bank-card__line"></text>
-				</view>
+				<view class="bank-card__wapper bank-card__wapper--active"><text class="bank-card__line"></text></view>
 				<view class="bank-card__wapper bank-card__wapper--active" @tap="onStep2">
-					<view
-						class="bank-card__icon bank-card--text"
-						:class="{ 'bank-card--active': stepClass2 }"
-					>
+					<view class="bank-card__icon bank-card--text" :class="{ 'bank-card--active': stepClass2 }">
 						<text>2</text>
 					</view>
 				</view>
-				<view class="bank-card__wapper bank-card__wapper--active">
-					<text class="bank-card__line"></text>
-				</view>
+				<view class="bank-card__wapper bank-card__wapper--active"><text class="bank-card__line"></text></view>
 				<view class="bank-card__wapper bank-card__wapper--active" @tap="onStep3">
-					<view
-						class="bank-card__icon bank-card--text"
-						:class="{ 'bank-card--active': stepClass3 }"
-					>
+					<view class="bank-card__icon bank-card--text" :class="{ 'bank-card--active': stepClass3 }">
 						<text>3</text>
 					</view>
 				</view>
@@ -130,11 +121,14 @@ export default {
 			},
 			inputsArray1: [
 				{
+					inputType: 'text',
+					placeholder: '请输入持卡人姓名',
 					title: '持卡人',
 					verifyType: 'Chinese',
 					verifyErr: '姓名必须是中文'
 				},
 				{
+					inputType: 'idcard',
 					title: '身份证',
 					verifyType: 'idCart',
 					verifyErr: '身份证号码输入有误'
@@ -147,24 +141,30 @@ export default {
 					verifyErr: '银行卡必须是数字'
 				},
 				{
+					inputType: 'number',
 					title: '手机号',
+					maxlength: 11,
 					verifyType: 'Tel',
 					verifyErr: '手机号码输入有误'
 				}
 			],
 			inputsArray3: [
 				{
+					inputType: 'number',
 					segmentationTitle: '请输入信用卡背后签名栏的最后三位数',
 					border_top: '1px solid #f2f2f2', //上划线
 					title: 'CVV2',
+					maxlength: 3,
 					verifyType: 'Number',
 					verifyErr: '银行卡必须是数字',
 					hide: true
 				},
 				{
+					inputType: 'number',
 					segmentationTitle: '有效日期格式月年.如(0421)',
 					border_top: '1px solid #f2f2f2', //上划线
 					title: '有效期',
+					maxlength: 4,
 					verifyType: 'Tel',
 					verifyErr: '手机号码输入有误',
 					hide: true
@@ -176,12 +176,17 @@ export default {
 			//激活样式
 			stepClass1: true,
 			stepClass2: false,
-			stepClass3: false
+			stepClass3: false,
+
+			userName: '',
+			idcard: '',
+			addMore: false
 		};
 	},
 	onLoad(options) {
 		if (options) {
 			//添加多张卡
+			// options.userInfo = `{"idcard":"430902198605260015","name":"陈文"}`;
 			if (options.userInfo) {
 				const userInfo = JSON.parse(options.userInfo);
 				if (userInfo.name && userInfo.idcard) {
@@ -288,9 +293,8 @@ export default {
 				.then(() => {
 					util.hideBusy();
 					util.showToast('success', '绑卡成功');
-					if (util.getRouterPrevPage().$$refreshBackCard) {
-						util.getRouterPrevPage().$$refreshBackCard();
-					}
+					//设置上个页面刷新
+					getApp().globalData.setPageRefresh('prev');
 					util.gotoPage('back', 2000);
 				})
 				.catch(errResponse => {

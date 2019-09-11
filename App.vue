@@ -1,5 +1,31 @@
 <script>
+import { getRouterPath } from '@/utils/router';
 export default {
+	globalData: {
+		route: {}, //路由页面
+		/**
+		 * 设置需要刷新的路由页面
+		 * value: prev
+		 */
+		setPageRefresh(value) {
+			let path = getRouterPath(value);
+			if (path) {
+				this.route[path] = true;
+			}
+		},
+		/**
+		 * 检测是否刷新页面
+		 * 根据当前页面的router是否被设置判断
+		 */
+		getPageRefresh() {
+			var path = getRouterPath();
+			if(this.route[path]){
+				delete this.route[path] //删除
+				//可以刷新
+				return true
+			}
+		}
+	},
 	onLaunch: function() {
 		console.log('App Launch');
 	},

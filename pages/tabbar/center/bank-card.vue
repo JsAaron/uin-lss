@@ -2,15 +2,9 @@
 	<view>
 		<view v-if="hasCard" class="bank-card">
 			<block v-for="(item, index) in listData" :key="index">
-				<view
-					class="bank-card__my-card lss-background-active--opacity"
-					:data-index="index"
-					@longtap="onDeleteCard"
-				>
+				<view class="bank-card__my-card lss-background-active--opacity" :data-index="index" @longtap="onDeleteCard">
 					<view class="bank-card__image_v1">
-						<view class="bank-card__image_v2">
-							<image class="bank-card__image" :src="getUrl(item.icon)" />
-						</view>
+						<view class="bank-card__image_v2"><image class="bank-card__image" :src="getUrl(item.icon)" /></view>
 					</view>
 					<view class="bank-card__text">
 						<text class="bank-card--text1">{{ item.bankname }}</text>
@@ -20,10 +14,7 @@
 				</view>
 			</block>
 		</view>
-		<view
-			class="bank-card__add lss-hairline--bottom--black bank-card__add--active"
-			@tap="onAddCard"
-		>
+		<view class="bank-card__add lss-hairline--bottom--black bank-card__add--active" @tap="onAddCard">
 			<text class="bank-card__add-text">添加银行卡</text>
 		</view>
 	</view>
@@ -36,7 +27,7 @@ export default {
 	components: {},
 	data() {
 		return {
-			update_card: true,
+			force_update_card: true,
 			banklist: [], //银行卡列表
 
 			hasCard: false,
@@ -47,15 +38,14 @@ export default {
 	props: {},
 
 	onLoad() {
-		this.update_card = true;
+		this.updateBackCard();
 	},
 
 	onShow() {
-		if (!this.update_card) {
-			return;
+		//如果需要刷新页面
+		if (getApp().globalData.getPageRefresh()) {
+			this.updateBackCard();
 		}
-		this.update_card = false;
-		this.updateBackCard();
 	},
 
 	methods: {
@@ -145,10 +135,84 @@ export default {
 		/**
 		 * 增加绑定
 		 */
-		onAddCard() { 
-			util.gotoPage(
-				`../../common/add-bank-card/?userInfo=${JSON.stringify(this.userInfo)}`
-			);
+		onAddCard() {
+			util.gotoPage(`/pages/common/add-bank-card?userInfo=${JSON.stringify(this.userInfo)}`);
+		},
+
+		//==========删除绑定银行卡=============
+
+		/**
+		 * 删除绑定银行卡
+		 */
+		deleteCard(index) {
+			const _data = this.data.bank_list_data[index];
+			if (_data) {
+				util
+					.unifyAjax({
+						data: {
+							funcode: '0025',
+							bankuserid: _data.bankuserid
+						}
+					})
+					.then(() => {
+						util.showToast('success', '解绑成功');
+						// 更新卡数据
+						if (this.data.bank_list_data) {
+							this.data.bank_list_data.splice(index, 1);
+							this.setData({
+								bank_list_data: this.data.bank_list_data
+							});
+						}
+					})
+					.catch(errResponse => {
+						util.showToast('fail', errResponse.data.retMsg);
+					});
+			}
+		},
+
+		onDeleteCard(e) {
+			wx.showModal({
+				content: '解绑银行卡',
+				confirmText: '确定',
+				success: res => {
+					if (res.confirm) {
+						$wuxKeyBoard().show({
+							inputText: '输入支付密码, 已验证身份',
+							disorder: false,
+							fullDisplay: true, //全屏显示
+							callback: password => {
+								util.showBusy('验证密码...');
+								util
+									.verifyPassword({
+										code: '805013',
+										password: String(password),
+										mobileno: app.globalData.login.mobileno,
+										money: String(10),
+										agentid: app.globalData.login.taccountid, //用户id
+										parent_agentid: '7080007' //固定商户id
+									})
+									.then(couponInfo => {
+										util.hideBusy();
+										$wuxKeyBoard().hide();
+										this.__delete_bank(e.currentTarget.dataset.index);
+									})
+									.catch(error => {
+										util.hideBusy();
+										if (error) {
+											if (error.data) {
+												util.showToast(error.data.data.Mesg);
+											} else {
+												console.log(error);
+											}
+										}
+										$wuxKeyBoard().empty();
+									});
+								return false;
+							}
+						});
+					}
+				}
+			});
 		}
 	}
 };
