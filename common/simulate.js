@@ -47,7 +47,7 @@ function simulate() {
 		"add-bank-card": "/pages/common/add-bank-card",
 	}
 
-	return userUrls["center-bankcard"]
+	return userUrls["center"]
 
 
 	//==============

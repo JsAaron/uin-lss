@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<payment-password
-		  ref="pay"
+			ref="pay"
 			:show="payFlag"
 			:forget="true"
 			digits="6"
@@ -9,18 +9,20 @@
 			@cancel="togglePayment"
 		></payment-password>
 		<view v-if="hasCard" class="bank-card">
-			<block v-for="(item, index) in listData" :key="index">
-				<view class="bank-card__my-card lss-background-active--opacity" :data-index="index" @longpress="onDeleteCard">
-					<view class="bank-card__image_v1">
-						<view class="bank-card__image_v2"><image class="bank-card__image" :src="getUrl(item.icon)" /></view>
+			<view class="bank-card__wapper" v-for="(item, index) in listData" :key="index">
+				<uni-swipe-action :options="options" @click="onDeleteCard(index)">
+					<view class="bank-card__my-card lss-background-active--opacity" :data-index="index" @longpress="onDeleteCard">
+						<view class="bank-card__image_v1">
+							<view class="bank-card__image_v2"><image class="bank-card__image" :src="getUrl(item.icon)" /></view>
+						</view>
+						<view class="bank-card__text">
+							<text class="bank-card--text1">{{ item.bankname }}</text>
+							<text class="bank-card--text2">{{ item.banktype }}</text>
+							<text class="bank-card--text3">{{ item.bankaccount }}</text>
+						</view>
 					</view>
-					<view class="bank-card__text">
-						<text class="bank-card--text1">{{ item.bankname }}</text>
-						<text class="bank-card--text2">{{ item.banktype }}</text>
-						<text class="bank-card--text3">{{ item.bankaccount }}</text>
-					</view>
-				</view>
-			</block>
+				</uni-swipe-action>
+			</view>
 		</view>
 		<view class="bank-card__add lss-hairline--bottom--black bank-card__add--active" @tap="onAddCard">
 			<text class="bank-card__add-text">添加银行卡</text>
@@ -32,8 +34,10 @@
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
 import paymentPassword from '@/components/payment-password/payment-password';
+import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
 export default {
 	components: {
+		uniSwipeAction,
 		paymentPassword
 	},
 	data() {
@@ -41,11 +45,20 @@ export default {
 			payFlag: false,
 
 			banklist: [], //银行卡列表
-			deleteIndex:'',//删除的索引
+			deleteIndex: '', //删除的索引
 
 			hasCard: false,
 			listData: [],
-			userInfo: {}
+			userInfo: {},
+
+			options: [
+				{
+					text: '解绑',
+					style: {
+						backgroundColor: '#dd524d'
+					}
+				}
+			]
 		};
 	},
 	props: {},
@@ -62,6 +75,7 @@ export default {
 	},
 
 	methods: {
+		
 		getUrl(icon) {
 			return `${this.$api.imgDomain}/images/${icon}@2x.png`;
 		},
@@ -158,7 +172,7 @@ export default {
 		/**
 		 * 删除绑定银行卡
 		 */
-		deleteCard(index) {
+		deleteCard() {
 			const deleteData = this.listData[this.deleteIndex];
 			if (deleteData) {
 				util
@@ -171,8 +185,8 @@ export default {
 					.then(() => {
 						util.showToast('success', '解绑成功');
 						// 更新卡数据
-						this.listData = this.listData.splice(index, 1);
-						this.togglePayment()
+						this.listData.splice(this.deleteIndex, 1);
+						this.togglePayment();
 					})
 					.catch(errResponse => {
 						util.showToast('fail', errResponse.data.retMsg);
@@ -188,7 +202,7 @@ export default {
 		 * 检测密码
 		 */
 		onCheckPwd(password) {
-			util.showBusy('验证密码...');
+			util.showBusy('验证密码');
 			util
 				.verifyPassword({
 					code: '805013',
@@ -211,17 +225,23 @@ export default {
 							console.log(error);
 						}
 					}
-					this.$refs.pay.emptyPassword()
+					this.$refs.pay.emptyPassword();
 				});
 		},
 
 		onDeleteCard(e) {
+			
+	
 			wx.showModal({
 				content: '解绑银行卡',
 				confirmText: '确定',
 				success: res => {
 					if (res.confirm) {
-						this.deleteIndex = e.currentTarget.dataset.index
+						if (e.currentTarget) {
+							this.deleteIndex = e.currentTarget.dataset.index;
+						}else{
+							this.deleteIndex = e
+						}
 						this.togglePayment();
 					}
 				}
@@ -241,12 +261,14 @@ page {
 	width: 96%;
 	margin-left: 2%;
 
+	&__wapper {
+		margin-top: 30rpx;
+	}
+
 	&__my-card {
 		@include flex-h-left;
 		height: 180rpx;
 		background: $blue;
-		border-radius: 3px;
-		margin-top: 30rpx;
 	}
 
 	&__image_v1 {

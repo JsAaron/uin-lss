@@ -271,7 +271,7 @@ export default {
 		 * 注册第三步
 		 */
 		onNextPage3(res) {
-			util.showBusy('绑卡中...');
+			util.showBusy('绑卡中');
 			const _data = {
 				funcode: '0081',
 				encrypt: {

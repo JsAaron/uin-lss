@@ -942,7 +942,7 @@
 				default() {
 					return {
 						openInputDebounce: true,
-						delay: 500
+						delay: 300
 					}
 				}
 			},
