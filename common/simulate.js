@@ -8,32 +8,12 @@
 function simulate() {
 
 	const common = {
-		"goods": "/common/goods/goods",
-		"settings": "/common/settings/settings",
-		"search": "/common/search/search",
-
-		// 注册
-		"merchant-login": "/common/login/login?pageType=merchant",
-		"user-login": "/common/login/login?pageType=user",
-		// 人脸
-		face: "/common/face-pay/face-pay",
-		//新增银行卡
-		"add-bank-card": "/common/add-bank-card/add-bank-card",
-		// 绑定快捷
-		success: "/common/success/success",
-		"fast-pay": "/common/fast-pay/fast-pay",
-		// 红包
-		"red-envelope-send": "/common/red-envelope/send/send",
-		"red-envelope-details": "/common/red-envelope/details/details",
-		"red-envelope-business": "/common/red-envelope/business/business",
-		// 密码
-		"change-password": "/common/safety-center/change-password/change-password",
-		"reset-password": "/common/safety-center/reset-password/reset-password",
-		//一分分享
-		"share-schedule": "/common/share-schedule/share-schedule"
+		// 增加银行卡绑定
+		"add-bank-card": "/pages/common/add-bank-card",
+		"scan-frame":"/pages/common/scan-frame",
 	};
 
-	// return common["goods"]
+	// return common["scan-frame"]
 
 	//用户端
 	const userUrls = {
@@ -44,10 +24,11 @@ function simulate() {
 		
 		//我的银行卡
 		"center-bankcard": "/pages/tabbar/center/bank-card",
-		"add-bank-card": "/pages/common/add-bank-card",
+		// 实名认证
+		'certification':"/pages/tabbar/center/certification"
 	}
 
-	return userUrls["center"]
+	return userUrls["certification"]
 
 
 	//==============

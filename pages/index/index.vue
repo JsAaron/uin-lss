@@ -54,7 +54,7 @@ export default {
 	onLoad(options) {
 		//通过退出按钮切换的
 		if (options && options.pageMode === 'logout') {
-			// this.startApp();
+			this.startApp();
 			return;
 		}
 
@@ -68,7 +68,7 @@ export default {
 				//定位服务
 				accreditUserLocation(() => {
 					getLocation(() => {
-						this.$api.showBusy();
+						util.showBusy();
 						this.initDeviceData(() => {
 							// 固码支付
 							if ($$get.share('type') === 'qrPay') {
@@ -94,21 +94,24 @@ export default {
 			//跳过广告
 			let testUrl = simulate();
 			if (testUrl) {
-				this.$api.gotoPage('reLaunch', testUrl);
+				util.gotoPage('reLaunch', testUrl);
 				return;
 			}
 
 			//如果是转发进来的,直接进入
 			if ($$get.share('type') === 'goods') {
-				this.$api.hideBusy();
-				this.$api.gotoPage('reLaunch', `/common/goods/goods?agentidsp=${app.globalData.share.agentidsp}&goodsid=${app.globalData.share.goodsid}`);
+				util.hideBusy();
+				util.gotoPage(
+					'reLaunch',
+					`/common/goods/goods?agentidsp=${$$get.share('agentidsp')}&goodsid=${$$get.share('goodsid')}`
+				);
 				return;
 			}
 
 			//分享注册
-			if ($$get.share('type') == 'register' && !app.$$hasLogin()) {
-				this.$api.hideBusy();
-				this.$api.gotoPage('reLaunch', `/common/login/login?pageType=user`);
+			if ($$get.share('type') == 'register' && !this.$api.hasLogin()) {
+				util.hideBusy();
+				util.gotoPage('reLaunch', `/common/login/login?pageType=user`);
 				return;
 			}
 
@@ -140,7 +143,7 @@ export default {
 					}
 				});
 				if (images.length) {
-					this.$api.hideBusy();
+					util.hideBusy();
 					this.hasAdvert = true;
 					this.advertImgUrls = images;
 					this.countDown = new util.CountDown({
@@ -165,9 +168,9 @@ export default {
 		 * 进入
 		 */
 		startApp() {
-			this.$api.hideBusy();
+			util.hideBusy();
 			this.hasAdvert = false;
-			this.$api.gotoPage('reLaunch', '/pages/tabbar/home/home');
+			util.gotoPage('reLaunch', '/pages/tabbar/home/home');
 		},
 
 		//==========================================
@@ -177,7 +180,7 @@ export default {
 		 */
 		initDeviceData(callback) {
 			getDeviceData().then(() => {
-				this.$api
+				util
 					.accessLogin()
 					.then(callback)
 					.catch(callback);
@@ -197,7 +200,7 @@ export default {
 				})
 				.catch(() => {
 					this.userAccreditStyle = false;
-					this.$api.showModal({
+					util.showModal({
 						title: '温馨提示',
 						showCancel: false,
 						confirmText: '继续授权',

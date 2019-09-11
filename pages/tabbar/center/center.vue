@@ -12,7 +12,7 @@
 							v-else
 							class="banner__shimimg"
 							bindtap="gotoPage"
-							data-url="/pages/user/pages/my/certification/certification"
+							data-url="./certification"
 						>
 							{{ hasLogin ? '未实名' : '未登录' }}
 						</text>
@@ -86,7 +86,7 @@
 		<view class="tools">
 			<view class="tools__tab lss-hairline--bottom"><text>必备工具</text></view>
 			<view class="tools__nav">
-				<view class="tools__col">
+				<view class="tools__col" @tap="gotoPage" data-url="./bank-card">
 					<image src="/static/tabbar/center/t1.png"></image>
 					<text>银行卡</text>
 				</view>
@@ -168,7 +168,63 @@ export default {
 			return `/static/tabbar/center/${level}.png`;
 		}
 	},
-	methods: {}
+	methods: {
+		/**
+		 * 跳页
+		 */
+		gotoPage(e) {
+			if (!this.$api.hasLogin({ hint: true })) {
+				return;
+			}
+			let url = e.currentTarget.dataset.url;
+
+			//必须认证实名
+			if (!$$get.login('isfact')) {
+				let certUrl = './certification';
+
+				//跳过认证 和 设置
+				if (url == certUrl || url == '/pages/common/settings') {
+					return util.gotoPage(url);
+				}
+
+				wx.showModal({
+					content: `亲,您还没有实名认证哦！`,
+					confirmText: '去认证',
+					success(res) {
+						if (res.confirm) {
+							util.gotoPage(certUrl);
+						}
+					}
+				});
+				return;
+			}
+
+			//已经认证
+			if (url == '/pages/user/pages/my/certification/certification') {
+				util.showToast('您已实名认证过啦！');
+				return;
+			}
+
+			//已经加入创客
+			if (
+				url == '/pages/user/pages/my/partner/partner' &&
+				app.globalData.login.user_level &&
+				app.globalData.login.user_level != 0
+			) {
+				util.showToast('您已加入创客啦！');
+				return;
+			}
+
+			//已经开通服务商
+			if (url == '/pages/subpackage/service-provider/apply-for/apply-for' && app.globalData.login.has_fws) {
+				util.showToast('您已是服务商啦！');
+				return;
+			}
+
+			//进页面
+			return util.gotoPage(url);
+		}
+	}
 };
 </script>
 
@@ -330,7 +386,6 @@ export default {
 	&__col {
 		@include flex-v;
 		width: 25%;
-
 		margin-top: 50rpx;
 		image {
 			width: 64rpx;
@@ -339,6 +394,9 @@ export default {
 		text {
 			margin-top: 10rpx;
 			font-size: 12px;
+		}
+		&:active{
+			color: $text-color-blue;
 		}
 	}
 }

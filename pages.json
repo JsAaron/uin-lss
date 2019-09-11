@@ -48,6 +48,12 @@
 			"style": {
 				"navigationBarTitleText": "我的银行卡"
 			}
+		},
+		{
+			"path": "pages/tabbar/center/certification",
+			"style": {
+				"navigationBarTitleText": "实名认证"
+			}
 		}
 	],
 	"globalStyle": {

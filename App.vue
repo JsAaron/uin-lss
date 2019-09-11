@@ -49,7 +49,7 @@ page {
 	// font-family: "PingFang SC", Helvetica, "STHeiti STXihei", "Microsoft YaHei",
 	//   Tohoma, Arial, sans-serif;
 	font-family: Arial;
-	background: rgb(242, 242, 242);
+	// background: rgb(242, 242, 242);
 	position: relative;
 	font-size: 16px;
 	font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
