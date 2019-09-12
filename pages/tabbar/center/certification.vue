@@ -121,20 +121,14 @@ export default {
 					};
 					break;
 				case 'back':
-					this.setData({
-						poptitle: '上传反面照',
-						poptip: '证件上的照片文字需要能够清晰辨认',
-						popimage: '/assets/images/register/2.jpg',
-						poptype: 'back'
-					});
+					this.scanData = {
+						title: '身份证反面照'
+					};
 					break;
 				case 'hand':
-					this.setData({
-						poptitle: '上传手持身份证正面照',
-						poptip: '请参考示例照片拍摄，请勿遮挡或模糊',
-						popimage: '/assets/images/register/3.jpg',
-						poptype: 'hand'
-					});
+					this.scanData = {
+						title: '手持身份证正面照'
+					};
 					break;
 			}
 		}

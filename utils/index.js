@@ -9,3 +9,4 @@ export * from "./login";
 export * from './state';
 export * from './count-down'
 export * from './pay'
+export * from './file'

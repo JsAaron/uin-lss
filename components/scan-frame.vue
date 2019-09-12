@@ -84,7 +84,31 @@ export default {
 			}
 		}
 	},
+
+
 	methods: {
+		
+		requestParse(base64Data) {
+			console.log('base64Data',base64Data)
+			uni.request({
+				url: 'https://lss.facess.net/card-server/baidu/ocr',
+				data: {
+					type: '2',
+					image: base64Data,
+					side: 'front'
+				},
+				header: {
+					'Content-Type':'application/json; charset=utf-8'
+				},
+				success: res => {
+					console.log('res',res);
+				},
+				fail(e){
+					console.log('e',e)
+				}
+			});
+		},
+		
 		takePhoto() {
 			const ctx = uni.createCameraContext();
 			ctx.takePhoto({
@@ -92,6 +116,10 @@ export default {
 				success: res => {
 					this.scanImageSrc = res.tempImagePath;
 					this.showCamera = false;
+					console.log('this.scanImageSrc',this.scanImageSrc)
+					util.converFileEncode(this.scanImageSrc).then(res => {
+						this.requestParse(res.data);
+					});
 				}
 			});
 		},
@@ -157,7 +185,7 @@ export default {
 	position: fixed;
 	width: 100%;
 	height: 800rpx;
-	bottom: 0;
+	bottom: 500rpx;
 	background: #ffffff;
 	z-index: 999999;
 	-webkit-transform: translate3d(0, 100%, 0);
