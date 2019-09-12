@@ -20,19 +20,19 @@
 				<view class="applyData__id-card lss-hairline--bottom">
 					<view class="applyData__card-view">
 						<view class="applyData__image--id-card" data-type="front" @tap="onUploadImage">
-							<!-- <image src="{{frontImageLocalPath?frontImageLocalPath:'/assets/images/register/1.jpg'}}" /> -->
+							<image :src="frontImageLocalPath ? frontImageLocalPath : '/static/identity/1.jpg'" />
 						</view>
 						<text>身份证正面</text>
 					</view>
 					<view class="applyData__card-view">
 						<view class="applyData__image--id-card" data-type="back" @tap="onUploadImage">
-							<!-- <image src="{{backImageLocalPath?bckImageLocalPath:'/assets/images/register/2.jpg'}}" /> -->
+							<image :src="backImageLocalPath ? backImageLocalPath : '/static/identity/2.jpg'" />
 						</view>
 						<text>身份证反面</text>
 					</view>
 					<view class="applyData__card-view">
 						<view class="applyData__image--id-card" data-type="hand" @tap="onUploadImage">
-							<!-- <image src="{{handImageLocalPath?handImageLocalPath:'/assets/images/register/3.jpg'}}" /> -->
+							<image :src="handImageLocalPath ? handImageLocalPath : '/static/identity/3.jpg'" />
 						</view>
 						<text>手持正面照</text>
 					</view>
@@ -50,7 +50,7 @@
 			/>
 		</view>
 
-		<scan-frame :dataSet.sync="scanData"></scan-frame>
+		<scan-frame :dataSet.sync="scanData" @complete="sacnComplete"></scan-frame>
 	</view>
 </template>
 
@@ -70,6 +70,10 @@ export default {
 			platform: '',
 			avatarUrl: '',
 			avatarName: '',
+
+			frontImageLocalPath: '',
+			backImageLocalPath: '',
+			handImageLocalPath: '',
 
 			fontSizeScaleSet: {
 				allScale: 0.04
@@ -92,13 +96,13 @@ export default {
 			inputsArray: [
 				{
 					inputType: 'text',
-					content: '扫描身份证图片自动识别',
+					content: '上传身份证照片自动识别',
 					title: '真实姓名',
 					type: 'text'
 				},
 				{
 					inputType: 'idcard',
-					content: '扫描身份证图片自动识别',
+					content: '上传身份证照片自动识别',
 					title: '身份证号',
 					type: 'text'
 				}
@@ -117,19 +121,42 @@ export default {
 			switch (e.currentTarget.dataset.type) {
 				case 'front':
 					this.scanData = {
+						type: '2',
+						side: 'front',
 						title: '身份证正面照'
 					};
 					break;
 				case 'back':
 					this.scanData = {
-						title: '身份证反面照'
+						title: '身份证反面照',
+						type: '2',
+						side: 'back'
 					};
 					break;
 				case 'hand':
 					this.scanData = {
-						title: '手持身份证正面照'
+						title: '手持身份证正面照',
+						noVerify: true,
+						side: 'hand'
 					};
 					break;
+			}
+		},
+
+		/**
+		 * 扫描完成
+		 */
+		sacnComplete(data) {
+			if (data.side == 'front') {
+				this.inputsArray[0].content = data.name;
+				this.inputsArray[1].content = data.id_card;
+				this.frontImageLocalPath = data.image;
+			}
+			if (data.side == 'back') {
+				this.backImageLocalPath = data.image;
+			}
+			if (data.side == 'hand') {
+				this.handImageLocalPath = data.image;
 			}
 		}
 	}

@@ -11,7 +11,7 @@
 						<text
 							v-else
 							class="banner__shimimg"
-							bindtap="gotoPage"
+							@tap="gotoPage"
 							data-url="./certification"
 						>
 							{{ hasLogin ? '未实名' : '未登录' }}
