@@ -28,7 +28,7 @@ function simulate() {
 		'certification':"/pages/tabbar/center/certification"
 	}
 
-	return userUrls["center"]
+	return userUrls["certification"]
 
 
 	//==============
