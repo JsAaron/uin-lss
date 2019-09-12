@@ -7,7 +7,7 @@
 		<view class="content">
 			<camera
 				v-if="showCamera"
-				device-position="back"
+				:device-position="devicePosition"
 				flash="auto"
 				@error="error"
 				style="width: 100%; height: 500rpx;"
@@ -23,8 +23,8 @@
 				style="width: 100%; height: 500rpx;position: relative;overflow: hidden;"
 			>
 				<image :src="scanImageSrc" style="width: 100%; height: 100%;"></image>
-				<view class="swiper-animate"></view>
-				<view class="scan-text">识别中</view>
+				<view :class="[swiperAnimate]"></view>
+				<view class="scan-text" :class="{ dot: hasDot }">{{ scanText }}</view>
 			</view>
 		</view>
 
@@ -62,7 +62,11 @@ export default {
 			type: Object,
 			default() {
 				return {
-					title: ''
+					title: '',
+					type: '',
+					side: '',
+					devicePosition: '', //摄像头位置
+					verify: true //是否需要验证
 				};
 			}
 		}
@@ -70,14 +74,24 @@ export default {
 	data() {
 		return {
 			title: '',
+			devicePosition: 'back',
+			scanText: '识别中',
 			showCamera: false,
 			popAnimateClass: '',
-			scanImageSrc: ''
+			swiperAnimate: '',
+			scanImageSrc: '',
+			hasDot: true,
+			state: false
 		};
 	},
 	watch: {
 		dataSet(val, oldVal) {
+			if (this.state) {
+				return;
+			}
+			this.state = true;
 			if (Object.keys(val).length) {
+				this.devicePosition = val.devicePosition || 'back';
 				this.title = val.title;
 				this.popAnimateClass = 'slideInUp';
 				this.showCamera = true;
@@ -85,40 +99,113 @@ export default {
 		}
 	},
 
-
 	methods: {
-		
+		resetText(text) {
+			this.scanText = text;
+			this.swiperAnimate = '';
+			this.hasDot = false;
+		},
+
+		/**
+		 * 识别完成
+		 */
+		complete(data = {}) {
+			data.image = this.scanImageSrc;
+			data.type = String(this.dataSet.type);
+			data.side = String(this.dataSet.side);
+			this.$emit('complete', data);
+			setTimeout(
+				() => {
+					this.clean();
+				},
+				this.dataSet.noVerify ? 0 : 1500
+			);
+		},
+
 		requestParse(base64Data) {
-			console.log('base64Data',base64Data)
+			//如果不要验证
+			if (this.dataSet.noVerify) {
+				this.complete();
+				return;
+			}
+
 			uni.request({
 				url: 'https://lss.facess.net/card-server/baidu/ocr',
-				data: {
-					type: '2',
+				data: JSON.stringify({
+					type: String(this.dataSet.type),
 					image: base64Data,
-					side: 'front'
-				},
+					side: String(this.dataSet.side)
+				}),
+				method: 'POST',
+				dataType: 'json',
 				header: {
-					'Content-Type':'application/json; charset=utf-8'
+					'Content-Type': 'application/json; charset=utf-8'
 				},
 				success: res => {
-					console.log('res',res);
+					//身份证
+					if (this.dataSet.type == 2) {
+						//身份证正面照
+						if (this.dataSet.side == 'front') {
+							if (!res.data.data.name && !res.data.data.id_card) {
+								this.resetText('未能识别图片,请重拍照');
+							}
+							if (res.data.data.name && res.data.data.id_card) {
+								this.resetText('识别成功');
+								this.complete({
+									name: res.data.data.name,
+									id_card: res.data.data.id_card
+								});
+							}
+							if (res.data.data.name && !res.data.data.id_card) {
+								this.resetText('未能识别证件码,请重拍照');
+							}
+							if (!res.data.data.name && res.data.data.id_card) {
+								this.resetText('未能识别姓名,请重拍照');
+							}
+						}
+						//身份证反面照
+						if (this.dataSet.side == 'back') {
+							if (res.data.data.issuing_date) {
+								this.resetText('识别成功');
+								this.complete();
+							} else {
+								this.resetText('未能识别图片,请重拍照');
+							}
+						}
+						return;
+					}
+
+					// 无法识别的图片
+					this.resetText('无法识别该图片');
 				},
-				fail(e){
-					console.log('e',e)
+				fail(e) {
+					console.log('e', e);
 				}
 			});
 		},
-		
+
 		takePhoto() {
+			this.scanText = '识别中';
+			this.hasDot = true;
 			const ctx = uni.createCameraContext();
 			ctx.takePhoto({
 				quality: 'high',
 				success: res => {
 					this.scanImageSrc = res.tempImagePath;
 					this.showCamera = false;
-					console.log('this.scanImageSrc',this.scanImageSrc)
-					util.converFileEncode(this.scanImageSrc).then(res => {
-						this.requestParse(res.data);
+					this.swiperAnimate = 'swiper-animate';
+					wx.compressImage({
+						src: this.scanImageSrc, // 图片路径a
+						quality: 80, // 压缩质量
+						complete: res => {
+							let tempPath = res.tempFilePath ? res.tempFilePath : this.scanImageSrc;
+							util.getFileSize(tempPath).then(newSize => {
+								console.log(`系统方法压缩后${parseInt(newSize / 1024)}k`);
+								util.converFileEncode(tempPath).then(res => {
+									this.requestParse(res.data);
+								});
+							});
+						}
 					});
 				}
 			});
@@ -129,6 +216,7 @@ export default {
 			this.scanImageSrc = '';
 			this.showCamera = false;
 			setTimeout(() => {
+				this.state = false;
 				this.popAnimateClass = 'slideInDown';
 			}, 0);
 		},
@@ -151,7 +239,9 @@ export default {
 		 * 重新拍
 		 */
 		resetPhoto() {
-			this.image = '';
+			this.scanImageSrc = '';
+			this.showCamera = true;
+			this.scanText = '识别中';
 		},
 		error(e) {
 			console.log(e.detail);
@@ -185,7 +275,7 @@ export default {
 	position: fixed;
 	width: 100%;
 	height: 800rpx;
-	bottom: 500rpx;
+	bottom: 0;
 	background: #ffffff;
 	z-index: 999999;
 	-webkit-transform: translate3d(0, 100%, 0);
@@ -270,18 +360,21 @@ export default {
 	opacity: 1;
 }
 .scan-text {
-	font-size: 20px;
-	color: $white;
+	width: 100%;
+	text-align: center;
+	font-size: 22px;
+	color: red;
 	@include position-center;
 }
 
-.scan-text:after {
+.dot:after {
 	overflow: hidden;
 	display: inline-block;
 	vertical-align: bottom;
 	animation: ellipsis 2s infinite;
 	content: '\2026'; /* ascii code for the ellipsis character */
 }
+
 @keyframes ellipsis {
 	from {
 		width: 2px;

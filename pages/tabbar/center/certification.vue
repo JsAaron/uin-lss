@@ -20,19 +20,37 @@
 				<view class="applyData__id-card lss-hairline--bottom">
 					<view class="applyData__card-view">
 						<view class="applyData__image--id-card" data-type="front" @tap="onUploadImage">
-							<image :src="frontImageLocalPath ? frontImageLocalPath : '/static/identity/1.jpg'" />
+							<image
+								:src="
+									frontImageLocalPath
+										? imgDomain + '/agentimg/' + frontImageLocalPath
+										: '/static/identity/1.jpg'
+								"
+							/>
 						</view>
 						<text>身份证正面</text>
 					</view>
 					<view class="applyData__card-view">
 						<view class="applyData__image--id-card" data-type="back" @tap="onUploadImage">
-							<image :src="backImageLocalPath ? backImageLocalPath : '/static/identity/2.jpg'" />
+							<image
+								:src="
+									backImageLocalPath
+										? imgDomain + '/agentimg/' + backImageLocalPath
+										: '/static/identity/2.jpg'
+								"
+							/>
 						</view>
 						<text>身份证反面</text>
 					</view>
 					<view class="applyData__card-view">
 						<view class="applyData__image--id-card" data-type="hand" @tap="onUploadImage">
-							<image :src="handImageLocalPath ? handImageLocalPath : '/static/identity/3.jpg'" />
+							<image
+								:src="
+									handImageLocalPath
+										? imgDomain + '/agentimg/' + handImageLocalPath
+										: '/static/identity/3.jpg'
+								"
+							/>
 						</view>
 						<text>手持正面照</text>
 					</view>
@@ -70,6 +88,10 @@ export default {
 			platform: '',
 			avatarUrl: '',
 			avatarName: '',
+
+			factname: '',
+			idcard: '',
+			imgDomain: '',
 
 			frontImageLocalPath: '',
 			backImageLocalPath: '',
@@ -109,14 +131,100 @@ export default {
 			]
 		};
 	},
-	props: {},
-	created() {},
+
 	onLoad() {
+		this.imgDomain = this.$api.imgDomain;
 		this.platform = $$get.login('platform');
 		this.avatarUrl = $$get.login('avatarUrl');
 		this.avatarName = $$get.login('facename') || $$get.userInfo('nickName');
 	},
 	methods: {
+		//=====================
+		// 提交
+		//=====================
+
+		/**
+		 * 验证数据
+		 */
+		verifyData() {
+			if (!this.factname) {
+				util.showToast('请输入姓名');
+				return false;
+			}
+			if (!this.idcard) {
+				util.showToast('请输入身份证号码');
+				return false;
+			}
+			if (!this.frontImageLocalPath) {
+				util.showToast('请上传身份证正面照');
+				return false;
+			}
+			if (!this.backImageLocalPath) {
+				util.showToast('请上传身份证反面照');
+				return false;
+			}
+			if (!this.handImageLocalPath) {
+				util.showToast('请上传身份证手持照');
+				return false;
+			}
+			return true;
+		},
+
+		/**
+		 * 注册
+		 */
+		sendReginster() {
+			return new Promise((resolve, reject) => {
+				let request = {
+					factname: this.factname, //真实姓名
+					idcard: this.idcard,
+					zmImage: this.frontImageLocalPath, //身份证正面照片
+					fmImage: this.backImageLocalPath, //身份证反面照片
+					scsfzImage: this.handImageLocalPath //身份证手持照片
+				};
+				util
+					.md5Ajax({
+						funcode: '0004',
+						encrypt: {
+							data: {
+								agentid: $$get.login('taccountid')
+							}
+						},
+						request: request
+					})
+					.then(resolve)
+					.catch(reject);
+			});
+		},
+
+		/**
+		 * 提交注册
+		 */
+		onSubmit() {
+			// 验证数据
+			if (!this.verifyData()) {
+				return;
+			}
+			util.showBusy();
+			this.sendReginster()
+				.then(() => {
+					this.$api
+						.accessLogin()
+						.then(() => {
+							util.hideBusy();
+							util.showToast('success', '认证成功', 2000);
+							util.gotoPage('back', 2000);
+						})
+						.catch(() => {
+							util.hideBusy();
+						});
+				})
+				.catch(errResponse => {
+					util.hideBusy();
+					util.showToast(errResponse.data.retMsg);
+				});
+		},
+
 		onUploadImage(e) {
 			switch (e.currentTarget.dataset.type) {
 				case 'front':
@@ -137,7 +245,8 @@ export default {
 					this.scanData = {
 						title: '手持身份证正面照',
 						noVerify: true,
-						side: 'hand'
+						side: 'hand',
+						devicePosition: 'front'
 					};
 					break;
 			}
@@ -149,14 +258,22 @@ export default {
 		sacnComplete(data) {
 			if (data.side == 'front') {
 				this.inputsArray[0].content = data.name;
+				this.factname = data.name;
 				this.inputsArray[1].content = data.id_card;
-				this.frontImageLocalPath = data.image;
+				this.idcard = data.id_card;
+				util.uploadFile({ path: data.image }).then(fileName => {
+					this.frontImageLocalPath = fileName;
+				});
 			}
 			if (data.side == 'back') {
-				this.backImageLocalPath = data.image;
+				util.uploadFile({ path: data.image }).then(fileName => {
+					this.backImageLocalPath = fileName;
+				});
 			}
 			if (data.side == 'hand') {
-				this.handImageLocalPath = data.image;
+				util.uploadFile({ path: data.image }).then(fileName => {
+					this.handImageLocalPath = fileName;
+				});
 			}
 		}
 	}
