@@ -19,31 +19,19 @@
 			<block>
 				<view class="applyData__id-card lss-hairline--bottom">
 					<view class="applyData__card-view">
-						<view
-							class="applyData__image--id-card"
-							data-type="front"
-							@tap="onUploadImage"
-						>
+						<view class="applyData__image--id-card" data-type="front" @tap="onUploadImage">
 							<!-- <image src="{{frontImageLocalPath?frontImageLocalPath:'/assets/images/register/1.jpg'}}" /> -->
 						</view>
 						<text>身份证正面</text>
 					</view>
 					<view class="applyData__card-view">
-						<view
-							class="applyData__image--id-card"
-							data-type="back"
-							@tap="onUploadImage"
-						>
+						<view class="applyData__image--id-card" data-type="back" @tap="onUploadImage">
 							<!-- <image src="{{backImageLocalPath?bckImageLocalPath:'/assets/images/register/2.jpg'}}" /> -->
 						</view>
 						<text>身份证反面</text>
 					</view>
 					<view class="applyData__card-view">
-						<view
-							class="applyData__image--id-card"
-							data-type="hand"
-							@tap="onUploadImage"
-						>
+						<view class="applyData__image--id-card" data-type="hand" @tap="onUploadImage">
 							<!-- <image src="{{handImageLocalPath?handImageLocalPath:'/assets/images/register/3.jpg'}}" /> -->
 						</view>
 						<text>手持正面照</text>
@@ -62,7 +50,7 @@
 			/>
 		</view>
 
-		<scan-frame :dataSet="scanData"></scan-frame>
+		<scan-frame :dataSet.sync="scanData"></scan-frame>
 	</view>
 </template>
 
@@ -77,7 +65,7 @@ export default {
 	data() {
 		return {
 			showScan: false,
-			scanData:{},
+			scanData: {},
 
 			platform: '',
 			avatarUrl: '',
@@ -120,7 +108,6 @@ export default {
 	props: {},
 	created() {},
 	onLoad() {
-		this.test = 1
 		this.platform = $$get.login('platform');
 		this.avatarUrl = $$get.login('avatarUrl');
 		this.avatarName = $$get.login('facename') || $$get.userInfo('nickName');
@@ -129,11 +116,8 @@ export default {
 		onUploadImage(e) {
 			switch (e.currentTarget.dataset.type) {
 				case 'front':
-					console.log(123)
 					this.scanData = {
-						poptitle: '身份证正面照',
-						poptype: 'front',
-						test:++this.test
+						title: '身份证正面照'
 					};
 					break;
 				case 'back':

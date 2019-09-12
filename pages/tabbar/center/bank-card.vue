@@ -230,8 +230,6 @@ export default {
 		},
 
 		onDeleteCard(e) {
-			
-	
 			wx.showModal({
 				content: '解绑银行卡',
 				confirmText: '确定',

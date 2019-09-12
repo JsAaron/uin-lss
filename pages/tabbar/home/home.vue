@@ -32,8 +32,16 @@
 				<block v-for="(item, index) in busslistData" :key="index">
 					<view class="nav__col" :data-id="item.businessid" @tap="onSwitchType">
 						<image class="nav__logo" :src="imgDomain + item.imgpath" />
-						<text class="nav__text" :class="[item.businessid == businessid ? 'nav__text--active' : '']">{{ item.businessname }}</text>
-						<view class="nav__line" :class="[item.businessid == businessid ? 'nav__line--active' : '']" />
+						<text
+							class="nav__text"
+							:class="[item.businessid == businessid ? 'nav__text--active' : '']"
+						>
+							{{ item.businessname }}
+						</text>
+						<view
+							class="nav__line"
+							:class="[item.businessid == businessid ? 'nav__line--active' : '']"
+						/>
 					</view>
 				</block>
 			</view>
@@ -44,7 +52,9 @@
 				<view class="discount__header">
 					<text class="discount__header-title">劲爆商品</text>
 					<view class="discount__header-right">
-						<text class="discount__header-more lss-color-active--blue" @tap="onDiscountMore">更多</text>
+						<text class="discount__header-more lss-color-active--blue" @tap="onDiscountMore">
+							更多
+						</text>
 						<uni-icon class="discount__header-more-icon" type="more-o" size="16"></uni-icon>
 					</view>
 				</view>
@@ -77,7 +87,11 @@
 					<view class="shop__row">
 						<view v-if="index == 0" class="discount__header shop__solt">
 							<text class="discount__header-title">优惠商家</text>
-							<view class="discount__header-right"><text class="discount__header-more lss-color-active--blue" @tap="onShopMore">更多</text></view>
+							<view class="discount__header-right">
+								<text class="discount__header-more lss-color-active--blue" @tap="onShopMore">
+									更多
+								</text>
+							</view>
 							`
 						</view>
 						<view class="shop__header" :data-id="item.agentid" @tap="onDetails">

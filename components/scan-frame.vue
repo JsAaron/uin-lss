@@ -1,5 +1,5 @@
 <template>
-	<view class="pop-box" :class="[animateClass]">
+	<view class="pop-box" :class="[popAnimateClass]">
 		<view class="title lss-hairline--top">
 			<text>{{ title }}</text>
 			<uni-icon type="cross" class="close" @tap="onClose" size="18">关闭</uni-icon>
@@ -10,17 +10,25 @@
 				device-position="back"
 				flash="auto"
 				@error="error"
-				style="width: 100%; height: 500upx;"
+				style="width: 100%; height: 500rpx;"
 			>
 				<cover-image
-					:src="image ? image : bg"
+					src="/static/components/scan-frame/scan-img.png"
 					class="scan-img"
-					:class="{ scano: image }"
 				></cover-image>
 			</camera>
+
+			<view
+				v-if="scanImageSrc"
+				style="width: 100%; height: 500rpx;position: relative;overflow: hidden;"
+			>
+				<image :src="scanImageSrc" style="width: 100%; height: 100%;"></image>
+				<view class="swiper-animate"></view>
+				<view class="scan-text">识别中</view>
+			</view>
 		</view>
 
-		<block v-if="image">
+		<block v-if="scanImageSrc">
 			<button
 				type="primary"
 				style="background: #9E9E9E;position: absolute;bottom: 50rpx;width: 80%;left:10%;"
@@ -54,7 +62,7 @@ export default {
 			type: Object,
 			default() {
 				return {
-					poptitle: ''
+					title: ''
 				};
 			}
 		}
@@ -63,24 +71,16 @@ export default {
 		return {
 			title: '',
 			showCamera: false,
-			animateClass: '',
-			bg: '/static/components/scan-frame/scan-img.png',
-			image: '',
-			succeed: false,
-			stauts: false //false 关闭  true 打开
+			popAnimateClass: '',
+			scanImageSrc: ''
 		};
 	},
-	created() {
-		// this.animateClass = 'slideInUp';
-		// this.poptitle = this.dataSet.poptitle
-	},
 	watch: {
-		'dataSet'(val, oldVal) {
-			console.log(val,oldVal);
-			if (val) {
+		dataSet(val, oldVal) {
+			if (Object.keys(val).length) {
+				this.title = val.title;
+				this.popAnimateClass = 'slideInUp';
 				this.showCamera = true;
-				this.title = val.poptitle;
-				this.animateClass = 'slideInUp';
 			}
 		}
 	},
@@ -90,17 +90,34 @@ export default {
 			ctx.takePhoto({
 				quality: 'high',
 				success: res => {
-					this.image = res.tempImagePath;
+					this.scanImageSrc = res.tempImagePath;
+					this.showCamera = false;
 				}
 			});
 		},
-		onClose() {
-			this.animateClass = 'slideInDown';
+
+		clean() {
+			this.$emit('update:dataSet', {});
+			this.scanImageSrc = '';
+			this.showCamera = false;
 			setTimeout(() => {
-				this.title = '';
-				this.dataSet.poptitle = ''
-				this.showCamera = false;
-			}, 300);
+				this.popAnimateClass = 'slideInDown';
+			}, 0);
+		},
+
+		onClose() {
+			if (this.scanImageSrc) {
+				util.showModal({
+					content: '正在识别中,确定退出?',
+					success: res => {
+						if (res.confirm) {
+							this.clean();
+						}
+					}
+				});
+				return;
+			}
+			this.clean();
 		},
 		/**
 		 * 重新拍
@@ -116,6 +133,26 @@ export default {
 </script>
 
 <style lang="scss">
+.swiper-animate {
+	position: absolute;
+	width: 100%;
+	height: 500rpx;
+	left: 0;
+	top: 0;
+	z-index: 2;
+	background: linear-gradient(to bottom, transparent, #3e88f1);
+	animation: scan 1.5s ease-in-out infinite;
+}
+
+@keyframes scan {
+	from {
+		top: -500rpx;
+	} /*网格移动到显示区域的外面*/
+	to {
+		top: 0;
+	}
+}
+
 .pop-box {
 	position: fixed;
 	width: 100%;
@@ -198,13 +235,31 @@ export default {
 	opacity: 0.4;
 	width: 100%;
 	height: 500rpx;
+	position: absolute;
+	z-index: 1;
 }
 .scano {
 	opacity: 1;
 }
 .scan-text {
 	font-size: 20px;
-	text-align: center;
-	line-height: 60rpx;
+	color: $white;
+	@include position-center;
+}
+
+.scan-text:after {
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: bottom;
+	animation: ellipsis 2s infinite;
+	content: '\2026'; /* ascii code for the ellipsis character */
+}
+@keyframes ellipsis {
+	from {
+		width: 2px;
+	}
+	to {
+		width: 20px;
+	}
 }
 </style>
