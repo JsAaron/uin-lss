@@ -7,7 +7,7 @@
 
 		<view class="applyPay__pay">
 			<text class="applyPay__pay-title">选择支付方式</text>
-			<radio-group bindchange="payRadioChange">
+			<radio-group @change="payRadioChange">
 				<!-- 微信支付 -->
 				<view
 					class="applyPay__pay-card lss-hairline--bottom"
@@ -79,7 +79,7 @@
 
 		<payment-password
 			ref="pay"
-			:show="payFlag"
+			:show="passwordFlag"
 			:forget="true"
 			digits="6"
 			@submit="onCheckPwd"
@@ -157,8 +157,8 @@ export default {
 			/**
 			 * 密码框
 			 */
-			payFlag: false,
-			verifyFlag: true //快捷支付
+			passwordFlag: false,
+			verifyFlag: false //快捷支付
 		};
 	},
 	watch: {
@@ -209,6 +209,81 @@ export default {
 			});
 		},
 
+		//=========== 选择 =============
+
+		/**
+		 * 支付类型选择
+		 * @param {*} e
+		 */
+		payRadioChange(e) {
+			this.payType = e.detail.value;
+		},
+
+		//整体改变
+		payChange(e) {
+			this.payType = e.currentTarget.dataset.value;
+		},
+
+		//=================================
+		//      密码框
+		//=================================
+
+		/**
+		 * 调用密码验证支付
+		 */
+		callPassword() {
+			this.passwordFlag = true;
+		},
+
+		togglePayment() {
+			this.passwordFlag = !this.passwordFlag;
+		},
+
+		/**
+		 * 支付密码框
+		 */
+		closePasswordFlag() {
+			this.passwordFlag = false;
+			this.$refs.pay.emptyPassword();
+		},
+
+		/**
+		 * 检测密码
+		 */
+		onCheckPwd(password) {
+			util.showBusy('验证支付密码');
+			util
+				.verifyPassword({
+					code: '805013',
+					password: String(password),
+					mobileno: $$get.login('mobileno'),
+					money: String(Number(this.money) * 100),
+					agentid: $$get.login('taccountid'), //用户id
+					parent_agentid: this.agentid //商户id
+				}) 
+				.then(() => {
+					//余额支付
+					if (this.payType === 'balance') {
+						return this.callLoosePay(password);
+					} else {
+						//银行卡，创建订单
+						this.createDeviceTrade();
+					}
+				})
+				.catch(error => {
+					// 密码错误
+					util.hideBusy();
+					if (error) {
+						if (error.data) {
+							util.showToast(error.data.data.Mesg, 3000);
+						} else {
+							console.log(error);
+						}
+					}
+					this.$refs.pay.emptyPassword();
+				});
+		},
+
 		//=================================
 		//       支付代码 - 零钱支付
 		//=================================
@@ -230,19 +305,49 @@ export default {
 			});
 		},
 
-		//=========== 选择 =============
-
 		/**
-		 * 支付类型选择
-		 * @param {*} e
+		 * 余额支付
 		 */
-		payRadioChange(e) {
-			this.payType = e.detail.value;
+		sendBalance(pwd) {
+			return new Promise((resolve, reject) => {
+				util.showBusy('支付中');
+				const request = {
+					is_fx: this.is_fx,
+					order_id: this.order_id,
+					is_royalty: this.is_royalty,
+					amount: String(this.money), //总金额
+					taccountid: $$get.login('taccountid'), //用户编码
+					userid: $$get.login('userid'),
+					parent_agentid: this.agentid //商户id
+				};
+				util
+					.md5Ajax({
+						funcode: '0120',
+						encrypt: {
+							data: {
+								paypwd: pwd //支付密码
+							}
+						},
+						request: request
+					})
+					.then(resolve)
+					.catch(reject);
+			});
 		},
 
-		//整体改变
-		payChange(e) {
-			this.payType = e.currentTarget.dataset.value;
+		/**
+		 * 余额支付方式
+		 */
+		callLoosePay(password) {
+			this.sendBalance(password)
+				.then(response => {
+					this.closePasswordFlag();
+					this.updatePayComplete(response.data.bodycontent, '零钱');
+				})
+				.catch(err => {
+					util.showToast(err.data.retMsg);
+					this.$refs.pay.emptyPassword();
+				});
 		},
 
 		//=================================
@@ -291,57 +396,6 @@ export default {
 		//=================================
 		//       支付代码 - 银行卡支付
 		//=================================
-
-		/**
-		 * 调用银行卡支付
-		 */
-		callPassword() {
-			this.payFlag = true;
-		},
-
-		togglePayment() {
-			this.payFlag = !this.payFlag;
-		},
-
-		/**
-		 * 支付密码框
-		 */
-		closePayFlag() {
-			this.payFlag = false;
-			this.$refs.pay.emptyPassword();
-		},
-
-		/**
-		 * 检测密码
-		 */
-		onCheckPwd(password) {
-			util.showBusy('验证密码');
-			util
-				.verifyPassword({
-					code: '805013',
-					password: String(password),
-					mobileno: $$get.login('mobileno'),
-					money: String(Number(this.money) * 100),
-					agentid: $$get.login('taccountid'), //用户id
-					parent_agentid: this.agentid //商户id
-				})
-				.then(() => {
-					//创建订单
-					this.createDeviceTrade();
-				})
-				.catch(error => {
-					// 密码错误
-					util.hideBusy();
-					if (error) {
-						if (error.data) {
-							util.showToast(error.data.data.Mesg, 3000);
-						} else {
-							console.log(error);
-						}
-					}
-					this.$refs.pay.emptyPassword();
-				});
-		},
 
 		/**
 		 * 验证快捷支付
@@ -393,14 +447,14 @@ export default {
 						//需要验证码开通快捷绑卡
 						if (isNeedBindCard == '1') {
 							util.hideBusy();
-							this.closePayFlag()
+							this.closePasswordFlag();
 							this.verifyFastPay();
 						} else {
 							// 等待订单支付结果
 							if (equipment_order) {
 								if (validateCode) {
 									//如果验证码是成功了，关闭验证框
-									this.closePayFlag()
+									this.closePasswordFlag();
 								}
 								this.polling_order(equipment_order, bodycontent);
 							} else {
@@ -526,7 +580,11 @@ export default {
 
 			// 零钱
 			if (this.payType === 'balance') {
-				return this.callLoosePay();
+				if (Number(this.money) > this.balance) {
+					util.showToast('余额不足,无法支付,请选用其余方式');
+					return;
+				}
+				return this.callPassword();
 			}
 
 			// 新增银行卡
