@@ -68,17 +68,17 @@
 			/>
 		</view>
 
-		<scan-frame :dataSet.sync="scanData" @complete="sacnComplete"></scan-frame>
+		<scan-ocr :dataSet.sync="scanData" @complete="sacnComplete"></scan-ocr>
 	</view>
 </template>
 
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
-import scanFrame from '@/components/scan-frame';
+import scanOcr from '@/components/scan-ocr';
 export default {
 	components: {
-		scanFrame
+		scanOcr
 	},
 	data() {
 		return {

@@ -10,7 +10,7 @@ function simulate() {
 	const common = {
 		// 增加银行卡绑定
 		"add-bank-card": "/pages/common/add-bank-card",
-		"scan-frame":"/pages/common/scan-frame",
+		"scan-frame": "/pages/common/scan-frame",
 	};
 
 	// return common["scan-frame"]
@@ -21,14 +21,16 @@ function simulate() {
 		"category": "/pages/tabbar/category/category",
 		"center": "/pages/tabbar/center/center",
 		"product": "/pages/common/product",
-		
-		//我的银行卡
-		"center-bankcard": "/pages/tabbar/center/bank-card",
-		// 实名认证
-		'certification':"/pages/tabbar/center/certification"
+
+		"bankcard": "/pages/tabbar/center/bank-card", //我的银行卡
+		'certification': "/pages/tabbar/center/certification", // 实名认证
+		"team": "/pages/tabbar/center/team", //我的团队
+		"partner":"/pages/tabbar/center/partner/partner",//创客
+		"partner-order":"/pages/tabbar/center/partner/order",
+		"partner-pay":"/pages/tabbar/center/partner/pay"
 	}
 
-	return userUrls["certification"]
+	return userUrls["partner"]
 
 
 	//==============

@@ -54,6 +54,30 @@
 			"style": {
 				"navigationBarTitleText": "实名认证"
 			}
+		},
+		{
+			"path": "pages/tabbar/center/team",
+			"style": {
+				"navigationBarTitleText": "我的团队"
+			}
+		},
+		{
+			"path": "pages/tabbar/center/partner/partner",
+			"style": {
+				"navigationBarTitleText": "加入创客"
+			}
+		},
+		{
+			"path": "pages/tabbar/center/partner/order",
+			"style": {
+				"navigationBarTitleText": "确定订单"
+			}
+		},
+		{
+			"path": "pages/tabbar/center/partner/pay",
+			"style": {
+				"navigationBarTitleText": "订单支付"
+			}
 		}
 	],
 	"globalStyle": {
