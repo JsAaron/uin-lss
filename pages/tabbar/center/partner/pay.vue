@@ -23,10 +23,10 @@
 	</view>
 </template>
 
-<script>
+<script> 
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
-import lssPayment from '@/pages/common/payment';
+import lssPayment from '@/pages/common/payment/payment';
 export default {
 	components: {
 		lssPayment

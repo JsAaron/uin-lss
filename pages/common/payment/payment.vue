@@ -76,14 +76,30 @@
 				</text>
 			</view>
 		</view>
+
+		<payment-password
+			ref="pay"
+			:show="payFlag"
+			:forget="true"
+			digits="6"
+			@submit="onCheckPwd"
+			@cancel="togglePayment"
+		></payment-password>
+
+		<verify-box v-if="verifyFlag" @click="onGetVerify"></verify-box>
 	</view>
 </template>
 
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
+import verifyBox from './verify-box';
+import paymentPassword from '@/components/payment-password/payment-password';
 export default {
-	components: {},
+	components: {
+		verifyBox,
+		paymentPassword
+	},
 	props: {
 		dataSet: {
 			type: Object,
@@ -136,7 +152,13 @@ export default {
 			 * 银行卡有外部接口
 			 * 需要有个外部操作
 			 */
-			refresh: false
+			refresh: false,
+
+			/**
+			 * 密码框
+			 */
+			payFlag: false,
+			verifyFlag: true //快捷支付
 		};
 	},
 	watch: {
@@ -240,7 +262,7 @@ export default {
 				parent_agentid: this.agentid, //商户编号(商家的)
 				agentid: $$get.login('taccountid') //商户编号(客户的)
 			};
-			console.log(data)
+			console.log(data);
 			util
 				.unifyAjax({ data })
 				.then(response => {
@@ -264,6 +286,214 @@ export default {
 					util.hideBusy();
 					util.showToast(res.data.retMsg);
 				});
+		},
+
+		//=================================
+		//       支付代码 - 银行卡支付
+		//=================================
+
+		/**
+		 * 调用银行卡支付
+		 */
+		callPassword() {
+			this.payFlag = true;
+		},
+
+		togglePayment() {
+			this.payFlag = !this.payFlag;
+		},
+
+		/**
+		 * 支付密码框
+		 */
+		closePayFlag() {
+			this.payFlag = false;
+			this.$refs.pay.emptyPassword();
+		},
+
+		/**
+		 * 检测密码
+		 */
+		onCheckPwd(password) {
+			util.showBusy('验证密码');
+			util
+				.verifyPassword({
+					code: '805013',
+					password: String(password),
+					mobileno: $$get.login('mobileno'),
+					money: String(Number(this.money) * 100),
+					agentid: $$get.login('taccountid'), //用户id
+					parent_agentid: this.agentid //商户id
+				})
+				.then(() => {
+					//创建订单
+					this.createDeviceTrade();
+				})
+				.catch(error => {
+					// 密码错误
+					util.hideBusy();
+					if (error) {
+						if (error.data) {
+							util.showToast(error.data.data.Mesg, 3000);
+						} else {
+							console.log(error);
+						}
+					}
+					this.$refs.pay.emptyPassword();
+				});
+		},
+
+		/**
+		 * 验证快捷支付
+		 */
+		verifyFastPay() {
+			util.showToast({
+				title: `首次支付需要短信安全验证,请查收短信`,
+				icon: 'none',
+				duration: 5000
+			});
+			this.verifyFlag = true;
+		},
+
+		/**
+		 * 获取快捷验证码
+		 */
+		onGetVerify(code) {
+			//获取验证码后，重新支付
+			this.createDeviceTrade(code);
+			this.verifyFlag = false;
+		},
+
+		/**
+		 * 创建交易订单
+		 */
+		createDeviceTrade(validateCode) {
+			util.showBusy('正在支付');
+			return new Promise((resolve, reject) => {
+				const data = {
+					is_new: 'new', //新版本
+					code: '805017',
+					validateCode: validateCode, //快捷绑卡验证码
+					xx_no: String(this.bankCardData.xx_no),
+					cardid: '',
+					order_id: this.order_id,
+					is_royalty: this.is_royalty,
+					is_fx: this.is_fx,
+					money: String(this.money * 100),
+					agentid: $$get.login('taccountid'), //用户id
+					parent_agentid: this.agentid //商户id
+				};
+				console.log('data', data);
+				util
+					.createBankCardTrade(data)
+					.then(response => {
+						//bodycontent 支付订单号
+						const { equipment_order, isNeedBindCard, bodycontent } = response.data.data;
+
+						//需要验证码开通快捷绑卡
+						if (isNeedBindCard == '1') {
+							util.hideBusy();
+							this.closePayFlag()
+							this.verifyFastPay();
+						} else {
+							// 等待订单支付结果
+							if (equipment_order) {
+								if (validateCode) {
+									//如果验证码是成功了，关闭验证框
+									this.closePayFlag()
+								}
+								this.polling_order(equipment_order, bodycontent);
+							} else {
+								util.hideBusy();
+								util.showToast('fail', '支付失败');
+							}
+						}
+					})
+					.catch(error => {
+						util.hideBusy();
+						// 订单错误
+						const message = error ? error.data.data.Mesg : '支付失败';
+						util.showToast('fail', message);
+						this.$refs.pay.emptyPassword();
+					});
+			});
+		},
+
+		/**
+		 * 获取状态状态
+		 */
+		get_order_state(equipment_order, { success_callback, fail_callback, poll_callback }) {
+			util
+				.deviceAjax({
+					data: {
+						code: '805006',
+						equipment_order
+					}
+				})
+				.then(response => {
+					let orderStatus = response.data.data.orderStatus;
+					//支付成功
+					if (orderStatus == 1) {
+						success_callback && success_callback(response);
+						return;
+					}
+					//支付失败
+					if (orderStatus == 2) {
+						fail_callback && fail_callback(response);
+						return;
+					}
+					// 没有获取结果，继续
+					if (orderStatus == 4) {
+						poll_callback && poll_callback(response);
+						return;
+					}
+				})
+				.catch(error => {
+					util.showToast(error.data.data.Mesg);
+				});
+		},
+
+		/**
+		 * 清理轮询
+		 */
+		clear_poll_timer() {
+			if (this.polling_timer) {
+				clearTimeout(this.polling_timer);
+				this.polling_timer = null;
+			}
+			this.polling_count = 5;
+		},
+
+		/**
+		 * 订单轮询
+		 * 获取订单状态
+		 */
+		polling_order(equipment_order, bodycontent) {
+			this.get_order_state(equipment_order, {
+				success_callback: response => {
+					util.hideBusy();
+					this.clear_poll_timer();
+					this.updatePayComplete(bodycontent, '银行卡');
+				},
+				fail_callback: response => {
+					util.hideBusy();
+					this.clear_poll_timer();
+					util.showToast(response.data.data.payment_info, 3000);
+				},
+				//如果没有获取结果，继续处理
+				poll_callback: () => {
+					if (this.polling_count) {
+						--this.polling_count;
+						this.polling_timer = setTimeout(() => {
+							this.polling_order(equipment_order, bodycontent);
+						}, 2000);
+					} else {
+						util.hideBusy();
+						this.clear_poll_timer();
+						util.showToast('fail', '支付反馈超时,请在订单中查看支付结果', 3000);
+					}
+				}
+			});
 		},
 
 		//================ 更新状态 =================
@@ -306,13 +536,11 @@ export default {
 
 			//银行卡支付
 			this.bankCardListData.map(item => {
-				if (item.bankuserid == this.data.payType) {
+				if (item.bankuserid == this.payType) {
 					//单卡数据
 					this.bankCardData = item;
 					//验证密码
-					// this.callBankCardPay().then(() => {
-					// 	this.createDeviceTrade();
-					// });
+					this.callPassword();
 				}
 			});
 		}
