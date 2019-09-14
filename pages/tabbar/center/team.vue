@@ -108,7 +108,7 @@ export default {
 
 	&__box {
 		overflow: hidden;
-		background: ￥white;
+		background: $white;
 		border: 1px solid #1a1a1a;
 		border-radius: 10rpx;
 	}

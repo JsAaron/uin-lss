@@ -345,9 +345,6 @@ export default {
 </script>
 
 <style lang="scss">
-page {
-	background: $background-color-white;
-}
 
 .button {
 	width: 90%;
@@ -413,6 +410,7 @@ page {
 		line-height: 50rpx;
 	}
 	&__content {
+		background: $background-color-white;
 		margin-top: 50rpx;
 	}
 	&__content-card {
