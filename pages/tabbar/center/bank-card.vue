@@ -20,7 +20,7 @@
 							<text class="bank-card--text2">{{ item.banktype }}</text>
 							<text class="bank-card--text3">{{ item.bankaccount }}</text>
 						</view>
-						<uni-icon class="bank-card__delete" type="delete" size="16" @tap="onDeleteCard(index)"></uni-icon>
+						<uni-icon class="bank-card__delete" type="trash" size="16" @tap="onDeleteCard(index)"></uni-icon>
 					</view>
 				</uni-swipe-action>
 			</view>
@@ -34,7 +34,7 @@
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
-import uniIcon from '@/components/uni-icon/uni-icon';
+import uniIcon from '@/components/uni/uni-icons/uni-icons';
 import paymentPassword from '@/components/payment-password/payment-password';
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
 export default {

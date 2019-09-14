@@ -55,7 +55,7 @@
 						<text class="discount__header-more lss-color-active--blue" @tap="onDiscountMore">
 							更多
 						</text>
-						<uni-icon class="discount__header-more-icon" type="more-o" size="16"></uni-icon>
+						<uni-icon class="discount__header-more-icon" type="more" size="16"></uni-icon>
 					</view>
 				</view>
 				<view class="discount__content">
@@ -123,8 +123,8 @@
 	</view>
 </template>
 <script>
-import uniIcon from '@/components/uni-icon/uni-icon';
-import lssLoadMore from '@/components/lss-load-more/lss-load-more';
+import uniIcon from '@/components/uni/uni-icons/uni-icons';
+import lssLoadMore from '@/components/lss/lss-load-more/lss-load-more';
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
 

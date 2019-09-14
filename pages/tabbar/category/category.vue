@@ -39,8 +39,8 @@
 
 <script>
 import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision';
-import lssLoadMore from '@/components/lss-load-more/lss-load-more';
-import uniIcon from '@/components/uni-icon/uni-icon';
+import lssLoadMore from '@/components/lss/lss-load-more/lss-load-more';
+import uniIcon from '@/components/uni/uni-icons/uni-icons';
 import typeNav from '../../common/type-nav';
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';

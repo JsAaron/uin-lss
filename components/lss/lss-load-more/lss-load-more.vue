@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import prompt from '@/components/prompt';
+import prompt from '@/components/lss/prompt';
 export default {
 	components: {
 		prompt
@@ -42,7 +42,7 @@ export default {
 		 */
 		total: {
 			type: Number,
-			default: 0
+			default: 0 
 		},
 		/**
 		 * 数据上拉加载完毕

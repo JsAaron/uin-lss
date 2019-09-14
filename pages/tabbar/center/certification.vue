@@ -75,7 +75,7 @@
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
-import scanOcr from '@/components/scan-ocr';
+import scanOcr from '@/components/lss/scan-ocr';
 export default {
 	components: {
 		scanOcr

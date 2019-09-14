@@ -94,7 +94,7 @@
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
-import lssButton from '@/components/lss-button';
+import lssButton from '@/components/lss/lss-button';
 export default {
 	components: {
 		lssButton

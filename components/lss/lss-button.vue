@@ -12,8 +12,18 @@
 		</block>
 		<block v-else>
 			<waves-button
+				v-if="type == 'primary'"
 				@click="this.$emit('click')"
 				btnStyle="background:linear-gradient(to right,#65a1fb, #4f96ff);border-radius:5px"
+				wavesColor="rgba(79,150,255)"
+			>
+				<slot></slot>
+			</waves-button>
+
+			<waves-button
+				v-if="type == 'submit'"
+				@click="this.$emit('click')"
+				btnStyle="width:82%;margin:100rpx auto 0 auto;background:linear-gradient(to right,#65a1fb, #4f96ff);border-radius:5px"
 				wavesColor="rgba(79,150,255)"
 			>
 				<slot></slot>

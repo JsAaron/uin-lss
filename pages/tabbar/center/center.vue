@@ -8,12 +8,7 @@
 					<view class="banner__t">
 						<text>{{ nickName }}</text>
 						<text v-if="isfact" class="banner__shimimg">已认证</text>
-						<text
-							v-else
-							class="banner__shimimg"
-							@tap="gotoPage"
-							data-url="./certification"
-						>
+						<text v-else class="banner__shimimg" @tap="gotoPage" data-url="./certification">
 							{{ hasLogin ? '未实名' : '未登录' }}
 						</text>
 					</view>
@@ -41,7 +36,7 @@
 				</view>
 				<view class="statistics__arrow">
 					<text class="statistics__t">收支明细</text>
-					<uni-icon type="arrow" class="statistics__arrow-icon" size="16"></uni-icon>
+					<uni-icon type="arrowright" class="statistics__arrow-icon" size="16"></uni-icon>
 				</view>
 			</view>
 			<view class="statistics__button">
@@ -59,7 +54,7 @@
 				<text>我的订单</text>
 				<view class="order__all">
 					<text>查看全部订单</text>
-					<uni-icon type="arrow" size="16"></uni-icon>
+					<uni-icon type="arrowright" size="16"></uni-icon>
 				</view>
 			</view>
 			<view class="order__nav">
@@ -90,7 +85,7 @@
 					<image src="/static/tabbar/center/t1.png"></image>
 					<text>银行卡</text>
 				</view>
-				<view class="tools__col"  @tap="gotoPage" data-url="./team">
+				<view class="tools__col" @tap="gotoPage" data-url="./team">
 					<image src="/static/tabbar/center/t2.png"></image>
 					<text>我的团队</text>
 				</view>
@@ -98,7 +93,7 @@
 					<image src="/static/tabbar/center/t3.png"></image>
 					<text>分享推广</text>
 				</view>
-				<view class="tools__col">
+				<view class="tools__col" @tap="gotoPage" data-url="/pages/common/settings">
 					<image src="/static/tabbar/center/t4.png"></image>
 					<text>个人设置</text>
 				</view>
@@ -134,7 +129,7 @@
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
-import uniIcon from '@/components/uni-icon/uni-icon';
+import uniIcon from '@/components/uni/uni-icons/uni-icons';
 import wavesButton from '@/components/waves-button/waves-button';
 export default {
 	components: {
@@ -395,7 +390,7 @@ export default {
 			margin-top: 10rpx;
 			font-size: 12px;
 		}
-		&:active{
+		&:active {
 			color: $text-color-blue;
 		}
 	}

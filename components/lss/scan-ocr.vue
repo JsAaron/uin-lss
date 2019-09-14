@@ -2,7 +2,7 @@
 	<view class="pop-box" :class="[popAnimateClass]">
 		<view class="title lss-hairline--top">
 			<text>{{ title }}</text>
-			<uni-icon type="cross" class="close" @tap="onClose" size="18">关闭</uni-icon>
+			<uni-icon type="closeempty" class="close" @tap="onClose" size="18">关闭</uni-icon>
 		</view>
 		<view class="content">
 			<camera
@@ -52,7 +52,7 @@
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
-import uniIcon from '@/components/uni-icon/uni-icon';
+import uniIcon from '@/components/uni/uni-icons/uni-icons';
 export default {
 	components: {
 		uniIcon

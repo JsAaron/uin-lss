@@ -11,9 +11,13 @@ function simulate() {
 		// 增加银行卡绑定
 		"add-bank-card": "/pages/common/add-bank-card",
 		"scan-frame": "/pages/common/scan-frame",
+
+		"settings": "/pages/common/settings",
+		"password-change": "/pages/common/password/change",
+		"password-reset": "/pages/common/password/reset"
 	};
 
-	// return common["scan-frame"]
+	// return common["settings"]
 
 	//用户端
 	const userUrls = {
@@ -25,9 +29,9 @@ function simulate() {
 		"bankcard": "/pages/tabbar/center/bank-card", //我的银行卡
 		'certification': "/pages/tabbar/center/certification", // 实名认证
 		"team": "/pages/tabbar/center/team", //我的团队
-		"partner":"/pages/tabbar/center/partner/partner",//创客
-		"partner-order":"/pages/tabbar/center/partner/order",
-		"partner-pay":"/pages/tabbar/center/partner/pay"
+		"partner": "/pages/tabbar/center/partner/partner", //创客
+		"partner-order": "/pages/tabbar/center/partner/order",
+		"partner-pay": "/pages/tabbar/center/partner/pay"
 	}
 
 	return userUrls["center"]

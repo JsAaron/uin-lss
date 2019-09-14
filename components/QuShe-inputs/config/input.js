@@ -98,5 +98,10 @@ export const verifyTypeObj = {
 	Number: {
 		reg: /^([1-9]\d*(\.\d+)?)|(\d+(\.\d+))$/,
 		name: '数字'
+	},
+	Number6:{
+		reg:/^\d{6}$/,
+		name:'6位数字'
 	}
+	
 };
