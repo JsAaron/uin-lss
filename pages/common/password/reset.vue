@@ -181,4 +181,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+	page{
+		background: $background-color-white;
+	}
+</style>
