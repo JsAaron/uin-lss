@@ -11,7 +11,7 @@
 		<view v-if="hasCard" class="bank-card">
 			<view class="bank-card__wapper" v-for="(item, index) in listData" :key="index">
 				<uni-swipe-action :options="options" @click="onDeleteCard(index)">
-					<view class="bank-card__my-card lss-background-active--opacity" :data-index="index" @longpress="onDeleteCard">
+					<view class="bank-card__my-card lss-background-active--opacity" >
 						<view class="bank-card__image_v1">
 							<view class="bank-card__image_v2"><image class="bank-card__image" :src="getUrl(item.icon)" /></view>
 						</view>
@@ -20,6 +20,7 @@
 							<text class="bank-card--text2">{{ item.banktype }}</text>
 							<text class="bank-card--text3">{{ item.bankaccount }}</text>
 						</view>
+						<uni-icon class="bank-card__delete" type="delete" size="16" @tap="onDeleteCard(index)"></uni-icon>
 					</view>
 				</uni-swipe-action>
 			</view>
@@ -33,10 +34,12 @@
 <script>
 import * as util from '@/utils';
 import { $$set, $$get } from '@/common/global';
+import uniIcon from '@/components/uni-icon/uni-icon';
 import paymentPassword from '@/components/payment-password/payment-password';
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
 export default {
 	components: {
+		uniIcon,
 		uniSwipeAction,
 		paymentPassword
 	},
@@ -265,6 +268,7 @@ page {
 
 	&__my-card {
 		@include flex-h-left;
+		position: relative;
 		height: 180rpx;
 		background: $blue;
 	}
@@ -330,6 +334,11 @@ page {
 		&:active {
 			background: #2b2b2b;
 		}
+	}
+	&__delete{
+		position: absolute;
+		right: 30rpx;
+		top:30rpx;
 	}
 }
 

@@ -30,7 +30,7 @@ function simulate() {
 		"partner-pay":"/pages/tabbar/center/partner/pay"
 	}
 
-	// return userUrls["partner-pay"]
+	return userUrls["center"]
 
 
 	//==============

@@ -90,7 +90,7 @@
 					<image src="/static/tabbar/center/t1.png"></image>
 					<text>银行卡</text>
 				</view>
-				<view class="tools__col">
+				<view class="tools__col"  @tap="gotoPage" data-url="./team">
 					<image src="/static/tabbar/center/t2.png"></image>
 					<text>我的团队</text>
 				</view>
